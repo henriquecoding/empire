@@ -19,7 +19,7 @@ import json
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from . import contracts, fidelity as fidelity_mod, guides, owner_rules, plan_native, production, prompts, refs as refs_mod
+from . import contracts, fidelity as fidelity_mod, guides, owner_rules, plan_native, production, prompts, refs as refs_mod, study
 from .backends import Call, gemini_images, openai_images, pixellab_api, pixellab_convert, sha
 from .imageops import png_bytes as png
 from .palette import Palette
@@ -53,6 +53,12 @@ class Plan:
         if d["model"] != pixellab_convert.MODEL and any(r["text"] not in prompt for r in
                 owner_rules.prompt_rules(d["kind"], d["frames"] > 1)):
             raise ValueError("prompt sem o texto das regras do dono: compilar de novo antes de gerar")
+        method = (d.get("expect") or {}).get("study")
+        if not method or method.get("revision") != study.context()["revision"]:
+            raise ValueError("plano sem consulta atual do estudo: compilar de novo antes de gerar")
+        if d["model"] != pixellab_convert.MODEL and any(r["text"] not in prompt for r in
+                study.rules(d["mode"], d["frames"] > 1)):
+            raise ValueError("prompt sem o texto do estudo: compilar de novo antes de gerar")
         r = d["request"]
         if d["backend"] == "pixellab" and d["model"] == pixellab_convert.MODEL:
             return pixellab_convert.call(self.images[0][1], r["width"], r["height"], **r["params"])
@@ -209,6 +215,7 @@ def make(backend: str, subject: str, kind: str | None = None, tags: list[tuple[s
     if d["expect"] is not None:
         d["expect"].update(role=selected["role"], target_useful_bbox=d["fidelity_prompt"].get("target_useful_bbox"))
         d["expect"]["owner_rules"] = owner_rules.context(prep["record"])
+        d["expect"]["study"] = study.context(d["mode"])
     d["attachments"] = [{"index": i, "role": refs_mod.family(r), "prompt_role": r, "sha256": sha(b), "bytes": len(b)}
                         for i, (r, b) in enumerate(images, 1)]
     d["prompt_sha256"] = hashlib.sha256(d["prompt"].encode("utf-8")).hexdigest()

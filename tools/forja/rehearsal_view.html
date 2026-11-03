@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="pt"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Forja · Ensaio de animação</title>
+<style>
+*{box-sizing:border-box}body{margin:0;padding:24px;background:#191b20;color:#eee;font:16px system-ui}
+main{max-width:1100px;margin:auto}h1{font-size:28px}p{line-height:1.5;color:#bbc2ce}
+nav,.controls,.views{display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin:20px 0}
+button,select,a{color:inherit}button,select{background:#292e38;border:1px solid #667080;padding:10px;border-radius:6px}
+button:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid #e9be64;outline-offset:3px}
+.stage{padding:20px;min-height:170px;border:1px solid #626975;border-radius:8px;overflow:auto;max-width:100%}
+canvas,img{image-rendering:pixelated}figure{margin:0}figcaption{margin-bottom:12px}#reference{max-width:100%;max-height:360px;object-fit:contain}
+input[type=range]{width:min(100%,650px)}code{overflow-wrap:anywhere}output{display:block;margin:12px 0}
+</style>
+<main><h1>Ensaio de animação</h1>
+<p>Compare o ator sem efeitos, a composição final e o conceito. A prévia mantém os pixels e tempos exportados.
+Revisão visual pendente; este ensaio de autoria não é um teste no Godot.</p>
+<div class="controls">
+<label>Ação <select id="action"><option value="">Ensaio completo</option></select></label>
+<button id="play">Reproduzir</button><button id="previous">Anterior</button><button id="next">Seguinte</button>
+<label><input id="effects" type="checkbox"> Efeitos ligados</label>
+<label><input id="onion" type="checkbox"> Anterior / seguinte</label>
+<label><input id="pivot" type="checkbox" checked> Pivô</label>
+<label>Ampliação <select id="zoom"><option>2</option><option selected>4</option><option>8</option></select></label>
+<label>Fundo <select id="background"><option value="#28221e">Escuro</option><option value="#f0ede5">Claro</option></select></label>
+</div>
+<label>Quadro do ensaio <input id="seek" type="range" min="0" value="0"></label>
+<output id="status" aria-live="polite"></output>
+<div class="views">
+<figure><figcaption>Grade nativa · 1×</figcaption><div class="stage"><canvas id="native"></canvas></div></figure>
+<figure><figcaption>Ampliação inteira</figcaption><div class="stage"><canvas id="large"></canvas></div></figure>
+<figure id="authority" hidden><figcaption>Conceito de autoridade</figcaption><img id="reference" alt="Conceito escolhido do personagem"></figure>
+</div>
+<nav><a href="review.template.json" download>Ficha de revisão</a><a href="recipe.json" download>Receita do ensaio</a>
+<a href="manifest.json" download>Manifesto</a></nav>
+<p>Registe mão, objeto, oclusão, estado facial, apoio e recuperação na ficha. Um “pass” exige observação e evidência;
+guardar um ficheiro não concede aprovação artística.</p>
+<p>Receita <code id="recipe"></code></p></main>
+<script id="data" type="application/json">/*DATA*/</script><script>/*PLAYER*/</script>
+</html>

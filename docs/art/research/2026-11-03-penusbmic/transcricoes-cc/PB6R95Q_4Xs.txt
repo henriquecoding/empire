@@ -1,0 +1,291 @@
+Aseprite TIPS & TRICKS you probably don't know
+Autor: Penusbmic
+Fonte: https://www.youtube.com/watch?v=PB6R95Q_4Xs
+Licença observada: Creative Commons Atribuição (reutilização permitida), conforme YouTube.
+Link da licença exibido na fonte: https://www.youtube.com/t/creative_commons
+Conferência da licença: 2026-11-02. Texto obtido via exportação de legendas do YouTube.
+Adaptação: apresentação textual das legendas, com este cabeçalho de atribuição.
+Idioma: original disponível (inglês). Legenda não revisada integralmente contra áudio; pode conter erros, omissões e tempos aproximados.
+Não há endosso do autor à Forja.
+
+YouTube transcript
+Video ID: PB6R95Q_4Xs
+Language: en
+Captions: auto-generated
+
+[0:00] welcome welcome I'm Penn a pixel artist
+[0:03] I've worked on games like domee keeper
+[0:04] shun Showdown bullet Bunny and RAM
+[0:08] Random Access ma'am which comes out
+[0:10] November 18th so check that out this
+[0:12] video is 10 tricks or tips that you
+[0:16] probably don't know in aprite so let's
+[0:18] jump right into it the first one is the
+[0:21] ey dropper tool and a cool little trick
+[0:24] with this one is if you just click here
+[0:26] on one of these two colors and drag it
+[0:29] on to a reference image or anything
+[0:32] really you could even do this Spotify
+[0:34] green or the Discord blue here Bluey
+[0:37] purple or a reference image and you can
+[0:40] just grab that color you want that blue
+[0:42] sky we got it so that's number one trick
+[0:45] number two I'll just make this bigger
+[0:47] now number two is extend extending a
+[0:51] cell so I'm just going to make bunch of
+[0:53] frames and this is actually an extension
+[0:55] that I will link below it's free so you
+[0:58] can download it I've been loving it
+[1:00] since I've started using it but what you
+[1:02] can do is when you click on your cell
+[1:05] you can right click it and go extend
+[1:07] cell and it will drag it all the way to
+[1:09] the next cell so if you have a frame
+[1:12] here it will go to frame 11 if you don't
+[1:14] have one there it will go all the way to
+[1:16] the end and it's just a quick little way
+[1:20] to extend the cell and that's number two
+[1:23] so let's do number three number three is
+[1:27] dragging if if you have two files open
+[1:30] one's a reference or one's the tile set
+[1:32] like here and then one's kind of your
+[1:34] testing the tiles over here we can
+[1:36] actually drag click on one and drag it
+[1:39] to the side here to the top to the side
+[1:42] over here drag it pretty much anywhere
+[1:44] on all four of these sides just let go
+[1:47] and you have it right here so it's as if
+[1:50] you're working on a single image but
+[1:52] you're not so here we can go ahead and
+[1:55] say you want to grab this statue we can
+[1:58] copy it jump over over here and paste it
+[2:01] and it's much just much quicker than
+[2:04] jumping back and forth between these and
+[2:06] to get rid of it you can just drag it
+[2:07] back up so that is number three tip
+[2:10] number three number four is one I feel
+[2:14] like that's not talked about enough but
+[2:16] it's the slice tool if you go over to
+[2:18] this move tool icon you can actually hit
+[2:21] the slice tool and you get this little
+[2:23] knife and you can go ahead and select an
+[2:26] area and it will make this blue box and
+[2:29] you can do it again on another and you
+[2:31] get a second blue box and a third one
+[2:34] you can go ahead and slice your entire
+[2:36] tile set or just a part of an image and
+[2:39] we can actually name these so we can do
+[2:41] this skull one name this one skulls 2
+[2:45] and skulls 3 and what this is useful for
+[2:49] is exporting these separately so with
+[2:52] most tile sets you can export them as
+[2:55] one sheet and in engine you can slice
+[2:58] them up fairly quickly but if your
+[3:00] engine can't do that we can slice them
+[3:02] in a Sprite and Export them if we go to
+[3:05] file export as not Sprite sheet just as
+[3:09] then you can see the area and you can
+[3:11] export the skulls one skulls two and
+[3:15] Export but if you want things to be even
+[3:18] easier we can install an extension that
+[3:21] I can link below and if we go to scripts
+[3:24] we can export slices and this will take
+[3:27] the location so where this Ace spray
+[3:30] file is and then we'll name it slice
+[3:32] name as a PNG you do a gif JPEG and you
+[3:35] can just export it and it will export
+[3:37] these three individually the size of the
+[3:40] slice so super handy and that's tip
+[3:43] number four and then tip number five is
+[3:47] color coding everything so if we do
+[3:48] control oops if we make a bunch of
+[3:51] layers alt and bunch of frames bunch of
+[3:53] shift n for a bunch of layers we can go
+[3:56] ahead and take a layer and see this
+[4:00] color here if you don't see it you can
+[4:01] click on user data and it will bring up
+[4:04] this color and user data and we can go
+[4:06] ahead and click on this pick a color or
+[4:08] you can drag it to a color over here but
+[4:11] we'll just pick this green and then you
+[4:12] can do the same down here pick an yellow
+[4:15] pick red you can color code the layers
+[4:17] you can also do a new tag do the same
+[4:20] thing with the tags and color code it
+[4:22] again user data open that up click on
+[4:24] this then you got a red tag and you can
+[4:27] even do it with the cell cells so if we
+[4:30] right click cell properties same thing
+[4:32] with user data toggle that and then you
+[4:35] get the color Tab and we can do this
+[4:38] something like blue so you can color
+[4:39] code everything which will just make it
+[4:41] a little easier and make your workflow a
+[4:44] little quicker so on to tip number six
+[4:48] which is onion skin which most of you
+[4:51] probably know about but something you
+[4:54] don't know about is you can toggle it
+[4:57] from behind and in front I'm going to
+[5:00] make a circle here I'm going to do red
+[5:02] so it stands out a bit better and and
+[5:04] click one here on frame two and frame
+[5:06] four over here and if we toggle onion
+[5:09] skin which is this box here you can see
+[5:12] it's behind so this middle frame they're
+[5:15] both behind and if we toggle this box
+[5:17] right here with the sliders you can
+[5:19] click on behind Sprite or in front of
+[5:21] Sprite and both have their benefits but
+[5:24] it's nice to know that you can toggle
+[5:27] between them which I didn't know until
+[5:30] year three or four so that's just a
+[5:32] handy little tip there I'm super
+[5:33] grateful to have today's video sponsored
+[5:35] by skillshare you don't already know
+[5:37] skillshare is the largest and I made the
+[5:40] largest online community for creatives
+[5:42] it has everything classes like art and
+[5:44] animation it even has pixel art courses
+[5:47] blender courses and all sorts of game
+[5:49] Deb courses skillshare can help you take
+[5:51] your career skills Hobbies passions to
+[5:53] the next level I've recently started
+[5:55] messing around in blender kind of
+[5:57] getting used to everything and now I'm
+[5:59] finally ready to Deep dive into some
+[6:01] character creation some modeling and
+[6:03] this class by Southern shoty 3D offers
+[6:05] everything I need once I start it I can
+[6:07] easily just go through the lessons at my
+[6:09] own paste and kind of learn exactly how
+[6:12] I want and it's so easy I highly
+[6:15] recommend skillshare and in fact the
+[6:17] first 500 people to use my link will
+[6:19] receive one month free so you can try it
+[6:21] out see if it's something you like while
+[6:23] supporting the channel and leveling up
+[6:24] your skills I want to thank skillshare
+[6:26] so much for sponsoring this video tip
+[6:28] number seven you can quickly grab a
+[6:31] selected area by justrl T and it will
+[6:34] just make a box around that Circle there
+[6:37] if you're on frame four you can do it
+[6:38] again and you can quickly select those
+[6:42] and what you can do with this quickly is
+[6:44] Each corner and kind of tab area has a
+[6:47] different thing and this is pretty
+[6:48] common knowledge but there's one that's
+[6:50] tricky that that not a lot of people
+[6:52] know about and turn off onion skin just
+[6:54] to Showcase this and the first one you
+[6:56] can rotate it all by grabbing the corner
+[6:58] up here and and seeing that little Bend
+[7:01] Arrow another one here is if you go over
+[7:04] the middle section here you can squash
+[7:06] it and then the corner one you see this
+[7:09] Arrow here and we can stretch it and the
+[7:11] one you probably don't know about which
+[7:13] is pretty strict or tricky is if you go
+[7:16] right above this one you will get a
+[7:19] double arrow going left and right and if
+[7:21] we grab that one we can rotate it on a
+[7:24] different angle which is useful in
+[7:27] different scenarios this looks like a
+[7:29] good kind of Shield say if the shield
+[7:31] was right here character holding it and
+[7:33] we wanted to make it on a slant we could
+[7:35] quickly make it on a slant and it keeps
+[7:37] roughly the same volume so that is tip
+[7:40] number seven and tip number eight which
+[7:43] is a very underrated tool and that is
+[7:47] the shading tool so if we just say we
+[7:49] just make a quick Rock demonstration
+[7:53] with this kind of dark color and we go
+[7:55] to our normal pencil tool and if you go
+[7:58] to this ink here and go shading we can
+[8:01] select all of these and you can see them
+[8:04] populate in the shading tool up there
+[8:06] right here so now we have all these
+[8:07] colors and if you rightclick and left
+[8:09] click it will choose the higher or lower
+[8:12] shade that you have left clicking I have
+[8:15] a kind of Darker shade going and you can
+[8:18] see on each color it will lower it so
+[8:22] now you can see the darker Shades here
+[8:24] and if we right click it will bring a
+[8:26] higher a higher shade in there and it's
+[8:29] super once you get used to it you can
+[8:31] quickly make a lot of things with very
+[8:34] little effort and switching between
+[8:36] these or jumping back to grab the colors
+[8:38] can be a bit tedious and here we can
+[8:41] just simply focus on the object itself
+[8:44] and just like that we have a rough start
+[8:47] to the Rock so very underrated tool
+[8:50] which is our tip number eight and tip
+[8:53] number nine is we'll make it a bit
+[8:55] bigger is the stabilizer and this was
+[8:58] introduced I think a year ago or so in
+[9:01] aprite and it really helps if you're
+[9:04] drawing with a pen or even with um a
+[9:07] mouse you grab your pencil tool go to
+[9:09] simple ink and then click on the
+[9:12] Dynamics it'll bring up this tab here
+[9:15] and if we set stabilizer on it avoids
+[9:18] shaky lines and you can adjust it here
+[9:21] so let's go let's test around 30 and
+[9:24] we'll just grab here or let's Showcase
+[9:26] with no stabilizer and then with a
+[9:28] stabilizer I'm going to try to make a a
+[9:30] nice swirl with my mouse and see how it
+[9:33] goes and you can see there's some weird
+[9:36] areas so now let's test it with the
+[9:38] stabilizer on and let's do 30 and you
+[9:41] can see already 30 30 might have been
+[9:43] too much but you can see how smooth the
+[9:46] line is so let's do it one more time and
+[9:48] do half of that so 16 and you can see
+[9:52] how much better the line on the right
+[9:54] looks compared to the r line on the left
+[9:57] so that is pretty cool tip number nine
+[10:00] and the last one is the tile mode and
+[10:05] you might be thinking about the tile set
+[10:07] mode but I'm talking about the tile mode
+[10:09] and if we go to the view Tab and go
+[10:11] tiled in both we can see it duplicates
+[10:13] everything which is pretty cool and
+[10:15] where this can be useful is one example
+[10:18] is doing Parallax if we do tiled in the
+[10:21] x axis we can see here all this and if
+[10:25] we turn off everything and just turn on
+[10:27] the sky we can see we have a nice sky
+[10:30] that goes perfectly in line together but
+[10:33] this wasn't the case when I first
+[10:35] started drawing it and I'll demonstrate
+[10:37] how if we go to the sky layer and just
+[10:40] start drawing still got the stabilizer
+[10:42] on I should showcase it let's turn off
+[10:44] tile mode to do this and simple ink now
+[10:48] say we're doing this we're drawing
+[10:50] clouds and I'm just going to use this
+[10:51] dark one just to Showcase it on each
+[10:54] side you could guess and line these up
+[10:57] or you could go view tile mode in the
+[10:59] x-axis you can see how these look real
+[11:02] weird and wonky but now if we draw it's
+[11:06] going to look smooth cuz we're drawing
+[11:08] from the sides and you can just line
+[11:09] them up and make it much more clean so
+[11:12] if you're doing backgrounds or Parallax
+[11:14] backgrounds I would highly suggest doing
+[11:17] this and that's a rough example but you
+[11:20] can see how you start doing it with the
+[11:22] tile mode on it will all just line up
+[11:25] and you'll be able to scroll perfectly
+[11:27] you can see it working over here as
+[11:29] we're working over here and so on so if
+[11:32] you're with me this far I hope you
+[11:34] learned a couple tricks I will put those
+[11:37] couple extensions I mentioned Below in
+[11:40] the description so thank you so much for
+[11:42] watching and I will see you next time by

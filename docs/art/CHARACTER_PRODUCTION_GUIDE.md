@@ -103,3 +103,10 @@ Entradas / rasters distintos / espelhos / pausas / inversões:
 Prova 1× / prova em movimento / teste Godot:
 Falhas abertas / aprovação do autor / próximo passo:
 ```
+
+## Conferência por quadro e ação
+
+O [fluxo Penusbmic da Forja](PENUSBMIC_WORKFLOW.md) registra mãos/objeto, estado facial
+autorizado, apoio, oclusão, entrada e recuperação. Ausência de evidência fica pendente;
+a revisão do corpo sem VFX precede a composição. Objetos partilhados conservam a medida
+absoluta autorizada, mesmo entre personagens de canvases diferentes.

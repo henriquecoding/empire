@@ -1,0 +1,332 @@
+The BEST extension for Aseprite just released: Asemulator
+Autor: Penusbmic
+Fonte: https://www.youtube.com/watch?v=dLvS_vtiXKQ
+Licença observada: Creative Commons Atribuição (reutilização permitida), conforme YouTube.
+Link da licença exibido na fonte: https://www.youtube.com/t/creative_commons
+Conferência da licença: 2026-11-02. Texto obtido via exportação de legendas do YouTube.
+Adaptação: apresentação textual das legendas, com este cabeçalho de atribuição.
+Idioma: original disponível (inglês). Legenda não revisada integralmente contra áudio; pode conter erros, omissões e tempos aproximados.
+Não há endosso do autor à Forja.
+
+YouTube transcript
+Video ID: dLvS_vtiXKQ
+Language: en
+Captions: auto-generated
+
+[0:00] welcome. Today's video is something
+[0:02] really special and cool. It [music] is
+[0:04] probably the best extension for Aseprite
+[0:08] that I've come across. And after using
+[0:11] it for the last few days, it's [music]
+[0:13] stopped here. I love it. If you haven't
+[0:14] read it already, it is Ace Simulator.
+[0:18] Not sure if that's how you say it, but
+[0:20] let's just go with that. Basically, it's
+[0:22] a engine inside Aseprite [music]
+[0:24] that lets you test your sprites and see
+[0:27] how they work. There's a side scroller
+[0:29] version, as you can see here, it'll be
+[0:31] for eight bucks. I'm not sure if that's
+[0:32] the final price, but [music] worth it.
+[0:35] And then there's also a top-down
+[0:36] version, just as cool, for eight bucks.
+[0:38] You can buy them both in a bundle. This
+[0:40] will be out August [music] 28th. The
+[0:42] video should be out August 28th, so this
+[0:44] should be out if you're watching this.
+[0:46] And it is unbelievable. We're going to
+[0:48] go through it a little bit. I've only
+[0:50] messed around with it for a few days,
+[0:51] and there's a lot to it, but we're going
+[0:53] to go through some of the basics and
+[0:55] [music] showcase some things. I was
+[0:57] lucky enough to get a key a bit early.
+[1:00] I'm going to buy this regardless just to
+[1:02] support the dev. So, I recommend you
+[1:04] checking [music] it out, buying it,
+[1:06] supporting it. So, let's check out the
+[1:08] We'll check out the examples quick, and
+[1:10] then we'll we're going to open up one of
+[1:12] my sprites and just see how it [music]
+[1:14] works. So, let's do the side scroller.
+[1:17] We're going to test this baby out. And
+[1:18] once you install it, which is pretty
+[1:20] easy, you can just click [music] on the
+[1:22] extensions and install install these,
+[1:25] whatever ones you want, and it works
+[1:27] like a charm. To view it, you just go to
+[1:29] view [music] up here, click on Ace
+[1:30] Simulator, and then and select the
+[1:32] template you want. [music] This one's
+[1:34] going to be side scroller, which is has
+[1:36] a little more than the platformer
+[1:38] template. The platformer is basically
+[1:40] just run, idle, and jump.
+[1:42] Side scroller has a bit [music] more to
+[1:44] it. And it'll bring up this screen. You
+[1:45] can see here, using the arrow keys, you
+[1:47] run around, you can jump, [music] double
+[1:49] jump, you can even ledge grab, and wall
+[1:51] slide, a wall wall hug in this, and you
+[1:54] can set up attacks. You do a little
+[1:56] plunge.
+[1:56] >> [music]
+[1:56] >> Amazing. Absolutely amazing. As for the
+[1:58] the little engine itself, it has its
+[2:00] properties. You got your inputs and you
+[2:02] can change these just by clicking on
+[2:04] them. Basically, you have your arrow
+[2:05] keys and then four actions. So, you got
+[2:07] space and then X, C, and V. And you can
+[2:10] switch them to whatever you prefer. You
+[2:12] got your documentation, which is very
+[2:14] organized and easy to read and
+[2:16] understand. I recommend going through
+[2:18] this
+[2:18] >> [music]
+[2:18] >> before messing around with it. And then
+[2:20] you have your main thing you're going
+[2:22] going to want to use here is your action
+[2:24] actor properties and [music] your
+[2:26] animation states. So, you can see all
+[2:28] your animations here and you can set
+[2:29] them up to whatever animations you want.
+[2:32] So, idle, of course, has idle. And we'll
+[2:34] go through this a bit more when we open
+[2:35] up one of my sprites. But, yeah,
+[2:36] animation [music] states, that's where
+[2:37] you're going to find all your animations
+[2:39] and you can even add some. So, I haven't
+[2:41] experimented too much with it, but you
+[2:43] can probably add whatever you want. If
+[2:45] you have a healing animation [music] and
+[2:47] you want to test it out, just add it,
+[2:49] set it to one of the So, I just added a
+[2:52] new action. We're going to add it to
+[2:53] action slot four, which I believe is V.
+[2:56] And then you can just add your animation
+[2:58] to that. And you can set it up if you
+[3:00] want it to stop movement or cancel
+[3:02] animations. [music] We'll get into that
+[3:04] a little bit. And I'm still learning cuz
+[3:06] this is very fresh for me as well. But,
+[3:07] so much you can do. So, let's go ahead
+[3:09] and open up one of my sprites. So, I
+[3:11] have [music] this little bear grunt
+[3:12] right here. And I've messed around a
+[3:14] little bit, but it's so easy to set up.
+[3:16] Unbelievable. Again, let's click on
+[3:18] view, click on it, and then let's go top
+[3:20] down because this is top down isometric.
+[3:23] And [music] this guy, I only have one
+[3:24] direction. So, this is top down with one
+[3:26] direction, but you can still [music]
+[3:28] make it look unbelievable. And most of
+[3:30] my top down sprites, it's kind of the
+[3:32] look I go for in my games and it's a lot
+[3:35] less work. So, [music] let's click okay.
+[3:37] And now you can see here, we have this
+[3:39] screen it's brought up. Let's turn off
+[3:40] the ground [music] tile and shadow
+[3:43] layers. You can see here we have this
+[3:45] big shadow as well. Oh, we can move. And
+[3:48] some things are a little off, but it's
+[3:49] so easy to fix. So, let's go to the
+[3:51] actor properties and [music] you can
+[3:53] click on show collision box to see the
+[3:56] collisions and the shadow. So, let's
+[3:58] let's fix this collision first and it's
+[4:00] so simple. Let's click on our sprite
+[4:03] here and use click M to have the
+[4:05] selection tool and then for the
+[4:07] collision, [music] I'm just going to go
+[4:08] right about here. So, you have this
+[4:10] selected and then you just click set
+[4:12] [music] from selection. And now we have
+[4:14] the collision there, which because it's
+[4:16] on the higher ground, it looks a little
+[4:17] off, but that's just cuz he does a
+[4:18] little hop down and it's very cute. We
+[4:21] don't even have a jump, but it looks
+[4:22] great. [music] So, now let's set up the
+[4:24] Let's turn off the collision box and
+[4:25] let's set up the shadow. We can also set
+[4:28] this from selection, but it's going to
+[4:30] look off right now because it's not
+[4:32] ideal. So, let's just select think of
+[4:34] right around here will look great. Maybe
+[4:36] let's make it a bit wider. So, it's just
+[4:37] going to make a shadow from your
+[4:39] selection. So, the angle's going [music]
+[4:41] to That's a little bit better. So, if
+[4:42] you make it a little bit taller, it's
+[4:44] going to going to appear at [music] a
+[4:45] better angle. I kind of like that. Maybe
+[4:47] move it down once. There. Now, our bear
+[4:50] is running, but he stays in one
+[4:52] direction. [music]
+[4:53] So, let's quickly fix that and it's
+[4:56] honestly pretty easy as well. We'll just
+[4:58] go into the animation states [music] and
+[5:00] then for the idle, you click show tag
+[5:03] bindings, advanced mode and we're
+[5:05] everything's on auto right now. So,
+[5:07] let's just flip this and then idle left,
+[5:10] click idle flip X. Basically all the
+[5:12] lefts. So, down left flip X and then up
+[5:16] left and I think that should work. Let's
+[5:18] do the same for the move now that we're
+[5:20] here and we're just going to go move
+[5:22] left run flip X move down left flip X
+[5:26] [music] flip X. And now let's see how it
+[5:29] works.
+[5:32] Looking pretty good.
+[5:34] He's going to do a little hop down.
+[5:36] So cool. And you can mess around with
+[5:38] the speed of the character. You can put
+[5:40] them to five, they can be really fast.
+[5:42] You can put gravity on the jumps [music]
+[5:44] and whatnot. You can So, in the
+[5:45] platformer, you can do jump height, the
+[5:47] gravity, the friction, lots of cool
+[5:49] stuff. You can also change it to move on
+[5:51] tile-based movement, so it will just go
+[5:53] [music] and it will give you Yeah, you
+[5:55] can put it 16 by 16 and it will just
+[5:57] move right along right along those
+[5:59] tiles, which is really cool. And you can
+[6:02] enable diagonal movement, which is also
+[6:04] cool. And, as you saw in the example,
+[6:07] you can add attacks, which is a little
+[6:10] This is where it gets a little more
+[6:11] complex, but still [music] not too bad.
+[6:13] Let's see if I can do it. I've only
+[6:15] messed around with it a couple times.
+[6:16] The attacks adding an [music] attack, so
+[6:18] let's just go ahead and new action. So,
+[6:20] action slot one, that will be space. I
+[6:22] kind of want it to be We'll just do C,
+[6:24] so three. So, now we have that. And if
+[6:26] we attack, we'll just name it attack.
+[6:29] Then we're going to add an action,
+[6:31] >> [music]
+[6:31] >> and this will be the first action it
+[6:33] does cuz you can set combos. I clicked
+[6:36] all of these, and I'm just going to go
+[6:38] through it quick. So, the click the
+[6:40] animation, so this animation window slot
+[6:43] comes up, and we're just going to give
+[6:45] attack. I think if we keep everything
+[6:47] auto, it should work. If not, we'll go
+[6:49] in and flip what's needed. So, you can
+[6:51] allow So, right now, if we go in,
+[6:53] [music] he's going to click Yeah, so
+[6:55] he's always going to look that way. So,
+[6:57] we can move it. But, if you click allow
+[6:59] [music] user movement when you attack,
+[7:01] he's going to be sliding. So, we don't
+[7:03] want that, but it can be [music] useful
+[7:05] for kind of like dashes or something
+[7:07] he'd use it for. So, let's go ahead and
+[7:08] quickly flip this. So, the left is going
+[7:11] to be attack, [music] and we're going to
+[7:12] flip it, and then the down left
+[7:15] flip up left attack and flip. So, now
+[7:18] let's check.
+[7:20] He's good there.
+[7:22] Good there.
+[7:24] And he's
+[7:26] a little cute bear.
+[7:28] Love love the little hop.
+[7:31] But, now he's attacking.
+[7:32] Just attacking away. And, [music]
+[7:34] honestly, this takes I've been recording
+[7:36] for 12 minutes, and I've been explaining
+[7:38] some stuff, but you set this up in 30
+[7:40] seconds and test your sprites. This is
+[7:42] great for game devs, it's great for game
+[7:45] asset creators [music] like me. I I test
+[7:47] my sprites in separate engine. So, you
+[7:49] got to export, set everything up. It's a
+[7:52] it's much more work than this, so
+[7:54] >> [music]
+[7:54] >> I prefer this. And I the dev is probably
+[7:57] going to add more potentially. This is
+[7:59] already enough. So, everything looks
+[8:01] good. Yeah, you [music] can have cancel,
+[8:03] so it cancels other actions. That's for
+[8:05] combos and whatnot. And then you can
+[8:06] [music] have it end. Yeah, it's awesome.
+[8:09] Again, I've just been experimenting
+[8:11] [music]
+[8:11] with this for a couple days, but it's
+[8:13] absolutely one of the coolest extensions
+[8:16] that I've seen. And it's going to get a
+[8:18] lot of use. So, we went through a couple
+[8:20] things. You can see the engine [music]
+[8:21] properties, so you can mess around with
+[8:24] the camera, block it vertically and
+[8:25] horizontally. And you can see the
+[8:27] templates. This will bring [music] up
+[8:28] this and you can switch it, which we'll
+[8:30] do at the end. But something really cool
+[8:32] that I saw the [music] dev post on
+[8:35] Twitter or X, which is @maplegecko, I
+[8:38] [music] believe.
+[8:40] But this is one of the coolest thing.
+[8:41] You can record, right? Let's go on.
+[8:45] Let's attack.
+[8:46] Go back up here.
+[8:48] Jump down.
+[8:49] Then let's stop it.
+[8:50] Then we just play it, [music] right?
+[8:53] Simple, cool. You can export this,
+[8:55] showcase it on game asset on itch. You
+[8:58] can post it on Twitter X. But [music]
+[9:01] the coolest thing is you can
+[9:04] click the head layer here,
+[9:06] hold [music] V, move his head up,
+[9:09] and it moves it
+[9:10] in the recorder. How unbelievable is
+[9:12] that? You can do all the actions and
+[9:15] whatnot, and then just manipulate it and
+[9:18] keep testing. You can watch this. It's
+[9:19] basically a preview [music] window on
+[9:22] steroids. It is the coolest thing ever.
+[9:24] Move his head back. If you change the
+[9:27] colors, it will change the colors. So
+[9:28] cool. And there's probably so much more
+[9:31] I haven't got into. You can add another
+[9:33] action, [music] hit or whatever. It gets
+[9:35] hit, add that, probably add the death,
+[9:37] test it out. So cool. And I can't wait
+[9:39] to continue to use this. It's going to
+[9:41] speed up my process quite a bit. [music]
+[9:43] So, 15 minutes in, this is what I wanted
+[9:45] to show. I can do an in-depth video
+[9:48] later on, kind of going through maybe
+[9:50] combos, or more things you can do, cuz
+[9:52] I'm going to learn. I'm going to learn
+[9:53] even more. One thing I didn't even
+[9:54] mention is the background. I I saw it in
+[9:57] the documentation. I haven't even looked
+[9:59] at it, but you can change the background
+[10:01] somewhere. I was reading about it.
+[10:03] Haven't looked at it yet. But you can
+[10:05] change the background to want and it's
+[10:07] pretty seems pretty simple. I don't even
+[10:08] know where it is. I swear I read it.
+[10:10] That'll be in this one. Anyways, it's in
+[10:12] I know you can change the background.
+[10:13] Just another cool thing. So, you can
+[10:14] even add your environment and test your
+[10:16] environment with the sprite, which is
+[10:19] unbelievable. So, I know it's been a
+[10:20] while since I've had a tutorial, but I
+[10:23] wanted to really share this. It's again
+[10:25] releasing on August 8th. Thank you Maple
+[10:27] Gecko Goomba. They've done amazing work
+[10:30] and go support them by purchas-
+[10:32] purchasing this on itch. So, thank you
+[10:35] for watching. Until next time. See you
+[10:36] around.

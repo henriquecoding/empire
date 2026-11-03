@@ -28,7 +28,8 @@ from .mcp_instructions import INSTRUCTIONS
 
 VERSIONS = ("2025-11-25", "2025-06-18", "2025-03-26", "2024-11-05")
 SKIP = {"mcp"}
-READ_ONLY = {"kinds", "lint", "verify", "regua", "ase", "par", "lote", "regras", "entrega"}
+READ_ONLY = {"kinds", "lint", "verify", "regua", "ase", "par", "lote", "regras", "entrega",
+             "estudo", "ensaio-rever", "ensaio-comparar"}
 PAID = {"generate", "auto", "inpaint"}
 
 

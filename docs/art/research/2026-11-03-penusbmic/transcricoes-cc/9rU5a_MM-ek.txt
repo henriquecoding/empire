@@ -1,0 +1,397 @@
+Pixel Art Tutorial: Glitchy Attacks
+Autor: Penusbmic
+Fonte: https://www.youtube.com/watch?v=9rU5a_MM-ek
+Licença observada: Creative Commons Atribuição (reutilização permitida), conforme YouTube.
+Link da licença exibido na fonte: https://www.youtube.com/t/creative_commons
+Conferência da licença: 2026-11-02. Texto obtido via exportação de legendas do YouTube.
+Adaptação: apresentação textual das legendas, com este cabeçalho de atribuição.
+Idioma: original disponível (inglês). Legenda não revisada integralmente contra áudio; pode conter erros, omissões e tempos aproximados.
+Não há endosso do autor à Forja.
+
+YouTube transcript
+Video ID: 9rU5a_MM-ek
+Language: en
+Captions: auto-generated
+
+[0:00] welcome welcome welcome I'm Penn the
+[0:02] creator of bullet bunny artist animator
+[0:04] for domee keeper artist animator for
+[0:05] Shogun Showdown and today we are going
+[0:08] to be doing this glitch attack tutorial
+[0:11] so we'll be doing this glitch out attack
+[0:15] and there will be a couple quick slices
+[0:18] and then a sweep at the end so the two
+[0:20] attacks will be in the video and we'll
+[0:22] be showcasing them a lot and if you want
+[0:24] to learn how to do something simple like
+[0:26] this I have another video on YouTube for
+[0:28] free called insane mainly smooth attack
+[0:31] animation it's very popular and it's
+[0:33] essentially the exact same thing almost
+[0:35] identical swipes it's just a little
+[0:37] quicker so if you want to do that
+[0:38] beforehand watch that video if you don't
+[0:41] and you just want to learn the glitch
+[0:42] effect watch this one so to lay it out
+[0:44] we will do this kind of squat glitch out
+[0:48] and once we're done that we'll do these
+[0:49] two quick glitch slices and then we'll
+[0:52] do the sweep and then we will uh glitch
+[0:55] it back into the original position of
+[0:57] this attack so let's begin on a fresh
+[1:00] canvas well not fresh but fresher and
+[1:02] let's just take this last frame here
+[1:04] where it's in kind of the end position
+[1:07] of the two attacks and we can delete the
+[1:09] VFX particles and what we're going to do
+[1:12] is just make a another frame we can go
+[1:15] ahead and tag this as glitch out and
+[1:20] then we can just move some parts down so
+[1:23] let's take the sword the head the
+[1:28] wire and
+[1:30] the body which moves you can see it
+[1:33] moves some here as well so we'll just
+[1:35] have to adjust this bottom piece so
+[1:38] let's take this pixel and put it on this
+[1:40] side we'll take this pixel and put it on
+[1:42] that one just to keep the volume of it
+[1:45] consistent and then you can go ahead and
+[1:48] move to this leg and we'll put it
+[1:52] here and if you're on patreon you'll
+[1:56] have the file for this I'll I'll include
+[1:58] this and it's all separated you can see
+[2:00] we have a glitch Shadow layer a head
+[2:02] layer body layer wire layer leg layers
+[2:06] and a sword layer and then the VFX if we
+[2:08] need them so let's continue so now we
+[2:11] have a second layer where he's kind of
+[2:13] just squatting a bit and we'll we'll
+[2:16] keep this one here that pixel here so
+[2:18] he's squatting into position and let's
+[2:20] do one more since we kind of know and
+[2:24] this time we're just going to move the
+[2:25] head and sword I think everything else
+[2:28] should be okay instead we will go to the
+[2:32] the right leg and we'll just add a
+[2:34] couple pixels on this side and then
+[2:36] we'll delete a couple on this one and
+[2:38] that's kind of just shifting pixels up
+[2:40] and down so again we'll go to the other
+[2:43] leg and we'll remove a couple pixels and
+[2:47] kind of experiment which ones maybe just
+[2:49] one and we'll add it to the the opposite
+[2:52] side and then we'll see how that looks
+[2:55] and we can fool around up here as well
+[2:57] the body layer and kind of delete a
+[3:01] couple of these and again you can add
+[3:03] them to the bottom down there and let's
+[3:06] just see how that looks we'll slide
+[3:10] across and it looks like a
+[3:12] SWAT and the purpose of this kind of
+[3:15] squat is to squat into the position and
+[3:18] then glitch out for the clitch Shadow
+[3:20] we're going to be using this this blue
+[3:24] and the only difference you want to make
+[3:27] sure double click on the the glitch
+[3:30] Shadow layer and switch it to hard light
+[3:32] you can keep it at 100% opacity or 255
+[3:36] depending on which setting you have to
+[3:37] set on and then you just want to go over
+[3:40] your entire Sprite character there's
+[3:43] many ways to do this but I will just
+[3:45] hand bomb it like so and make sure you
+[3:48] do perhaps the second frame and you
+[3:52] might need to edit a bit since we did it
+[3:54] on the wrong one there let's just redo
+[3:57] this and we'll keep the the sword glitch
+[3:59] out here I think it looks pretty cool
+[4:01] and then on the third frame of that we
+[4:04] can again fill it all in or copy and
+[4:06] paste and then what you want to do you
+[4:09] can keep these extra ones here since
+[4:10] they look kind of cool use the rectangle
+[4:13] tool and just grab a section and use the
+[4:17] arrow keys to shift it left and right so
+[4:20] we're just pulling these
+[4:22] apart just pulling sections and you can
+[4:24] do that on the first one as well just
+[4:26] make sure kind of the opposite to make
+[4:30] it more glitchy you don't want to keep
+[4:33] them in the same spot so if you're going
+[4:35] right on one frame go left on the other
+[4:37] and that looks pretty cool then we're
+[4:39] going to go ahead and make a new empty
+[4:42] frame will keep the background there
+[4:46] even though we have the visibility
+[4:49] hidden and we will take our glitch color
+[4:53] and just the tail end of of these tips
+[4:56] we'll just add a few pixels make another
+[4:58] frame and just make them Trail off
+[5:01] quickly go ahead and do that on each
+[5:05] tip as many as you want really and then
+[5:08] we can go ahead and see what's
+[5:11] happening and you can see already it
+[5:14] looks very good you got the squat going
+[5:16] happening quickly and then the glitch
+[5:18] effect happening just as quick so now
+[5:21] the next frame we will make an empty one
+[5:24] and we'll name this uh the two slices
+[5:28] we'll break this up we'll do two slices
+[5:30] and we'll do the sweep and with the
+[5:32] slices I'm just going to use altn and
+[5:34] make a bunch of frames and we're going
+[5:36] to work on the VFX frame I'm just going
+[5:39] to grab the color of the sword or which
+[5:43] is the same as this VFX and to make sure
+[5:47] we're working on these this pixel line
+[5:50] right here and for the slices you can
+[5:52] leave a couple frames believe I did
+[5:55] three frames in the original and what
+[5:57] you want to do is use the the ellipse
+[6:00] tool the filled one and just make a
+[6:03] circle like this and then grab a
+[6:05] different color this is kind of just the
+[6:08] way I like to do it and bring it into
+[6:11] the circle leave it there highlight it
+[6:13] again and delete then you kind of have
+[6:16] this perfectly um smooth slash that I
+[6:19] like and it's a lot quicker than hand
+[6:21] drawing it and I actually I'm going to
+[6:24] go to the left side first and I use
+[6:28] shift H to flip it and then this is
+[6:31] where you want to turn the Sprite so
+[6:34] it's on an angle if you grab the corner
+[6:36] when you have it all highlighted you can
+[6:38] pick an angle you like and then you're
+[6:40] going to get these stray kind of pixels
+[6:42] and we're just going to
+[6:44] quickly clean that right up and that's
+[6:49] sometimes just moving pixels in adding
+[6:52] some to make it a bit
+[6:53] smoother and so forth
+[6:56] [Music]
+[7:02] awesome so you have that cleaned up and
+[7:05] we're just going to quickly do the
+[7:07] particles that come after this the slash
+[7:10] so if we're working if the slash is
+[7:12] going this way we're en visioning it
+[7:14] like that the particles are going to
+[7:16] kind of follow
+[7:18] through and kind of swoop around with it
+[7:22] and we don't need
+[7:23] many kind of fool around with what what
+[7:26] works for you and then quick quickly
+[7:29] make them fade so just one frame of a
+[7:32] few pixels and Ne the next one maybe
+[7:35] even two and then the next just one and
+[7:37] then you can make that one move if you
+[7:39] want and we can just see how that
+[7:43] looks looks great and we can add a
+[7:46] couple more up
+[7:50] here see that
+[7:53] looks looks great as
+[7:57] well and since it's the two slices we're
+[8:00] going to add another
+[8:02] slice three frames after this one and we
+[8:06] could just copy and paste it but to make
+[8:08] it look a little more natural and
+[8:11] different uh let's just go ahead and
+[8:13] make this one as well so same process
+[8:16] make a circle make another one grab it
+[8:18] you don't like it you can adjust it make
+[8:21] it attach smaller leave it there and
+[8:24] highlight it and delete it and I'm doing
+[8:26] this on a different layer just in case
+[8:29] we need to make some changes down the
+[8:32] road it's all set up and should be easy
+[8:36] I'm going to highlight that and I'm
+[8:38] going to rotate it going to get it in
+[8:40] position and then clean it up like we
+[8:42] did
+[8:43] before make sure every little section
+[8:46] looks
+[8:48] peeling add some if you need
+[8:50] to and delete some if you need to
+[8:53] awesome so we will do a couple more
+[8:57] particles here quickly
+[9:00] and this one will be going the other way
+[9:04] we need to change that later on it's
+[9:05] fairly
+[9:06] [Music]
+[9:11] simple looks great and we might adjust
+[9:15] some of these to make them kind of line
+[9:18] better so we'll we'll highlight this
+[9:19] whole layer or all these frames and kind
+[9:21] of move it a bit and we'll do the same
+[9:23] with this one kind of separate them a
+[9:25] bit
+[9:26] more then we can go ahead and kind of
+[9:29] steal the glitch frames we had before
+[9:32] and we have four here and I think the
+[9:35] quickest approach is to copy the first
+[9:38] one adjust it into position and one
+[9:42] thing I'm going to do is take the sword
+[9:44] of the glitch Shadow and kind of just
+[9:47] rotate it if I can to make it look like
+[9:50] it's lining up with the the slice and
+[9:53] then we can take the next three frames
+[9:56] of the glitch out and let's start it
+[9:58] where the second slice starts and again
+[10:02] we're going to move it into
+[10:06] position and then we're going to adjust
+[10:08] the The
+[10:11] Sword and we can check out how that all
+[10:14] looks
+[10:16] squats so we have everything lower so
+[10:20] let's uh let's move it up we need it
+[10:23] right here and we have the slashes
+[10:25] happening below so let's just go ahead
+[10:28] and move that up
+[10:31] and see how everything looks
+[10:36] together looks great I think one thing
+[10:38] we can do is move the glitch Shadows
+[10:42] down a bit and see that
+[10:45] [Music]
+[10:47] looks looks great maybe even justed a
+[10:50] tad more and I think we could even put
+[10:54] the and the last thing we'll do is just
+[10:57] add we'll go to the bottom layer we'll
+[11:00] just grab the body black color and we'll
+[11:03] kind of just add it behind the
+[11:07] glitch just to give it a little more um
+[11:10] depth and it doesn't necessarily matter
+[11:14] where just as long as it feels a little
+[11:17] more
+[11:18] lively and then one last
+[11:22] preview looks great now we can move on
+[11:25] to the last part which is the finisher
+[11:28] sweep and it's going to kind of be it's
+[11:31] going to be the same process so we'll
+[11:34] just start it off with a blank frame and
+[11:38] we'll do a couple
+[11:40] altn and then we'll highlight them all
+[11:42] and we'll call the this The
+[11:46] Sweep
+[11:47] glitch and we're just going to start at
+[11:49] a few frames uh later like we did with
+[11:53] the
+[11:54] slices and we're going to make sure
+[11:56] we're on the right one this time and
+[11:59] we're just going to do a big
+[12:02] circle just the position and then we'll
+[12:06] do another
+[12:08] Circle adjust it its
+[12:11] position that looks good and then
+[12:15] we'll grab it delete and we have our
+[12:19] first slash and this one we won't need
+[12:21] to rotate so we go go ahead and and and
+[12:25] touch it up
+[12:27] now then we can go ahead and add the
+[12:31] particles after we'll turn on the onion
+[12:33] skin so we can see where it's going and
+[12:35] this one's going to go swooping from the
+[12:37] left to the right so we'll do these
+[12:40] particles
+[12:42] [Music]
+[12:46] here maybe a couple over
+[12:49] here next frame we'll make them vanish
+[12:52] real quickly
+[12:56] [Music]
+[13:06] let's see how that
+[13:08] looks looks great turn off onion skin
+[13:11] and looks great as well and I believe
+[13:14] I'm at 65 frames or uh not frames per
+[13:19] second for milliseconds that's the frame
+[13:21] rate in a Sprite so we have the Slash
+[13:24] and now we just need the the key frame
+[13:28] of the character and I already know cuz
+[13:31] this is what I did in the first time or
+[13:33] in the first uh first round I did this
+[13:35] is I took this Frame right here and just
+[13:39] flipped it so we'll do the same thing
+[13:41] copy and paste that we will start it
+[13:45] right when the slice starts we will
+[13:47] highlight them all and crl H and we will
+[13:52] position him we can go ahead and copy it
+[13:56] paste it again and we're going to
+[13:58] highlight all those frames again and
+[14:00] we're just going to move it one pixel
+[14:02] over and then we're going to copy and
+[14:03] paste again and then we're going to move
+[14:05] it one make sure you're highlighting all
+[14:08] of them and move it one more over and we
+[14:13] can see how that looks all together and
+[14:15] see where we need to go from
+[14:18] there looks great there's no movement in
+[14:21] the the final slice for the sweep let's
+[14:25] go ahead and do one more and we'll just
+[14:28] keep it in this position
+[14:30] and we're actually going to move body
+[14:33] parts down kind of like the impact of
+[14:35] the sweep so the second frame of the
+[14:39] sweep we can use our V tool and just
+[14:44] hold it while we click on body parts and
+[14:46] move move it down and then when we move
+[14:50] to the third frame we will move this one
+[14:52] down two and the sword down two and then
+[14:57] we'll do the same with the four fourth
+[15:00] frame and we'll see how that looks
+[15:05] overall it looks pretty good we could
+[15:08] even try to move the head up on the last
+[15:11] frame a bit more and what this needs now
+[15:14] is some some movement in the other area
+[15:17] so the legs maybe not we'll start on the
+[15:20] third frame since since this
+[15:23] covers um a lot of the leg on the third
+[15:27] frame we can add jump to the leg layer
+[15:30] and we'll just take some from the top
+[15:32] here that you don't see so it Blends in
+[15:34] and we'll just add a couple here we'll
+[15:36] go to the other leg layer We'll add a
+[15:39] couple there and we'll actually remove
+[15:42] from the top here just one and the next
+[15:44] frame we'll do the same but we'll
+[15:47] actually remove another one here and
+[15:49] perhaps add it there and then we'll add
+[15:52] some to other leg as well make sure
+[15:56] you're on that layer
+[16:02] and then we'll do the same with the body
+[16:06] make sure you're on the body layer and
+[16:08] kind of just the third frame we're going
+[16:10] to remove from there wraps up
+[16:15] here
+[16:17] [Music]
+[16:20] there and then we can take a
+[16:25] look so the end of the video was messed
+[16:29] up somehow so I'll quickly go over what
+[16:32] was done we just finished the sweep
+[16:34] glitch and at the end I added this
+[16:37] glitch Shadow here which is basically
+[16:39] just copy and paste the glitch Shadow we
+[16:40] use for the glitch out and then it comes
+[16:42] back to the beginning where he's kind of
+[16:45] in the idle standing position and it
+[16:47] quickly Fades out there so it's just a a
+[16:50] better loop it's not necessary but just
+[16:52] the final touch to the animation and
+[16:54] then I also added this flatten layer
+[16:57] which I can quickly redo I just copy and
+[16:59] paste all these layers from The Sword to
+[17:01] the VFX paste it and then I'm going to
+[17:03] highlight all of it again since we're
+[17:05] duplicates of it and then I'm just going
+[17:07] to flatten it and then I'm going to
+[17:08] highlight the flatten layer and hit
+[17:11] shift V which will flip everything
+[17:13] upside down and then you just want to
+[17:15] hold V make sure all the layers are are
+[17:19] selected hold V and then drag it all
+[17:22] down and then double click the layer and
+[17:26] drop the the opacity to about 20%
+[17:30] and then you have this beautiful
+[17:33] animation that you can share on social
+[17:36] media and I hope you've learned
+[17:39] something and enjoyed this video if you
+[17:41] are interested in doing the two first
+[17:44] slashes click on this video here
+[17:49] [Music]

@@ -1,7 +1,7 @@
 """O mesmo pedido nativo completo no plano e no pixellab.json do compilador, sem a grade ampliada."""
 from __future__ import annotations
 
-from . import constraints, owner_rules, production
+from . import constraints, owner_rules, production, study
 
 
 def build(subject: str, contract, palette, facing: str, mode: str, fid: dict) -> dict:
@@ -9,6 +9,7 @@ def build(subject: str, contract, palette, facing: str, mode: str, fid: dict) ->
                               fid.get('where'), fid.get('max_colors'), fid.get('tones'))
     rules += production.rules(fid)
     rules += owner_rules.prompt_rules(contract.kind)
+    rules += study.rules(mode)
     w, h = (v // contract.cluster for v in contract.canvas)  # o mesmo tamanho que o pedido manda (image_size)
     scale = (f' (the game shows each pixel as a {contract.cluster}x{contract.cluster} block, '
              f'{contract.canvas[0]}x{contract.canvas[1]} on screen)' if contract.cluster > 1 else '')

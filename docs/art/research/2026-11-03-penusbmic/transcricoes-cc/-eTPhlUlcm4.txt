@@ -1,0 +1,227 @@
+I made a game in 100 hours & I'm bringing it to STEAM
+Autor: Penusbmic
+Fonte: https://www.youtube.com/watch?v=-eTPhlUlcm4
+Licença observada: Creative Commons Atribuição (reutilização permitida), conforme YouTube.
+Link da licença exibido na fonte: https://www.youtube.com/t/creative_commons
+Conferência da licença: 2026-11-02. Texto obtido via exportação de legendas do YouTube.
+Adaptação: apresentação textual das legendas, com este cabeçalho de atribuição.
+Idioma: original disponível (inglês). Legenda não revisada integralmente contra áudio; pode conter erros, omissões e tempos aproximados.
+Não há endosso do autor à Forja.
+
+YouTube transcript
+Video ID: -eTPhlUlcm4
+Language: en
+Captions: auto-generated
+
+[0:05] welcome welcome I'm pen and today we're
+[0:08] going to cover how I took on this insane
+[0:10] challenge making from scratch a game in
+[0:12] just 100 hours that's right from concept
+[0:15] to Code art to audio everything in just
+[0:17] 100 hours Let's cover
+[0:21] it let's start off with the idea it's
+[0:25] the first thing you need when you start
+[0:26] making a game and I want to do something
+[0:28] fun simple and hopefully a little
+[0:31] addicting idle games in right now and
+[0:33] I've been loving them and they seem
+[0:35] pretty easy right that's when I had this
+[0:37] idea to make this chaotic spell
+[0:39] manipulating casting idle game the idea
+[0:42] is to level up your hero unlock spells
+[0:44] and then find Loop that manipulates and
+[0:46] changes your spells keep it simple
+[0:47] stupid day one in the first 6 hours my
+[0:50] goal is to get the base of the game set
+[0:52] up player movement enemy spawning a
+[0:54] level up system and a passable UI layout
+[0:57] this was all fairly easy and just a a
+[1:00] tad time consuming but I got it all done
+[1:02] and I was happy with it the game was
+[1:04] sort of a game at this
+[1:08] point day two the next 6 hours my goal
+[1:11] was to figure out a spell casting system
+[1:13] I wanted to try out a dragon drop system
+[1:15] where you could drag the spell onto the
+[1:17] screen and then it would cast the spell
+[1:20] I've never done that before it wasn't
+[1:22] too bad but I spent a fair amount of
+[1:24] time squashing bugs that came with it I
+[1:26] ended up being pretty happy with it and
+[1:27] made three fire spells that could be
+[1:30] copied and pasted later on to do other
+[1:33] spells my goal was to have 16 spells but
+[1:35] I ended up with 12 three fire three
+[1:37] water three Earth and three air spells
+[1:39] each element has a low MP spell with a
+[1:42] short coold down a large AOE spell that
+[1:45] does various things like poison push
+[1:47] back and leaves uh burning flames and
+[1:49] the F spell is a support spell like
+[1:51] gives you a massive Dodge or armor buff
+[1:53] for few
+[1:57] seconds the next 8 hours were probably
+[2:01] my least favorite of the 100 hours again
+[2:04] I try tackling something I've never done
+[2:06] before by making an inventory system
+[2:08] where you can drag and equip items I had
+[2:10] to follow tutorials for this and tweak
+[2:12] it to my liking and most of the day we
+[2:14] spent squashing boxs at the end of the
+[2:17] day I was pretty happy with it but it
+[2:18] was far from perfect I made Seven
+[2:21] equipment slots one for a weapon helmet
+[2:23] chest belt boots amulet and a gauntlet
+[2:26] each piece of equipment gives basic
+[2:28] stats like HP or an element damage type
+[2:31] buff but some give unique abilities that
+[2:34] I've been calling triggers and these
+[2:36] triggers manipulate your spells and add
+[2:38] new mechanics to
+[2:42] them at this point I was planning to
+[2:44] have the game finished in a week but I
+[2:46] had a wonderful Christmas surprise and
+[2:48] had my second son early it was sweet but
+[2:49] meant this project was put on hold for a
+[2:52] little bit these were the zombie days
+[2:54] I've been calling it was over the
+[2:55] holidays with a newborn and I had no
+[2:57] real schedule or routine I was tired but
+[2:59] when I had the chance I would do a quick
+[3:01] session here and there that was mainly
+[3:03] just adding a new item or a new spell I
+[3:05] did this for weeks and it was actually
+[3:07] quite enjoyable throughout these
+[3:08] sessions that combined for almost 20
+[3:10] hours I had made a bulk of the equipment
+[3:12] and almost all the Spells so it was
+[3:14] pretty
+[3:18] efficient at this point I had a lot of
+[3:20] things in the game but I really wanted
+[3:22] to polish the loop the loop was
+[3:24] basically you die restart and everything
+[3:26] is reset which is pretty lame for an
+[3:28] idol game to fix this I created this
+[3:30] timeline at the top of the screen it
+[3:31] tracks the amount of enemies needed to
+[3:33] be killed until you reach the next stage
+[3:35] and once you reach the next stage
+[3:37] enemies become stronger and loot becomes
+[3:39] better I wanted to really customize this
+[3:41] and have random events happen through o
+[3:43] timeline but I ran out of time
+[3:45] regardless it's a simple addition that
+[3:47] adds so much to the loop on top of that
+[3:49] I made it so when you die you keep
+[3:50] everything your level equipment and
+[3:52] spells this makes sense for an idol game
+[3:54] you check back here and there see loot
+[3:56] you've accumulated and carry on with
+[3:57] your day
+[4:02] at this point in development I was
+[4:03] pretty overwhelmed I had so many little
+[4:05] things to fix and test and polishing the
+[4:06] game Loop was eating up so much time
+[4:09] that's when I decided to call in some
+[4:10] help to start testing I sent the game to
+[4:12] a few Discord members and it was so
+[4:14] helpful after a day of testing they
+[4:16] compiled a list of bugs improvements
+[4:18] suggestions but most importantly they
+[4:20] all loved it and here's some words each
+[4:23] of them said this was insanely
+[4:25] motivating and in the next 16 hours I
+[4:27] had tackle all the bugs they caught and
+[4:29] added in most of the improvements and
+[4:31] quality of life
+[4:35] features with 29 hours remaining I knew
+[4:38] I had to start adding sounds music and
+[4:40] replacing a lot of the placeholder art
+[4:42] at this point I had zero music and zero
+[4:44] sounds I spent way too long searching
+[4:46] for music like way too long eventually I
+[4:48] landed on the sick little apic
+[4:54] track and then I added a bunch of eight
+[4:57] sound effects
+[5:00] [Music]
+[5:02] and then I started polishing on some
+[5:04] animations like this boss
+[5:07] animation and this rock
+[5:11] animation and then I added a save and
+[5:13] load system which um is boring and it
+[5:16] sucked to do but it
+[5:21] works so so grateful to have today's
+[5:23] video sponsored by skillshare if you
+[5:25] don't already know skillshare is the
+[5:27] largest online community for creatives
+[5:29] it is everything I was blown away with
+[5:31] the variety and wide range of classes
+[5:32] like art and animation pixel art courses
+[5:35] blender courses and all kinds of Game
+[5:37] Dev courses and since I made a game in
+[5:40] 100 hours I cannot stress about the
+[5:43] enormous number of tutorials on game
+[5:46] development with skillshare it has all
+[5:48] the big names good Unity Unreal Engine I
+[5:51] can't stress this enough these are
+[5:53] complete tutorials they don't just stop
+[5:55] halfway through they're from scratch and
+[5:57] take you all the way to the end if you
+[5:59] you are someone wanting to get into game
+[6:01] development use this one month pre-trial
+[6:04] I highly recommend skillshare and in
+[6:06] fact the first 500 people to use this
+[6:08] link in the description will receive one
+[6:10] month free trial of skillshare so you
+[6:12] can try it out and see if it's something
+[6:13] you like while supporting the channel
+[6:15] and leveling up your skills and one last
+[6:17] thanks to skillshare for sponsoring this
+[6:22] video with all that completed I had less
+[6:25] than 10 hours to add some finishing
+[6:27] touches like this grass you can interact
+[6:29] with
+[6:31] these cute birds you can interact with
+[6:34] and some setting
+[6:40] toggle and with the clock hitting zero I
+[6:42] found myself Amazed by the final outcome
+[6:44] I created a game with a cute charm and
+[6:46] felt it captured the idol Adventure I
+[6:48] had planned from the start I called the
+[6:50] game or NOA which means Eagle Eye in
+[6:52] Swedish because that's what my son has
+[6:55] been calling it you can currently play
+[6:57] the 100 hour version of oron NOA on it
+[6:59] .io and GD games right now with all the
+[7:02] amazing feedback from Friends testers
+[7:04] and even successful developers I knew I
+[7:06] had to take this further that's why I'm
+[7:08] officially bringing or NOA to steam and
+[7:10] the best thing you can do right now is
+[7:12] wish list the game it seriously helps
+[7:14] more than you know to rap things up
+[7:16] here's the oroa trailer giving you a
+[7:18] glimpse of what's ahead thanks so much
+[7:19] for your
+[7:20] support this is or NOA or NOA is an idol
+[7:24] game that lets you embark on a magical
+[7:26] Adventure Master powerful spells and and
+[7:29] collect Epic Loot all while the game
+[7:32] plays itself your character
+[7:34] automatically moves fights enemies and
+[7:36] progresses even while you're not
+[7:38] actively playing customize your journey
+[7:40] by selecting spells to AutoCast and
+[7:43] equipping your hero with the best gear
+[7:45] set or NOA on a separate Monitor and let
+[7:47] the adventure unfold while you work
+[7:50] browse or watch video however if you
+[7:52] prefer a more Hands-On approach you can
+[7:55] jump in at any time and take full
+[7:57] control of your character Move Free
+[8:00] cast spells and manage your inventory
+[8:02] the full version of or NOA will expand
+[8:05] the adventure with new biomes powerful
+[8:07] characters unique passives loyal
+[8:10] mercenaries and much more wish list for
+[8:13] NOA right now on Steam

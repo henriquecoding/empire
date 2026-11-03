@@ -1,0 +1,197 @@
+Animating ATTACKS in 10 Seconds vs 10 Hours
+Autor: Penusbmic
+Fonte: https://www.youtube.com/watch?v=XbQ4RmritTY
+Licença observada: Creative Commons Atribuição (reutilização permitida), conforme YouTube.
+Link da licença exibido na fonte: https://www.youtube.com/t/creative_commons
+Conferência da licença: 2026-11-02. Texto obtido via exportação de legendas do YouTube.
+Adaptação: apresentação textual das legendas, com este cabeçalho de atribuição.
+Idioma: original disponível (inglês). Legenda não revisada integralmente contra áudio; pode conter erros, omissões e tempos aproximados.
+Não há endosso do autor à Forja.
+
+YouTube transcript
+Video ID: XbQ4RmritTY
+Language: en
+Captions: auto-generated
+
+[0:00] welcome welcome today's video we're
+[0:01] going to be animating a pixel attack in
+[0:03] 10 seconds 10 minutes 1 hour and finally
+[0:07] 10 hours let's see how it
+[0:10] goes little bit nervous about this one
+[0:13] but timer's on 10 seconds okay starting
+[0:17] now frame sword oh
+[0:28] God that's so let's check it out let's
+[0:31] see how I
+[0:33] did doesn't resemble much everything's
+[0:36] from scratch though let's go ahead and
+[0:39] do 10
+[0:42] minutes starting 10 minutes let's uh
+[0:46] with character eggs we'll get a c maybe
+[0:49] not a cap we don't have time what am I
+[0:52] sword two I think we have time for two
+[0:55] let's get a
+[0:56] back already losing time okay take the
+[0:59] basics that's key frames this guy over
+[1:02] here leg over here think I have more
+[1:05] time less time than
+[1:08] I make a sword it here there frame
+[1:11] lights forward okay legs coming forward
+[1:13] a bit already I'm messing up my layers
+[1:16] pretty bad SWS behind now this way in
+[1:19] between frames start adding such a
+[1:22] bummer where frames aren't really set up
+[1:24] or your layers aren't set
+[1:26] up you know what layer that's on it I'm
+[1:28] just going to merge I'm St down maybe
+[1:30] this sword starts coming in way comes
+[1:33] over here let's duplicate this frame
+[1:35] maybe this way maybe there's a little
+[1:38] bit of head movement not so great brings
+[1:41] it back need
+[1:42] a need the V going big swipe let's see
+[1:46] where we're at okay we're getting
+[1:48] somewhere 5 minutes to go this head move
+[1:51] so awkward coming down leg start out
+[1:58] over is a some follow through on the
+[2:01] sword swing so move and body move and
+[2:04] body part move back I don't know heat
+[2:07] frames the legs are so bad I stress so
+[2:11] much about setting up your layers
+[2:12] properly and having everything on a also
+[2:16] character itself is let's at least do
+[2:17] some to keep itent and I will be on the
+[2:21] other side I think so 3
+[2:23] minutes it's not going to give so maybe
+[2:26] do or something a bag to a bag bouncy
+[2:28] bag send it all unlink but I like to now
+[2:31] these ones above so we'll go C or the Z
+[2:35] index two minutes though down boom move
+[2:39] his head let's just keep six his
+[2:41] legs got one minute let's go what are
+[2:44] all these weird straight pixels do clean
+[2:46] it up keep this leg that's that's way
+[2:49] cooler oh keep it extended fill in the
+[2:52] gas fill in the Gap enough
+[2:55] see all right oh so let's see what what
+[2:58] we're doing it's not terrible head's
+[3:00] like real wonky legs are legs are a bit
+[3:04] better than they were they were not so
+[3:06] great the bags just but 10 minutes
+[3:09] that's a fun
+[3:13] challenge so I'm going to sketch out I'm
+[3:16] just going to go with sword someone with
+[3:18] couple layers let's sketch out some
+[3:20] shapes maybe a big X wielding dude cool
+[3:24] somewhat smaller one on this side that
+[3:26] could be cool okay fly by the legs even
+[3:29] the if he looks cool enough maybe do a
+[3:31] walk cycle eventually make the challenge
+[3:34] completely from scratch so this back arm
+[3:38] be here we'll work on the back a we'll
+[3:41] go here right I think I'm quite close
+[3:44] though still have 48 minutes I'm happy
+[3:47] with that it looks way better than I
+[3:49] thought it would so now I'm going to
+[3:50] start planning some key frames
+[3:52] everything set up decent there so that
+[3:54] should for me 4 to 3 minutes left sure
+[3:57] what direction I want to go with the
+[3:59] Final Flash or key frame not crazy about
+[4:02] it but we're going to need to one of
+[4:04] these wasted 5 minutes but I switched
+[4:06] the weapon to a spear dealing with that
+[4:08] funky looking a I don't what it was
+[4:11] tricky right now so it's only having 38
+[4:13] minutes uh I decided to switch it to the
+[4:16] spear which is a lot easier we can just
+[4:18] do a big thrust or something so I think
+[4:21] I got the base of the main frames and
+[4:23] got 34 minutes to fill it in and try to
+[4:26] smooth it out as best as possible that's
+[4:28] the time frame quick St a lot of
+[4:31] smoothing to do the Lance itself is
+[4:33] stale and lacking we don't have too much
+[4:36] more time and I'm working on some VFX to
+[4:38] give it some oomph 6 minutes left switch
+[4:41] his arm here don't really like it at all
+[4:44] but I only got 6 minutes to to deal with
+[4:47] it so maybe I just leave it and focus on
+[4:50] something else I don't know fun
+[4:52] challenge it looks pretty good I think
+[4:53] that's all I can do 40 48 seconds not
+[4:56] going to push it too much but it ended
+[4:58] up being better than I thought I think
+[5:01] for the first 20 25 minutes I wasn't
+[5:04] crazy about my choices the character but
+[5:08] in the end it's okay the Lance itself
+[5:10] looks stiff a lot of the time but a
+[5:13] little spin at the end kind of ties it
+[5:15] all together nicely 3 seconds yeah there
+[5:17] it is that is the 1 Hour 1 hour attack
+[5:23] animation my game plan for animating
+[5:27] this 10hour animation
+[5:30] was to start off with designing the
+[5:31] character gave myself about an hour
+[5:35] which in the end I should have gave
+[5:36] myself a bit more time I really like the
+[5:39] character in the end but could have
+[5:41] tweaked a few more things that would
+[5:43] have made it even better so yeah the
+[5:45] first hour was designing the character
+[5:48] and the second hour was really just
+[5:49] starting to plan the animation getting
+[5:52] some key frames in there which ended up
+[5:55] taking longer and that pushed into the
+[5:57] third hour where I started to get the
+[5:59] key frames for the first couple punches
+[6:02] and then eventually led into an uppercut
+[6:05] spin um which was really cool the next
+[6:09] hours was kind of just figuring out kind
+[6:11] of the overall motion I wanted to get
+[6:13] the animation feeling right before I
+[6:15] started jumping into details and VFX and
+[6:18] everything and that was kind of at the
+[6:20] 45 hour mark and at once I was pretty
+[6:22] happy with the animation and the feel of
+[6:25] it everything flowed properly I started
+[6:28] adding VFX which really starts to bring
+[6:30] the animation
+[6:32] together you know adding the the fire
+[6:35] the kind of special effects just the
+[6:37] dust when when the character lands on
+[6:40] the ground or takes off jump and that
+[6:44] was really the next kind of few hours
+[6:46] just going through different
+[6:48] combinations I started adding bubbles
+[6:51] you fire uh wind element kind of shaking
+[6:55] the Earth was a cool thing and
+[6:59] eventually that led into my last couple
+[7:02] hours which was just kind of adding blow
+[7:06] effects you know making the ground shake
+[7:08] really tweaking making sure every frame
+[7:11] looks good not just the key frames which
+[7:13] some still aren't perfect but I think I
+[7:16] got it in pretty good shape places again
+[7:21] nothing and everyone knows nothing and
+[7:24] this
+[7:27] is every l it's about what I want right
+[7:32] about and this is
+[7:38] [Music]
+[8:17] let's look at the end result
+[8:20] [Music]
+[8:23] here ended up being pretty
+[8:26] cool the whole process was a bit
+[8:28] different I didn't feel as rushed you
+[8:31] know in the last hours it was kind of
+[8:33] just tweaking and and making sure things
+[8:37] were perfect as could
+[8:40] be and it was kind of refreshing in a
+[8:43] way cuz usually I'm rushing get my
+[8:45] animations done on the timeline so it
+[8:48] was it was pretty cool
+[8:52] experience you made it this far thank
+[8:54] you for
+[8:55] watching hit that
+[8:57] sub like it comment comment if you want
+[9:01] me to do something else like this again
+[9:04] I'll see you next time

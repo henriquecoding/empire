@@ -50,4 +50,9 @@ INSTRUCTIONS = (
     "forja_forge so diz raster_valid e label study; uma base nativa reexportada leva --lineage do forge anterior (as "
     "perdas criticas ficam abertas ate uma resolucao provada nesta imagem); forja_fidelity com --forge-json e "
     "--resolutions da release_ready; forja_par mede o frasco partilhado contra o molde e a pega; a ficha facial do "
-    "conceito, nao os pinos do candidato, prova a personalidade; forja_lote lista os 15 do elenco com os estados.")
+    "conceito, nao os pinos do candidato, prova a personalidade; forja_lote lista os 15 do elenco com os estados. "
+    "(15) forja_estudo consulta o estudo Penusbmic de 03/11; forja_ensaio exporta por acao, preserva tempos/pivot "
+    "e cria previa com corpo sem VFX e ficha por quadro. forja_ensaio-rever exige maos/objeto, estados faciais, "
+    "apoio e recuperacao observados; incompleto fica pendente. forja_ensaio-comparar repete a mesma receita. "
+    "forja_variantes so explora designs em aberto; forja_cena-piloto compara massas, planos, ator e dia/noite. "
+    "Estes ensaios nao concedem aprovacao artistica nem provam integracao Godot. docs/art/PENUSBMIC_WORKFLOW.md.")

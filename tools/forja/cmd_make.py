@@ -29,6 +29,8 @@ def do_sheet(args) -> dict:
     sopts = sheetforge.SheetOptions(tags=tags, layout=layout, anchor=args.anchor, same_height=args.same_height,
                                     deflicker=args.deflicker, static=args.static, actions=args.action,
                                     lock=args.lock, mirror=args.mirror,
+                                    effect_windows=json.loads(Path(args.effect_windows).read_text(encoding="utf-8"))
+                                        if args.effect_windows else None,
                                     godot_texture=args.godot_texture, region=region, align=args.align,
                                     holds=review.parse_holds(args.hold))
     prompt = Path(args.prompt_file).read_text(encoding="utf-8") if args.prompt_file else None
@@ -183,6 +185,7 @@ def register(sub) -> None:
                    "parada, onde o --deflicker pode corrigir (repetivel)")
     p.add_argument("--action", type=box, action="append", help="caixa x0,y0,x1,y1 com accao de proposito (olho que "
                    "pisca, boca, chama): nunca se estabiliza (repetivel)")
+    p.add_argument("--effect-windows", help="JSON: lista de regioes e intervalos inclusivos de efeito intencional")
     p.add_argument("--lock", type=box, help="caixa x0,y0,x1,y1 do rosto a travar em todos os quadros")
     p.add_argument("--mirror", action="store_true", help="exportar tambem a direcao espelhada")
     p.add_argument("--godot-texture", help="caminho res:// da tira, para escrever o SpriteFrames .tres")

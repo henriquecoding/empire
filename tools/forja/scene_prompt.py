@@ -13,7 +13,7 @@ from __future__ import annotations
 
 from PIL import Image, ImageDraw
 
-from . import constraints, contracts, matte, prompts, regua
+from . import constraints, contracts, matte, prompts, regua, study
 from .palette import Palette
 
 ROLE_TEXT = {"palette": prompts.ROLES["palette"],
@@ -131,7 +131,7 @@ def rules(res: dict, palette: Palette | None, swatch: int | None, listed: int = 
     if light:
         out.append(_rule("light", f"Light: {light}; warm light only where a source exists, as stepped color clusters; "
                          "no glow halo, no bloom.", "scene:brief"))
-    return out
+    return out + study.rules("scene")
 
 
 def build(res: dict, target: str = "gpt-image", attached: list[str] | None = None, geo: dict | None = None,
@@ -172,7 +172,7 @@ def build(res: dict, target: str = "gpt-image", attached: list[str] | None = Non
                      f"row {y1 - 1}; everything outside that box is empty background.")
     lines.append("Avoid: characters, animals, text or lettered signs, UI, frames, perspective or isometric projection, "
                  "photorealism, 3D render, painterly brushwork, blur, glow, watermark.")
-    expect = {"kind": res["kind"], "cells": [lw, lh], "content": [x0, y0, x1, y1], "scale": k,
+    expect = {"study": study.context("scene"), "kind": res["kind"], "cells": [lw, lh], "content": [x0, y0, x1, y1], "scale": k,
               "scale_exact": geo["exact"], "grid": "requested", "layout": [1, 1], "frames": 1, "tags": None,
               "background": background, "size": geo["size"], "cluster": res["step"], "attached": attached,
               "mode": "scene", "scene": res["id"], "forge_args": res["forge_args"], "placement": "origin"}
@@ -197,7 +197,8 @@ def backdrop(res: dict, target: str, palette: Palette | None = None) -> str:
 def pixellab_params(res: dict) -> dict:
     c = contracts.get(res["kind"])
     outline = {None: None, 0: "lineless"}.get(c.outline_px, "single color black outline")
-    return {"description": f"{res['scene']['subject']}, {res['spec']['en']}",
+    return {"description": f"{res['scene']['subject']}, {res['spec']['en']}\n" +
+            "\n".join(r["text"] for r in study.rules("scene")),
             "image_size": {"width": res["cells"][0], "height": res["cells"][1]}, "outline": outline,
             "shading": "basic shading", "detail": "highly detailed", "view": "side", "no_background": True}
 

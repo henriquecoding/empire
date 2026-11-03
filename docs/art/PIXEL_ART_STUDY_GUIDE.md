@@ -110,3 +110,10 @@ atribuir ao professor uma regra que foi proposta para o Empire.
 O estudo de outubro de 2026 fica versionado como conhecimento consultável.
 Não constitui treinamento permanente do modelo nem substitui abrir esses
 documentos nas próximas tarefas.
+
+## Continuação de 03/11/2026
+
+O [estudo recebido](research/2026-11-03-penusbmic/README.md) passa a ter
+[ensaios executáveis na Forja](PENUSBMIC_WORKFLOW.md): revisão por quadro/ação,
+exportação exata, replay, variantes de designs abertos e piloto de cenário.
+As propostas continuam subordinadas à autoridade do dono e aos contratos do jogo.

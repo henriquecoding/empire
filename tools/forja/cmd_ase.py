@@ -74,6 +74,16 @@ def do_ase(args) -> dict:
 
 
 def do_exportar(args) -> dict:
+    if args.actions:
+        from . import action_export
+        if not args.kind or args.layer or args.composite or args.columns:
+            raise ValueError("--actions pede --kind e nao se combina com --layer/--composite/--columns")
+        out = outside_art(args.out or "build/forja/exportar/actions")
+        manifest = action_export.export(args.file, out, args.kind, args.effect_layer or [], args.trim)
+        return {**action_export.verify(out / "manifest.json"), "manifest": str(out / "manifest.json"),
+                "actions": [a["name"] for a in manifest["actions"]]}
+    if args.trim or args.effect_layer or args.kind:
+        raise ValueError("--trim/--effect-layer/--kind nesta exportacao pedem --actions")
     sprite = read_ase(args.file)
     title = args.title or Path(args.file).stem
     out = outside_art(args.out or f"build/forja/exportar/{title}")
@@ -132,3 +142,7 @@ def register(sub) -> None:
     p.add_argument("--slices", action="store_true", help="na exportacao por camada, levar as slices (o pivot) ao JSON")
     p.add_argument("--sheet-type", default="rows", choices=SHEET_TYPES)
     p.add_argument("--columns", type=int, help="quadros por linha (--sheet-columns)")
+    p.add_argument("--actions", action="store_true", help="folhas por acao e prova de reconstrucao nativa")
+    p.add_argument("--kind", help="contrato nativo da exportacao por acao")
+    p.add_argument("--trim", action="store_true", help="com --actions: recorte de armazenamento reversivel")
+    p.add_argument("--effect-layer", action="append", help="com --actions: camada de efeito separavel")

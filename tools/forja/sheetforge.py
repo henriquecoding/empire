@@ -37,6 +37,7 @@ class SheetOptions:
     region: tuple[int, int, int, int] | None = None
     align: str = "auto"
     holds: list[dict] | None = None
+    effect_windows: list[dict] | None = None
 
 
 def parse_tags(text: str | None, default: str = "anim") -> list[tuple[str, int]] | None:

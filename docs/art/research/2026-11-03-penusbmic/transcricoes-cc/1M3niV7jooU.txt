@@ -1,0 +1,159 @@
+Three ASEPRITE extensions you MUST have!
+Autor: Penusbmic
+Fonte: https://www.youtube.com/watch?v=1M3niV7jooU
+Licença observada: Creative Commons Atribuição (reutilização permitida), conforme YouTube.
+Link da licença exibido na fonte: https://www.youtube.com/t/creative_commons
+Conferência da licença: 2026-11-02. Texto obtido via exportação de legendas do YouTube.
+Adaptação: apresentação textual das legendas, com este cabeçalho de atribuição.
+Idioma: original disponível (inglês). Legenda não revisada integralmente contra áudio; pode conter erros, omissões e tempos aproximados.
+Não há endosso do autor à Forja.
+
+YouTube transcript
+Video ID: 1M3niV7jooU
+Language: en
+Captions: auto-generated
+
+[0:01] [Music]
+[0:06] hey my name's pen USB mic I'm a pixel
+[0:09] artist animator I've worked on games
+[0:11] like domee keeper and Shogun Showdown
+[0:15] I'm currently working on my own solo
+[0:17] project called bullet Bunny and I want
+[0:20] to share with you three a Sprite
+[0:22] extensions for scripts that greatly
+[0:25] improve your workflow the first one here
+[0:27] is isometric box generator and it's by
+[0:30] dark work on itch I believe their name
+[0:34] is Cam on on Twitter but what it does is
+[0:37] autog generates a box in this isometric
+[0:40] style and it's super quick and you
+[0:42] should definitely use it if you don't I
+[0:44] see a lot of artists just hand pixeling
+[0:47] it let me just show you how quick so I I
+[0:49] don't do isometric too much so this was
+[0:51] kind of just a test kind of picture I
+[0:53] did but look at this you start off and
+[0:56] I'll just open it up
+[0:58] here ismetric box you can just start off
+[1:01] with something like three height um go
+[1:04] to the right 20 left 20 let's let's try
+[1:09] that and what it does is it just adds a
+[1:12] box like that adds its own layer so you
+[1:14] can use your move tool just move it
+[1:17] around um you can set up the colors here
+[1:19] you got the top left right highlight um
+[1:24] everything and it makes its own own
+[1:26] layer so you can see here all the cubes
+[1:29] I made for this little
+[1:31] box and you can go ahead and just just
+[1:34] keep doing that now if you want a wall
+[1:36] you're going to make the height let's do
+[1:39] 20 and you're going to want the right
+[1:42] side
+[1:43] high and this one let's do two um and
+[1:48] you can add that you can you can double
+[1:50] the height there so let's just undo
+[1:53] that let's do 40 one and then you got
+[1:56] your wall back here a little thick but
+[1:59] you can easily make that one pixel wide
+[2:02] this would take you you know 10 15 20
+[2:04] minutes and it just took me a whole 20
+[2:07] seconds to do and then if you want the
+[2:09] other side you know slide that to two
+[2:12] slide this one up to 20
+[2:15] boom you have your wall and you just
+[2:17] need to line them up properly just like
+[2:20] that you can make a whole scene and you
+[2:23] can see here you can see I used floor
+[2:26] one the walls um this little air
+[2:29] conditioner thing this shelf um that's
+[2:32] eventually the bed a dresser um gas can
+[2:36] a little coat hanger Tower and then you
+[2:39] can just like use it as a guideline and
+[2:42] get your colors and just keep adding to
+[2:44] it and this whole scene took maybe less
+[2:47] than 30 minutes in the
+[2:49] end so that's the isometric box
+[2:53] generator by dark work on in it um I'll
+[2:57] post a link in the description for you
+[2:58] guys and the second one to improve your
+[3:03] workflow the script for exporting tags
+[3:06] to different spreadsheets so say you
+[3:08] have Sprite like this and you have 1 2 3
+[3:10] 4 You know 10 15 different animations
+[3:13] different tags um what you can do is
+[3:17] let's just turn off the background um
+[3:20] the title and we'll just trim this all
+[3:24] now we just got the animation with no
+[3:26] background you can go up to scripts just
+[3:29] click on export tags to different Sprite
+[3:31] sheets so as long as you have your tag
+[3:33] set up it will bring up this and you can
+[3:35] see here you have the idle front idle
+[3:38] Side Run jump fall Dash orb Shield up
+[3:42] down hold shock wave hit and death you
+[3:45] have all these as different Sprite
+[3:46] sheets and depending on what engine
+[3:48] you're using it um has its benefits but
+[3:51] I like to offer both if I'm doing
+[3:53] commissions or working for someone and I
+[3:55] used to export them one by one which was
+[3:58] kind of timec consuming but now it's
+[4:00] super quick and this one
+[4:02] is I'll have a link for it it's on
+[4:05] GitHub um here's a pack of a bunch of
+[4:08] scripts and it's this one right here
+[4:10] export tags to different spray sheets
+[4:13] and you'll just copy that into your
+[4:14] aprite script folder and refresh it or
+[4:17] restart a Sprite and it should be there
+[4:19] and then the last but not least is the
+[4:24] background Autos scroll toolbar like
+[4:26] carbs code and this one what this one
+[4:29] does it um animates say if you have
+[4:32] landscape photo let's just set this up
+[4:35] quick let's say you have ground here and
+[4:38] this will be very rough and behind it
+[4:41] let's say you have some some
+[4:43] clouds or Sky the sky at the bottom and
+[4:48] then we'll do some clouds try to make it
+[4:51] as pretty as I can quickly and as long
+[4:54] as these these sides line up so what we
+[4:57] can do here is go to child mode on X and
+[5:02] you can just clean those up as long as
+[5:05] that's smooth um they connect good you
+[5:09] can work your magic with this script so
+[5:12] let's do some clouds um and we'll do
+[5:14] let's just do whatever buildings quick
+[5:20] [Music]
+[5:22] buildings and what we can do now
+[5:26] is run the script to building
+[5:31] um clouds we'll just animate these
+[5:37] two link these all unlink
+[5:42] and delete the building and clouds um
+[5:47] we're going to run the script PG autoc
+[5:49] scroll toolbar and we'll do it for do 24
+[5:54] since the Run animation is eight so just
+[5:57] three times we'll do it to the right and
+[5:59] then we'll we'll go up to the building
+[6:01] and we'll run this as well let's do this
+[6:03] one 12 so they're at different speeds
+[6:05] and then we can copy and paste this like
+[6:08] so make
+[6:09] sure your
+[6:12] sky and everything's good copy and paste
+[6:15] the
+[6:18] [Music]
+[6:20] run and you can see it auto Scrolls the
+[6:23] clouds in the buildings and we can
+[6:26] adjust those you know if you want the
+[6:28] building slower
+[6:30] you can go let's do 48 I think would be
+[6:33] good 48 do that to the right side and
+[6:36] then you just need to copy and paste
+[6:37] those other ones you get this cool
+[6:40] effect but instead of manually doing it
+[6:42] Hand by hand you um just have this nice
+[6:45] Parallax and those are three a Sprite
+[6:48] scripts extensions to greatly improve
+[6:51] your workflow

@@ -1,0 +1,627 @@
+The QUICKEST way to make Sci-fi Isometric Pixel Art
+Autor: Penusbmic
+Fonte: https://www.youtube.com/watch?v=l-GrnsUKlsg
+Licença observada: Creative Commons Atribuição (reutilização permitida), conforme YouTube.
+Link da licença exibido na fonte: https://www.youtube.com/t/creative_commons
+Conferência da licença: 2026-11-02. Texto obtido via exportação de legendas do YouTube.
+Adaptação: apresentação textual das legendas, com este cabeçalho de atribuição.
+Idioma: original disponível (inglês). Legenda não revisada integralmente contra áudio; pode conter erros, omissões e tempos aproximados.
+Não há endosso do autor à Forja.
+
+YouTube transcript
+Video ID: l-GrnsUKlsg
+Language: en
+Captions: auto-generated
+
+[0:00] welcome welcome welcome I'm pen I'm a
+[0:02] pixel artist animator I've worked on
+[0:05] these games and today we are going to be
+[0:08] making a cute little sci-fi isometric
+[0:12] shelter it will be kind of like this and
+[0:14] we will be using cams isometric box
+[0:17] generator which you can download for
+[0:19] free on itch.io I'll put the link in the
+[0:23] description whether on YouTube or
+[0:25] patreon and you can go ahead and
+[0:26] download it so we'll break it down into
+[0:29] a few steps the first one being blocking
+[0:31] and that will just be adding a block
+[0:34] with this generator and kind of stacking
+[0:36] them like Lego blocks which is quick
+[0:38] kind of fun to do and then step two will
+[0:40] be kind of figur out your base colors
+[0:42] which I third step we will add smaller
+[0:45] blocks kind of more detailed blocks kind
+[0:47] of fig figuring out kind of how we want
+[0:49] to stylize it and then there will be
+[0:50] small details like you know the wires
+[0:53] grass and rust and so on and then we'll
+[0:56] we'll finish it off let's begin on a new
+[0:59] canvas we'll we'll start by going 192 by
+[1:02] 192 and we're going to add a bunch of
+[1:05] layers shift n to add layers and then
+[1:10] we're going to delete this pallet we
+[1:13] will copy and paste this pallet over
+[1:15] here and I believe this is the
+[1:19] background color could be wrong o I was
+[1:22] wrong so that's the background the
+[1:24] ground and we will just name that ground
+[1:28] and we will lock it so we don't alter
+[1:30] any anything on that layer and then we
+[1:33] will click somewhere in the middle and
+[1:35] we'll start messing around with these
+[1:38] boxes and to access it if you downloaded
+[1:41] it you can just go scripts isometric box
+[1:44] I can and then it brings up this little
+[1:47] box generator and it throws some some
+[1:50] Auto colors I think it just takes it
+[1:51] from your palette might not I'm not sure
+[1:55] and it will give you default settings so
+[1:57] you can see all you have is your colors
+[1:59] and and the size and then Corners which
+[2:02] kind of just adds to it I keep it at two
+[2:04] pixels and you can see here left is five
+[2:07] right is five and 10 or height is five
+[2:10] or 10 sorry all over the place but we
+[2:13] can go ahead and turn off the background
+[2:15] and we'll just add our first box and you
+[2:17] can see here makes a layer calls it Cube
+[2:21] and then it has the dimensions there and
+[2:25] 5x 5x five is looks pretty good it's a
+[2:29] little big
+[2:30] so let's try to get it in a 16x 16
+[2:33] square I don't think we'll get it
+[2:35] perfect but I think we can get pretty
+[2:37] close so let's go ahead and delete that
+[2:40] layer and let's change this to four I
+[2:45] can get there 4x4 and let's do eight see
+[2:50] if that fits a bit better and I think
+[2:53] that's that's close cuz you can always
+[2:56] copy and paste these you'll always kind
+[2:58] of go above them so it's kind of like
+[3:01] they're smaller than it actually appears
+[3:03] but yeah so now we have our initial box
+[3:06] and if you have a player like this this
+[3:08] dude here you can always grab them for
+[3:11] scaling just keep them on scene you can
+[3:14] put them on a top layer just kind of
+[3:16] have them chilling you can lock it and
+[3:20] you can name it player just for
+[3:22] reference and then if we go back to our
+[3:24] Cube layer we have our Cube and there's
+[3:27] a few ways we can expand this we can
+[3:29] just add a new box but that's going to
+[3:31] add a new layer which then you'll have
+[3:34] to flatten and it's just couple extra
+[3:37] steps so what I like to do is go on my
+[3:39] Cube layer and I know this is going to
+[3:41] be the size of the cube itself 4X 4x8
+[3:46] and I'm just going to copy and I'm going
+[3:47] to paste it so it connects like a Lego
+[3:49] block and then I'm going to do another
+[3:51] one and now we have three and what we
+[3:54] can do with this we can move it and we
+[3:57] can copy it all and connect them like so
+[4:00] then you can add another one and you can
+[4:02] connect it like so and you can make it
+[4:04] bigger you can make it longer you can
+[4:07] make it as many different ways as you
+[4:09] want but I think we will keep it fairly
+[4:12] small for this tutorial since it's kind
+[4:14] of a beginner friendly isometric
+[4:17] tutorial so we're going to keep it 3x3
+[4:20] and we're going to copy all that and
+[4:22] paste it and then we're just going to
+[4:24] slap it on top and then we'll add
+[4:25] another one on top of there and you can
+[4:28] see we have this nice Cube that's the
+[4:30] right size for our hero and it's perfect
+[4:35] perfect isometric box and it didn't take
+[4:37] long at all so once you have the cube
+[4:39] you can go ahead and then add some
+[4:42] different sizes so let's try to make
+[4:44] something maybe we'll do a height of
+[4:47] eight since that seemed fine let's try 8
+[4:50] by 8 by 8 see how that looks and we kind
+[4:52] of got this this piece on top on its own
+[4:55] layer which is fine we'll keep it on its
+[4:57] own layer for now but it kind of just
+[4:59] looks like a little more big AC unit or
+[5:03] something kind of something on top of
+[5:05] the building we can keep it there we can
+[5:08] change the size we can make it a bit
+[5:11] smaller we can go try 7 by S and we can
+[5:14] delete that one see if we like that that
+[5:17] gives us a little more room to play we
+[5:19] can even try to make it smaller let's
+[5:22] see let's see it's six we can do six or
+[5:25] five five might be a bit too small or
+[5:28] maybe not looks good we can even keep it
+[5:31] in this top corner and we can mess
+[5:35] around with two and we can add it there
+[5:38] then we can try to make some smaller
+[5:40] details if we want but for now let's
+[5:42] just keep it as so and let's try a
+[5:46] skinny but tall one so let's go to 16
+[5:50] and we'll try a 2X two and it makes a
+[5:53] tall little skinny box and we can just
+[5:57] place that in position perhaps there
+[6:00] and maybe we'll make another one we'll
+[6:01] just add a box we can add it here on the
+[6:04] side and we'll try to add more actually
+[6:08] let's undo let's move this one back so
+[6:10] when we add it just comes on top already
+[6:13] and and that looks pretty cool so you
+[6:17] got this kind of small shelter home kind
+[6:20] of coming together so we can merge all
+[6:24] these you can keep them separated if you
+[6:27] want if you want to do some adjustments
+[6:28] down the road you definitely can I think
+[6:31] I'm going to flatten them for now and
+[6:33] then we're going to figure out kind of
+[6:34] our base color so what how do you want
+[6:37] this to look essentially I'm going to
+[6:39] use the paint bucket and I already know
+[6:41] I like these kind of rusty kind of
+[6:44] colors so I'm going to go ahead and
+[6:46] select those I'm going to use another
+[6:48] script called color shading just to grab
+[6:50] some quick colors and I'm just going to
+[6:54] kind of replace some of these and just
+[6:56] get the the base look kind of or the
+[6:59] base color is kind of figured out and I
+[7:01] know I want these to be darker inside
+[7:05] perhaps these go all the way across and
+[7:08] then maybe just one here with a lighter
+[7:11] one kind of like that look and then with
+[7:15] this color you can you can go ahead and
+[7:16] use the eye dropper and grab this and
+[7:18] then go get and it will give you more
+[7:20] shades of this Shades light saturation
+[7:23] and even some Hues this color picture or
+[7:26] color shading tool which is pretty cool
+[7:29] and going to do the the same up here and
+[7:31] these ones towards the back I'm just
+[7:32] going to keep all that that color and
+[7:35] now you're kind of getting more of a
+[7:37] color we can turn on the ground to kind
+[7:39] of get an idea maybe we'll change these
+[7:42] boxes here to a more of a gray kind of
+[7:45] look different to the house so let's
+[7:47] let's do that then to turn off
+[7:51] contiguous and then I'm just going to
+[7:53] get the shade shading for that color
+[7:55] kind of just mess around with different
+[7:57] shades here use a darker one on the side
+[7:59] over here and then perhaps a lighter one
+[8:02] for this right here and then maybe even
+[8:06] lighter on on the edges and then bring
+[8:10] this or sorry let's bring this one and
+[8:14] now it's starting to look more like a AC
+[8:17] unit or some kind of sci-fi technology
+[8:20] if you want you can bring it this this
+[8:23] one as well which looks pretty cool take
+[8:26] this darker shade here and it looks
+[8:28] pretty cool maybe we'll add add some
+[8:30] darker ones to these let's see how that
+[8:32] looks and pretty cool so now that we got
+[8:35] this flattened layer the color kind of
+[8:38] sorted out we could we could Let's do
+[8:41] let's make these kind of a box machine
+[8:43] we can always change them later on if we
+[8:46] feel we need to those are all connected
+[8:48] so let's just this here and do these two
+[8:51] those ones I think they come come two
+[8:54] out yep come two out there so fill those
+[8:57] in oops we'll fill these in and this one
+[9:00] here and then we can do this and fill
+[9:03] these two orange ones here and now we
+[9:05] kind of have different kind of units set
+[9:08] up we can fill these in too looks more
+[9:10] like a straight line and this corner one
+[9:12] a little bright one and also put that in
+[9:15] if we need or if we want and I think
+[9:17] these ones had bright ones as well we'll
+[9:19] keep them in and now you kind of have
+[9:21] your color sorted out but still kind of
+[9:24] looks like it doesn't fit in at all so
+[9:26] let's go to a layer above
+[9:30] and we can now start adding kind of like
+[9:33] details to it or little things um by
+[9:35] using the isometric box generator or
+[9:38] just by hand drawing it and we will use
+[9:42] a little bit of both so let's go to this
+[9:44] orange and kind of get a brighter color
+[9:46] and kind of make a line and it's going
+[9:48] to be one pixel and then one over and
+[9:51] one up we'll kind of keep it like that
+[9:54] and I'm just going to copy this entire
+[9:56] line so we know it's the same and we're
+[9:59] going to paste it over here on the same
+[10:01] pixel so generally with these isometric
+[10:04] ones it's usually a 2X two or a two line
+[10:09] down over two two pixels 2 pixels 2
+[10:11] pixels so you kind of Follow That same
+[10:14] format so now when you use the 111 kind
+[10:17] of creates a different look so but you
+[10:20] still want to make sure when these lines
+[10:22] are connecting so this one up here and
+[10:24] then this one as well it should be 2x
+[10:27] two x two so we know we did kind of
+[10:30] something funky here and that could just
+[10:32] be the placement of this right here we
+[10:36] could bring it in one and it should be
+[10:39] better here and it's not so you kind of
+[10:41] just mess around until cuz you want that
+[10:44] placement perfect and you could do this
+[10:47] as well and then you know kind of this
+[10:50] placement is going to be right there
+[10:52] then you can kind of delete the pieces
+[10:53] and see how that looks oops fill it in
+[10:56] now oops and now we have kind of a
+[10:59] little sun shade and we can go ahead and
+[11:02] add some lines to this side now you have
+[11:05] this little kind of sun shade and it
+[11:08] looks looks decent right now but we can
+[11:10] definitely make it better so let's add
+[11:12] some basic kind of shading to it I'm
+[11:15] going to use a couple Shades Darker and
+[11:18] I'm just going to go on the inside here
+[11:20] do the same up here and then just come
+[11:23] down basically just to give that orange
+[11:26] kind of the edge trim and now we have
+[11:28] this this nice oops kind of dark color
+[11:33] in the center and I'm just going to
+[11:35] follow these guidelines from before and
+[11:37] just kind of do the same thing where we
+[11:40] get 1X one pixel in in those two lines
+[11:43] and you kind of get these three sections
+[11:45] and we can go even further and split
+[11:47] them up by just going in the middle of
+[11:48] each of those and now we have 1 2 3 4 5
+[11:52] six sections and it kind of looks uh bit
+[11:56] different and not so isometric like
+[11:59] following the rules so much kind of get
+[12:01] gives a little bit of a Twist to it and
+[12:03] that's kind of a great detail to start
+[12:07] with I'm going to go onto this flatten
+[12:09] layer and just kind of actually change
+[12:13] this cuz I'm not a big fan of that
+[12:14] orange color going all the way down we
+[12:16] didn't we forgot to change it earlier
+[12:18] but this looks pretty good so now we can
+[12:21] kind of add some additional smaller
+[12:24] boxes to the to this to kind of get a
+[12:27] cool little smaller details in it that
+[12:30] should be quick so let's go let's make
+[12:32] this height 4X 4X 2 we kind of get this
+[12:36] really small box and we can just place
+[12:38] it kind of wherever we want and you can
+[12:41] go smaller you can go 2x two by three is
+[12:44] the smallest we can do kind of get
+[12:46] another one can even put it down here if
+[12:48] we want or on top of these ones maybe
+[12:50] one right here and then you can go ahead
+[12:52] and grab your line tool and we have some
+[12:56] sort of antenna and this is where the
+[12:59] building kind of really starts to shape
+[13:01] itself and we'll just try different kind
+[13:04] of designs and patterns here and we'll
+[13:06] bring these cubes down with the flatten
+[13:09] layer and let's just flatten those as
+[13:13] well to keep them together we can kind
+[13:16] of start adding more details we'll kind
+[13:18] of make a details layer and we'll make
+[13:21] it we'll try darker color sorry let's
+[13:25] make let's just some of these colors
+[13:28] make it a little better cuz this side
+[13:30] was a little too dark let's just adjust
+[13:33] that a bit and maybe we'll add some
+[13:35] color into this maybe some more purple
+[13:38] to these generators like so and then
+[13:41] perhaps we can try to add some kind of
+[13:43] wiring system kind of using the line
+[13:46] tool you can kind of just follow follow
+[13:49] the guidelines and these ones they don't
+[13:52] necessarily need to be perfect but you
+[13:55] want them to align somewhat but you you
+[13:59] can you can be more forgiving with them
+[14:02] we'll add some highlights to it maybe
+[14:04] we'll try some more here like so and
+[14:06] then we can also try adding some kind of
+[14:08] wires on this side we'll do the 2x two
+[14:12] and they're just kind of sneaking into
+[14:13] the front like so you can add some wires
+[14:17] coming down on this side maybe that's
+[14:19] too bright and maybe these ones start to
+[14:22] this side again we'll follow the 2x two
+[14:25] rule until it gets to the end and that
+[14:28] looks pretty cool perhaps they come off
+[14:30] the side a bit let's make this right
+[14:34] here let's add that but overall it's
+[14:36] starting to look like a little sci-fi
+[14:39] techie house and we can still add some
+[14:41] more things we can add some light
+[14:44] details kind of you kind of go nuts with
+[14:47] these they really it's really hard for
+[14:49] them to look bad if you just start
+[14:51] placing them in spots these can be like
+[14:54] some kind of battery cell generator
+[14:56] things which look pretty cool we can
+[14:59] even start some shading just to give a
+[15:02] little bit more oops go to the flatten
+[15:06] layer just some dark we'll add some dark
+[15:09] shadows kind of Behind These wires here
+[15:12] and one way to do this we could always
+[15:14] add a layer and we can go soft light
+[15:18] we'll go about 67% we can just grab a
+[15:22] dark color like like what we're on now
+[15:26] and when we apply this color anywhere on
+[15:29] the scene it will kind of just blend
+[15:32] because it's a layer it's its own layer
+[15:34] with a mode soft light it'll kind of
+[15:36] just blend in and use the the color
+[15:39] below as kind of reference and it will
+[15:42] come out like a shadow anywhere you go
+[15:45] so you don't need to switch up your your
+[15:47] colors or anything and that could be e
+[15:49] for doing something like this adding
+[15:50] Shadows to these and and even this guy
+[15:55] up here we can go 2 by two and we can
+[15:57] come up 2 by two 2x two by two and then
+[16:00] you can kind of shoot back down and
+[16:03] we'll just go along the edges and we
+[16:05] might come and fix this up soon but for
+[16:08] now we can just add that but let's go to
+[16:11] we'll name this the shadow layer details
+[16:15] and we'll name this the main this will
+[16:17] be the sun shade little sun shade and
+[16:22] what I think I want to do is make a new
+[16:24] layer above the main and we'll kind of
+[16:26] add we'll kind of add some kind of front
+[16:29] thing kind of front entrance a little
+[16:32] doorway and doing that Let's do let's
+[16:37] follow these oops these uh guidelines
+[16:40] here might be too small but see how it
+[16:43] goes we'll kind of just and this is on a
+[16:46] another layer so going to be over top of
+[16:49] it so we need to kind of connect
+[16:51] everything before we fill it in let's
+[16:53] see oh and I missed these here and
+[16:56] they're just over top but we can just go
+[16:59] ahead and delete that after and over
+[17:02] here that one should be good and it's a
+[17:04] bit too small so let's go ahead and just
+[17:06] delete one line here this one as well
+[17:10] maybe one more and then we can grab this
+[17:13] blue color maybe grab a highlight and
+[17:16] we'll just kind of make highlights on
+[17:18] the sides so they look more like door
+[17:21] and then we'll grab a dark color maybe
+[17:22] this one here and we'll kind of just
+[17:25] fill this all in just to start the kind
+[17:27] of inside and now now it looks more like
+[17:30] a door and we can add just kind of maybe
+[17:33] that's too bright we can take this
+[17:35] Shadow color we can kind of just use
+[17:37] that same two pixels line and kind of
+[17:41] just fill in that top and now we kind of
+[17:43] have this kind of entrance and we can
+[17:46] still spice this up by adding some more
+[17:49] to it so maybe we can take some of this
+[17:51] this orange siding here maybe there's a
+[17:54] panel of it coming down like so do the
+[17:57] same thing over here perhaps these
+[18:00] wires come over a little bit and then we
+[18:05] can go to the shadow layer I think we
+[18:08] were on this color and we can just kind
+[18:10] of add some shadows as well fill that in
+[18:13] like so and now you kind of have the sun
+[18:15] shade blocking it out a bit and then we
+[18:17] can go maybe we can merge this front
+[18:21] area a bit we can merge that down and
+[18:25] then we can go ahead and start messing
+[18:27] with with some of the f colors maybe add
+[18:30] a couple darker spots maybe darker in
+[18:33] general looks better and maybe we'll
+[18:37] grab darker of this as well we'll kind
+[18:40] of just see how that looks we can also
+[18:42] change the color of these as well some
+[18:45] sort of gray boxes as well grab a
+[18:49] highlight of that it's kind of a pinky
+[18:51] maybe they don't fit in too well so
+[18:53] let's kind of mess with that pink a
+[18:55] little bit maybe we'll we'll bring this
+[18:57] blue up you can see how that looks kind
+[18:59] of tie in the blue a bit more grab one
+[19:01] more shade of it and that looks a bit
+[19:03] better so I think we can make this up
+[19:05] here kind of stand out a bit better and
+[19:07] maybe down here as well see if we can
+[19:09] add kind of a plate get colors for that
+[19:12] maybe add some bolts on it it looks like
+[19:15] a little kind of Bolt thing maybe we'll
+[19:17] add a kind of little Lookout window here
+[19:21] we'll grab some sort of blue kind of
+[19:23] bring this maybe we'll get light blue
+[19:25] here and I like to follow these lines up
+[19:27] here so if there's two there there's two
+[19:29] here two there oops two there come down
+[19:32] then we can go ahead maybe we'll make
+[19:34] that a bit darker since it stands out a
+[19:36] bit too much even darker I think and
+[19:39] then to make it look like a window we
+[19:40] can grab a lighter version and kind of
+[19:43] just go across it like that we don't
+[19:45] have much play but it looks like
+[19:47] something add a little detail maybe
+[19:49] we'll add some highlights to these wires
+[19:52] here and these ones as well so I'm
+[19:55] liking the side I think we can spruce up
+[19:57] this shade thing right here let's go
+[20:00] ahead and do that maybe it looks cool
+[20:02] like one of these are if they're
+[20:04] different colors and maybe these are bit
+[20:07] worn out in areas perhaps will go a bit
+[20:10] darker especially where right underneath
+[20:13] that looks a bit better and then maybe
+[20:15] we'll we'll hit control U since it's on
+[20:17] its own layer and let's just kind of see
+[20:21] if we can get a better color perhaps
+[20:24] even maybe the orange wasn't almost like
+[20:27] that red a little bit turn down the
+[20:29] saturation a little and even the color
+[20:32] and that looks even cooler I think I
+[20:35] like the mix of the blue the rusty red
+[20:38] and orange I like that as well as the
+[20:41] Grays and maybe that that original
+[20:44] orange will come out just in little
+[20:46] areas looks pretty good and I like that
+[20:50] let's kind of do the same thing with
+[20:53] these kind of figure out a color maybe
+[20:55] more more blue more around these but
+[20:59] maybe uh bit more saturated closer to
+[21:02] gray let's do up here see how this oops
+[21:07] let's make sure we're on the right layer
+[21:08] adding the blue to the top I like that
+[21:11] bit darker I do like that so let's get
+[21:14] some color shades of that and I think we
+[21:16] might be able to get all of those these
+[21:20] Blues as well and that kind of brings it
+[21:22] all together a bit more We'll add this
+[21:25] since they kind of stand out a bit too
+[21:27] much maybe we'll try to get a turn off
+[21:31] contiguous maybe we'll just do a couple
+[21:33] of them we'll add B to these o that's
+[21:37] that's the same color there let's fill
+[21:39] in these colors now it's a little bit of
+[21:42] just kind of messing around with the the
+[21:44] colors the final details just making
+[21:47] sure everything's perfect let's add some
+[21:49] shading under these wires maybe that
+[21:51] adds a little more to this area maybe we
+[21:53] can try something cool add a new layer
+[21:56] and we'll do a pretty bright blue and
+[22:01] maybe it's a sign maybe this is a place
+[22:03] to get supplies medical supplies perhaps
+[22:07] so there's a kind of a hospital cross
+[22:09] thing medic sign which looks pretty cool
+[22:13] we can duplicate this and the layer
+[22:17] above let's switch it to addition and
+[22:19] see how it looks makes it more white
+[22:22] Let's see we bring it down a bit just
+[22:25] makes it a bit more kind of like the the
+[22:28] original blue so let's just leave it
+[22:29] like this and this will be the sign
+[22:32] looks pretty cool and some additional
+[22:35] details you can do is add kind of like a
+[22:38] satellite dish in here perhaps like so
+[22:42] maybe we'll add some outline to it so it
+[22:44] doesn't look too out of place we can add
+[22:47] another kind of antenna there we can add
+[22:50] a plate or some sort over here as well
+[22:53] let's do that one two two one two go
+[22:57] down go in there and then we can get
+[23:01] maybe it's a little lighter and let's do
+[23:04] a little darker and we'll get a couple
+[23:06] bolts and that looks pretty good we can
+[23:09] add some kind of maybe rust happening or
+[23:12] something happening here we can add that
+[23:14] everywhere if we want we'll just grab
+[23:16] some darker shades of it and these are
+[23:18] kind of just the finishing touches to
+[23:21] this little piece maybe too much perhaps
+[23:24] if we just highlight these and kind of
+[23:27] just shade the corner Corners oh I had
+[23:29] stabilizer on so that's why it felt
+[23:31] weird and that looks pretty cool we can
+[23:34] grab this blue up here and kind of maybe
+[23:36] some door handles here maybe there's an
+[23:39] animated sign or something kind of like
+[23:42] that tint for these ads just kind of
+[23:45] just brings all those little colors
+[23:47] together maybe we can grab this yellow
+[23:49] and do even brighter one and let's grab
+[23:53] it and use Color Picker and it was on
+[23:56] the details so we'll jump there we'll
+[23:58] just kind of make those couple different
+[24:00] colors and I think we're really really
+[24:03] this thing to life and it's kind of just
+[24:05] like nitpicking little details and and
+[24:08] adding little details here and there
+[24:10] like we can always make the roof a bit
+[24:11] better adding little kind of Shades
+[24:15] there you can highlight these as well
+[24:18] take that color and then kind of add
+[24:22] some some rough Parts there we can go to
+[24:24] this sunsh shade and kind of add bit
+[24:27] more r rer colors well let's add one
+[24:32] more maybe one more kind
+[24:34] of just so we really know it's sci-fi
+[24:38] maybe this one has yellow kind of beeper
+[24:40] on it and that looks pretty cool and
+[24:43] then if you want you can start adding
+[24:47] vegetation depending on the state of
+[24:50] this and I think this is the grass of
+[24:53] this is kind of like the grass I use in
+[24:55] stranded you can always check over here
+[24:58] kind of this color and that color okay
+[25:02] kind of close this is the grass I use
+[25:05] and the stranded series is kind of like
+[25:07] a dystopian dystopian kind of
+[25:11] post-apocalypse type feel so this this
+[25:13] kind of fits in real good and go to that
+[25:16] shadow and use the shadow kind of make
+[25:19] shadows for little little grass blades
+[25:22] like so and you can always then copy and
+[25:25] paste these grass blades bit more maybe
+[25:29] the Shadows stand out a little too much
+[25:31] I think I did them lighter in this one
+[25:34] yeah bit lighter but we can go ahead and
+[25:38] copy and paste this grass and kind of
+[25:40] place it as fitting let's move the
+[25:43] shadow layer above it so this grass here
+[25:45] is darker and then we just need to
+[25:47] delete the ones that overlap with the
+[25:50] grass pieces it doesn't look weird and
+[25:53] then we can p some more back here make
+[25:56] sure you're on the vegetation layer
+[25:58] maybe spin it a bit and then you can
+[26:01] always add a bigger kind of one maybe
+[26:03] right out in front here perhaps not and
+[26:06] then if you want to go even further with
+[26:08] vegetation say this shop is really
+[26:11] booming it's got some vegetation life
+[26:14] you can go ahead and add some leaves
+[26:15] everywhere and I kind of generally just
+[26:17] use the same shape kind of 4x4 square
+[26:20] and kind of stack them and then
+[26:22] sometimes I add the on bigger one and
+[26:25] then we can add kind of highlight to
+[26:28] those
+[26:29] and then we'll just want to delete the
+[26:31] shadow Parts wherever they may be so it
+[26:34] doesn't look like they overlap awkwardly
+[26:37] and you can connect them with a branch
+[26:40] kind of a brown if you want they look
+[26:43] fine just kind of chill them as is but
+[26:46] if you want it to look more like a viny
+[26:49] kind of connected vegetation do that and
+[26:53] you can just kind of keep going and
+[26:55] depends how vegetated you want it to be
+[26:58] you copy and paste some kind of add it
+[27:00] everywhere perhaps it's going under this
+[27:04] you can move them as you see fit and now
+[27:07] you have this little sci-fi little
+[27:11] isometric Hut and it's pretty cute let's
+[27:14] let's keep this all green and turn the
+[27:17] grass into it and we'll add some kind of
+[27:20] more subtle Shadows to these since
+[27:22] they're just little tiny grass blade
+[27:25] blades like so so if you've been with me
+[27:28] this far I hope you learned a few things
+[27:31] on creating this cute little sci-fi Hut
+[27:34] and if you support me on socials patreon
+[27:36] watching on YouTube in any way I thank
+[27:38] you so much and I appreciate your time
+[27:41] thank you see you next time
