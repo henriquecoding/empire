@@ -165,3 +165,10 @@ Não transformar “metadados presentes” em “animação aprovada”.
 
 Plugins e scripts vistos nos tutoriais permanecem opcionais e não foram
 instalados. Uma necessidade real de dependência segue a regra de ADR do projeto.
+
+## Ensaio por ação com a Forja
+
+`forja ensaio` e `exportar --actions` preservam canvas, pivô e milissegundos por quadro.
+O trim é reconstruído antes de conferir pixels. Corpo e VFX têm provas separadas;
+ver o [fluxo Penusbmic](PENUSBMIC_WORKFLOW.md). Esta prévia não declara abertura no editor
+nem integração Godot. A exportação histórica por slot permanece disponível.

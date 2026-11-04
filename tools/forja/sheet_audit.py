@@ -1,7 +1,7 @@
 """Auditar a prancha sem confundir acoes, ocultar perdas ou aprovar movimento pela exportacao."""
 from __future__ import annotations
 
-from . import anim, guard, lineage, masks, motion, temporal, timeline
+from . import anim, effect_windows, guard, lineage, masks, motion, temporal, timeline
 from .equipment import image_sha
 
 SCHEMA = "forja.animation_lineage/1"
@@ -25,16 +25,26 @@ def correct(frames, tags, sopts, keep):
     out = [f.copy() for f in frames]
     fixes, counts, changed = {}, {s: 0 for s in temporal.STATUSES}, 0
     locks = []
+    windows = effect_windows.validate(sopts.effect_windows, len(frames), frames[0].size)
     lock_keep = keep | frozenset().union(*[masks.box(b) for b in sopts.actions or []])
     for name, first, last, _ in tags:
         part = frames[first:last + 1]
+        local = [{**w, "from": max(w["from"], first) - first, "to": min(w["to"], last) - first}
+                 for w in windows if w["from"] <= last and w["to"] >= first]
         if sopts.deflicker:
-            part, info = temporal.stabilize(part, sopts.deflicker, sopts.static, sopts.actions, keep)
+            part, info = temporal.stabilize(part, sopts.deflicker, sopts.static, sopts.actions, keep, local)
             changed += len(info["changed"])
             for status, n in info["counts"].items():
                 counts[status] += n
         if sopts.lock:
+            before = part
             part, reports = motion.lock(part, sopts.lock, keep=lock_keep)
+            for i, report in enumerate(reports):
+                dx, dy = report["offset"]
+                reference = {(x + dx, y + dy) for x, y in effect_windows.at(local, 0)}
+                for x, y in effect_windows.at(local, i) | reference:
+                    if 0 <= x < part[i].width and 0 <= y < part[i].height:
+                        part[i].putpixel((x, y), before[i].getpixel((x, y)))
             locks += [{**r, "frame": first + r["frame"], "tag": name} for r in reports]
         out[first:last + 1] = part
     if sopts.deflicker:
@@ -44,6 +54,8 @@ def correct(frames, tags, sopts, keep):
             "nenhuma regiao estatica declarada: nada foi alterado"}
     if sopts.lock:
         fixes["lock"] = locks
+    if windows:
+        fixes["effect_windows"] = windows
     return out, fixes
 
 

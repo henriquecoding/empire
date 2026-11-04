@@ -1,0 +1,52 @@
+Testing Sprites inside of Aseprite #aseprite #pixelart #asemulator
+Autor: Penusbmic
+Fonte: https://www.youtube.com/watch?v=8VZVFGJIrSs
+Licença observada: Creative Commons Atribuição (reutilização permitida), conforme YouTube.
+Link da licença exibido na fonte: https://www.youtube.com/t/creative_commons
+Conferência da licença: 2026-11-03. Texto obtido via exportação de legendas do YouTube.
+Adaptação: apresentação textual das legendas, com este cabeçalho de atribuição.
+Idioma: original disponível (inglês). Legenda não revisada integralmente contra áudio; pode conter erros, omissões e tempos aproximados.
+Não há endosso do autor à Forja.
+
+YouTube transcript
+Video ID: 8VZVFGJIrSs
+Language: en
+Captions: auto-generated
+
+[0:00] Now, you can see here, we have this
+[0:01] screen, it's brought up. Let's turn off
+[0:03] the ground [music]
+[0:05] tile and shadow layers. You can see
+[0:07] here, we have this big shadow as well.
+[0:09] Well, we can move and some things are a
+[0:11] little off, but it's so easy to fix. So,
+[0:13] let's go to the actor properties and
+[0:15] [music] and click on show collision box
+[0:18] to see the collisions and the shadow.
+[0:20] So, let's let's fix this collision
+[0:22] [music] first, and it's so simple. Let's
+[0:24] click on our sprite here and use click M
+[0:27] to have the selection tool, and [music]
+[0:28] then for the collision, I'm just going
+[0:30] to go right about here. So, you have
+[0:32] this selected, and then you just click
+[0:34] set from selection. [music] And now we
+[0:36] have the collision there, which because
+[0:38] it's on the higher ground, it looks a
+[0:39] little off, but that's just cuz he does
+[0:41] a little hop down, and it's very cute.
+[0:43] We don't even have a jump, but it looks
+[0:44] great. [music] So, now let's set up the
+[0:46] Let's turn off the collision box. Let's
+[0:48] set up the shadow. We can also set this
+[0:50] from selection, but it's going to look
+[0:52] off right now because it's not ideal.
+[0:55] So, let's just select I think right
+[0:57] around here will look great. Maybe let's
+[0:58] make it a bit wider. It's just going to
+[1:00] make a shadow from your selection. So,
+[1:02] the angle's going to That's a little bit
+[1:04] better. So, if you make it a little
+[1:05] [music] bit taller, it's going to going
+[1:07] to appear at a better angle. I kind of
+[1:09] like that.

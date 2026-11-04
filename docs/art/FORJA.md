@@ -873,3 +873,9 @@ A API pública do PixelLab foi revalidada. Os endpoints de animação continuam 
 Forja; não usar a existência deles para afirmar que o `create-image-*` produz animações. A auditoria
 explica limites de contagem, referência e esqueleto, incluindo a incompatibilidade direta de contagens
 ímpares do jogo com `animate-with-text-v3`.
+
+## Estudo Penusbmic aplicado (03/11/2026)
+
+Ver [ensaios, exportação por ação e pilotos](PENUSBMIC_WORKFLOW.md) (FORJA-19, ADR 0105).
+`forja estudo`, `ensaio`, `ensaio-rever`, `ensaio-comparar`, `variantes` e `cena-piloto`
+implementam o fluxo; evidência incompleta continua pendente e não concede aprovação.

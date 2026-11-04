@@ -1,0 +1,153 @@
+How I Design Unique Characters Step by Step!
+Autor: Penusbmic
+Fonte: https://www.youtube.com/watch?v=zRGV_9GRBTc
+Licença observada: Creative Commons Atribuição (reutilização permitida), conforme YouTube.
+Link da licença exibido na fonte: https://www.youtube.com/t/creative_commons
+Conferência da licença: 2026-11-02. Texto obtido via vidIQ.
+Adaptação: apresentação textual das legendas, com este cabeçalho de atribuição.
+Idioma: original disponível (inglês). Legenda não revisada integralmente contra áudio; pode conter erros, omissões e tempos aproximados.
+Não há endosso do autor à Forja.
+
+[0:00] Welcome, welcome. I'm Pen and today we're going to be designing some unique characters. A little bit different this time. Today we're going to be using a new app called Pixquare. I've been recently using it and I've been absolutely loving it. You can see here I have a design I was working on. We're
+[0:16] going to start from scratch and go through the entire process. I've been making these characters, you can see here, and posting them on my socials recently. And I have a couple more and they've been popular. So I thought, hey, let's do a tutorial on this. Pixquare.
+[0:34] It's pretty straightforward. I will go through some of the the uh little things you can do in it as we go along. Uh but for the most part, if you use any Pixel program, you should be able to follow along. I also have a code for this. You can use code pen USB mic for 30% off. So
+[0:53] let's let's uh go through the program pretty quick. start off by uh going back to our gallery. You can see some my uh son has done and some from myself. So, we're going to click this arrow up here and go artwork and we're going to scratch our 64 and we're going to start
+[1:08] with 192 by 192. Title it tutorial. You can see my beautiful writing and we'll go create. Now, we have a 192x 192 canvas. Once we get that done, we can go
+[1:25] ahead and set up some layers and set up our pallet. So, if we click this little arrow over here, it brings up your layers. And this is also your animation tab. I like to grab this arrow here and bring it all the way up here. You can um go into settings and bring this all the
+[1:41] way down to the bottom, but I like to manually do it. And then I'm going to go ahead and click this box right here with the arrows. And I'm going to make six layers. And I'm just going to extend them so I can see them all. This layer one will be background layer. And you
+[1:58] can rename layers by double clicking them, coming up here, clicking this pencil, and then renaming it. And we'll say background. We'll go okay. And now we have our layers set up. We're going to generally be working on layer 4. And then behind we have some layers and
+[2:14] above we have some layers. So now let's do our pallet. I've been using this palette that's built into Pixquare. If you don't have it, you can also find it on um lawspec.com and it's this resurrect 64. So now we have everything set up. We can go through a couple more
+[2:30] things. One thing I would I recommend setting up is if you two finger double tap it will undo. Now we're going to be doing the same kind of imagine we're doing the same universe where these characters with their their blue and red
+[2:47] and white robes are roaming. So, we're going to add another character. It might be similar to this one. So, let's begin. I'm going to start in the middle layer here, layer four. And I'm just going to start with the darkest color. And we're
+[3:03] going to start making a strong silhouette. I can't recommend or push this enough that a strong silhouette can carry a drawing pretty far. So, let's just start off with a Oops. Let's make a smaller. And I'm going to go click on the pencil up here and turn contour on.
+[3:20] And what contour does is it if you draw say a triangle, it fills in the middle. And it's just a little quicker, more efficient. So let's go ahead and start drawing our shapes. And I'm pretty loose with my
+[3:36] with my initials shapes. I kind of just I want to get that strong silhouette. And I I don't worry too much because we can we can shape carve everything later on.
+[3:51] And I use this term shape carver because there's a fellow on Instagram I believe called shape carver and it's kind of how he references everything. So right away I'm just
+[4:09] drawing shapes and kind of getting the the design. I'm going to use the eraser tool and just kind of erase some things and see if we like the shape. And already that shape looks cool, but it's not much yet. So, let's go back to the brush and maybe extend
+[4:26] that ear a bit. See if we like that. We don't. We'll double tap and erase. So, now let's uh maybe add something here. And it's really just adding to the design, the silhouette to make sure you
+[4:43] have [Music] some kind of strong silhouette that you can really look at and be like, okay, that that character is so and so. And we're going to be doing it sim similar
+[4:59] to this. So, a lot of the silhouette itself is going to be actually with this second color. So, we can add that right now. And I'm just going to go ahead and use the second color in the palette, which is just a another shade of this. You can see here.
+[5:18] And we can just kind of blob. We can just add in some If we lock this. Let's lock this layer. So, we're double click the layer and go alpha lock. You can see the little lock here. And that means we won't draw outside of
+[5:34] that silhouette. So, let's just do that and get some addition additional colors in here and kind of get some robe shapes. And we'll probably color these blue later on. Maybe there's one over here. And
+[5:52] we're going to really get the depth of the the shading and everything later on. So, don't worry about that. But we're just going to get our general shape going here
+[6:09] with our designs just so we get an idea of what of what we want to do. We can bring our pallet back up. Kind of again carve out some some things here.
+[6:26] And you don't have to use contour. It's kind of it's kind of odd at times. But let's just go ahead and give him a little belt maybe perhaps. And the thing is with these designs,
+[6:43] you don't have to commit. If you if you draw your silhouette and you're not happy with it, you don't feel like it's very strong, then just erase it. It it only took 5 10 minutes, so just erase it and and
+[6:59] start over. and hopefully um you can get a stronger silhouette and something you're more something you're happier with. So, let's uh let's grab this brownish red color and let's make a mask. Most of these characters, you can
+[7:14] see they have these these skull looking masks on them. So, let's let's do that. And let's uh we'll just draw a circle. Again, it's going to be on um alpha lock, so we can't can't really mess up
+[7:31] going out of these lines. And we can clean up little details later on. I'm going to grab the dark color again and kind of draw some negative space in here, which
+[7:46] is kind of just erasing this color. And let's do some eyes. do some odd shapes. Just kind of get general feel for the eye.
+[8:03] And then let's just for good measure add a small little eye so we can see what we're we're working with. And he doesn't look too bad. Let's grab the eraser tool and kind of erase some
+[8:20] small things here. like so. And then go back to the um pencil tool. Let's turn off the alpha layer here. And you
+[8:35] can just click on it here, which will turn it off. And then you can draw outside of that all. We can close this. [Music]
+[8:50] Like so. And maybe perhaps we can start adding um some color to this. So, let's uh [Music] let's add some cloth. We're going to flip and turn these and
+[9:06] make sure we get them pretty nice looking. [Music] Add some cloth there. This one goes over here a bit. Let's undo that. We didn't like that.
+[9:23] And then we had a big one last time coming down like this. So let's let's do something similar [Music] like so. And all these little small pixels we're going to eventually clean up, but for now we will keep them as is.
+[9:43] And then this one right here, let's undo if we don't like it. kind of just set up here. And let's grab this white color and kind of set up a small one here.
+[9:58] If you don't like it, again, undo [Music] like so. And so far he doesn't look like much, but we're going to slowly add
+[10:16] small details and more shadows and depth and everything. And eventually he will come to life. So let's let's add some more details to this cloak. You can see in these these ones we have a lot of small details that really bring the character together cuz if you if you
+[10:31] remove those details from this guy, he's going to look more like this guy. So, let's go ahead and add some details. We're going to add some red here. Maybe
+[10:49] pretty thick. Maybe one up here. And then we're going to paint bucket. And we're going to add that there. And maybe try adding some red. Oops. We
+[11:06] don't want to be paint bucket. And let's turn contour off. And let's just add red to this line here. Zoom in to make it easier.
+[11:25] Again, go to white and kind of fill this in. Make it a bit smoother. Perhaps these be a bit smoother over here. This one as
+[11:40] well. That looks a little better. And we'll add some white. Kind of smooth this out right here. [Music] You can see it coming together. Now, let's get a background color. I believe we use We can just steal this one. Um,
+[11:59] if it comes over Can we copy that? Copy. And paste.
+[12:16] Did that work? Let's copy. Copy this and we'll paste it on the background. And then we can grab it. We'll
+[12:33] improvise. Just uh select. And then let's go up here and use the selection tool. And let's just move this guy a little more in the center.
+[12:49] And des to select. And I think we can kind of shape things out a bit more. Let's uh use the eraser tool and kind of just make this guy a little more.
+[13:06] [Music] Let's make his silhouette a little bit stronger. Kind of like these kind of coming down a little more. And then this we can uh turn this black up here. That
+[13:23] one there. And now let's uh let's continue with some colors here. We'll bring this red let's bring this red around here and just
+[13:40] [Music] bring it on the outside of these. And then we'll zoom in to clean it up kind of [Music] like so.
+[13:57] And then you can do some some designs in this kind of some straight lines. [Music]
+[14:14] Like so. And then we can do some basic kind of shading with with some of these. And I'll show you how I usually do shading where it really kind of comes together in the end by using a multiply layer and
+[14:32] the color dodge layer. So let's just add some highlights in this side like so. [Music]
+[14:59] and erase some of this. Let's see if we can adjust his head a little bit. Let's just highlight it and kind of perhaps make it a bit smaller and then we'll clean it up. I think it was a bit too big for my
+[15:15] liking. Let's see the original. [Music] Maybe just a tad smaller. [Music]
+[15:35] Like so. Uh, maybe we'll maybe we'll keep it as is. Let's just see. I had to think about that one and maybe I'm overthinking it.
+[15:54] So, let's uh let's just continue. Let's start to add some kind of designs. Turn contour on. And we're just going to add some little knickknacks along his cloak.
+[16:11] And we can add a little highlights in them just to like feel out the design. [Music]
+[16:27] And then let's do some string tools. [Music] Not so thick. [Music] Let's bring it into this kind of area.
+[16:45] [Music] And again, erase it if you're not happy with it. [Music]
+[17:01] Brush tool. And let's uh add some more designs kind of little gadgets or potions or or whatnot down here
+[17:17] [Music] like so. And let's uh get rid of this behind there. Um, and let's add some see what color
+[17:35] this mask is. We can grab highlight in it. And let's uh go selection tool to the magic wand. We're just going to select it. So, we can use the brush tool and kind of color all that in
+[17:54] like so. And we can also go a darker color on this side and behind there.
+[18:10] And we'll grab that middle color and kind of do this here. And let's zoom out and see how it looks. You can you see in this uh corner down here, it's looking much better. Once we get all this shading in, it kind of slowly comes
+[18:26] together. So, let's grab this blue here and start adding this to um the scarf. So, let's uh do some highlights here. And you can always
+[18:42] use a mix of the paintbrush and the the drawing pen. We can get a better idea of of how this kind of shading and everything's going to look. So, we know it's coming, the light's coming from
+[19:01] the left side. And we're going to later add a kind of rim light from the left side as well.
+[19:16] And I'll just kind of have this kind of flow down a bit more and this match the the white here. You can do the same with the red as well. Bring that in. [Music]
+[19:34] We can zoom in a bit more and kind of bring the red all in these. Oops. Double tap. And then you can even bring
+[19:52] red on these. And we can grab this color here and maybe this green. Usually, when you're using a pre-made palette, these colors are going to tend to look pretty good
+[20:07] together. We'll just add these highlights here. [Music] And let's add the design kind of in this scarf here.
+[20:27] [Music] and grab the highlight and wherever that white is, we can go ahead and add it
+[20:43] there. Looks pretty good. And you can mess around with just kind of designs on your character.
+[20:58] You know, if you have a bunch of reference, you can kind of follow those and get an idea of what you want. You can just add
+[21:14] little things. They don't even necessarily need to look like anything. Just kind of some kind of design. Add this here.
+[21:34] Add some highlights to those dots to whatever they were. And then maybe some shading to these green things. [Music]
+[21:49] Like so. And I think it's about time we add maybe a backpack or something behind him. And this can just be a dark color. Maybe this here.
+[22:07] And let's do contour on it as well. Zoom in. Maybe maybe we'll stick to this green. This dark green looks pretty good. [Music]
+[22:24] We'll kind of do little things kind of hanging down here. Perhaps we can also do maybe that's too light. Maybe uh kind of darker different color string.
+[22:41] Well, [Music] and then we can add even do it on a different layer kind of weapon. a weapon. Bunch of weapons. Maybe a big weapon.
+[22:59] Add a big sword or something. An Aztec sword. Like so.
+[23:16] Maybe that handle needs to be moved a bit. So, let's use the magic wand and kind of just move it in a better position. And then we can go ahead and clean that up
+[23:32] like so. And then that entire sword, you can always just select it all and kind of move it into a better position. Maybe like that. And then we can always add some
+[23:48] some color to it slowly. Maybe the handle. Let's go ahead and
+[24:05] alpha lock this this layer here. And then we'll use the line tool like that. And maybe
+[24:23] some kind of design there might look cool. Again, it's just exploring and trying trying different things. And it's kind of you want the blade
+[24:39] to uh stand out a bit more. Maybe we could try this one. That looks more like a sword color. And then maybe the highlight.
+[24:57] Do a couple highlights there. And then once we use the multiply layer, we can kind of get a better idea of of what the the shadows and everything will look like. Perhaps I'm going to erase just a
+[25:15] little bit more on this sword. I think it'd be cool to actually give it some kind of like a red ribbon. Let's uh turn off alpha lock
+[25:30] here and kind of just have some cloth hanging down. And we can get the
+[25:49] brighter red and kind of add some color to it. Undo that. Like so. [Music]
+[26:06] And we're we're really slowly getting there. Kind of got this shape and everything. And this is kind of where you just start plucking away at smaller details till you get something
+[26:23] you like a bit more. One thing we can do with this little shadow under here, let's highlight it. And then we're going to kind of manipulate it with the color adjustments. And if you use this A right here, it's going to change the opacity.
+[26:38] [Music] And we're just going to lower it so it looks more like a shadow, which looks pretty cool. And I think we can add a bit more
+[26:56] details to this lower layer. Maybe just like some so we know there's some kind of pattern in there. Just small like that.
+[27:11] And little detail or a little different color to these. And we'll kind of just clean up this stuff.
+[27:26] Like so. [Music] Add some more kind of just knickknack things.
+[27:41] Just using the color palette. There's so many colors on here that I haven't I haven't even touched yet. Let's uh go ahead and maybe make this is where you start to get pickier and kind of explore changing little things. Let's
+[28:00] make that a little bit smaller like it's tucked in there. [Music] Oops.
+[28:16] Like so. And then I think now we can let's merge um let's merge these three layers. So if we click have the arrow checked on all these and merge them all. They should merge.
+[28:32] So now we have them all on one layer. So now we can go ahead and click on layer five and let's um do masking and we're going to clipping clip it which basically is like alpha lock
+[28:48] um and it apply all everything on this layer. So if we change the blending mode to multiply it's going to apply it all just like to uh layer two. And we're going to use kind of let's
+[29:05] just use this blue color. Make sure contour is on. So if I draw over here, nothing will happen. But if I draw over here, we're going to get lots of shading. So let's just go ahead and quickly do some shading around everything here. And
+[29:25] you can be picky with this. You can be quick. you can kind of just do quick things. And this is very dark right now. And what we're going to do is actually change the the opacity to this
+[29:41] um afterwards. So it doesn't stand out too much. [Music] So, just go ahead and quickly scan everything and everywhere you think
+[29:58] there might be a shadow, let's uh let's let's add it. [Music] All right, [Music]
+[30:13] [Music] so we can slowly go over everything. And we know the light was coming from the left, so the shadow is going to naturally be on
+[30:28] the right. [Music] Don't want to cover that eye. [Music] Let's get some shadows under these little gadgets here.
+[30:45] [Music] Maybe some shadow on this this backpack over here. Color in some things. And now we got a lot going on.
+[31:02] So, let's go ahead and click on layer five and let's click on opacity over here. And let's just crank it down a bit. And you can see the difference already where if you keep it around 50%.
+[31:18] Um, it's looking pretty good. If we go lower, it's pretty subtle at 25 20%. So, perhaps 50% looks pretty good. And we can go ahead and use the eraser tool. And anything that looks a bit too
+[31:34] odd, let's just go ahead and erase that. So that maybe is too much. Maybe this is too much as well. And there's nothing else that kind of
+[31:52] sticks out too much. So, we can keep that as it as it is right now. And let's let's do the opposite now. Let's add this rim light. And this will be kind of the same idea.
+[32:11] Um, we're going to click on layer six and we're going to go to masking and we're going to go clipping mask and it's going to apply to layer 2 as well. But with this layer, we're going to go to blending and we're going to go to color dodge. So, this is kind of the
+[32:29] opposite where if you take a color, let's take a brighter one. It's going to get lighter now. So, we can experiment what color we want this rim light to be. Maybe you want like some kind of purple. Um, that might look
+[32:44] cool going along all this. Maybe purple's not the color we want. And you can clean it up quickly. Um,
+[33:01] maybe we use pink bucket. And let's try out green. And green looks a bit too much. I kind of like this blue somewhere around the blue. This blue here. Um, let's uh make this contiguous so when we
+[33:19] fill it, everything goes. And now we can kind of just clean it up. With rim light, you don't want to use as much. It's kind of just on the rim. And again, we're going to change the opacity. So, this looks this seems pretty intense right now. Um,
+[33:36] and we don't have to we don't have to uh make it this intense. This is kind of more fine detailed things as well.
+[33:52] Let's get it out of there. Maybe these a little less. This one a little less as well. Perhaps this is lights traveling down there. Maybe on
+[34:07] this thing. Maybe on this a little bit. Maybe somewhat on these. Coming in a bit. You can see this is quite a lot.
+[34:24] So, let's just clean up some quick ones. Oops. And then again, we will click on it. And the opacity, we can change it until
+[34:41] we think it's subtle enough to make a difference. [Music] Oops. I undid there. So let's So now we have we can see here 54 um the color dodge
+[34:57] one. So our rim light is 54%. Toggle it on and off. The layer five which is our multiply which is our shadows. We can toggle that on and off as well. And you can see they both make pretty big difference. Without it's
+[35:12] looking pretty bland and with it's looking pretty the depth to it it's looking deep. Um and it's looking good. So basically now it's kind of just adding final touches. You can always add
+[35:30] a layer behind and kind of mess around with some background things. Maybe there's some kind of string. Oops. Let's not do that. Let's do some contour. And let's do some maybe some strings coming around here. Maybe
+[35:49] it's attached to the sword somehow. Like so. Maybe there's some strings above him. So on this layer here, we can just go do some strings
+[36:06] here. Maybe the line tool is better to use for this. And just small details like that. Maybe you can add another weapon
+[36:23] somewhere. Maybe there's like a some pocket knives here. He is kind of [Music] coming around here or something. You could just
+[36:38] explore little details. I just the main part of this design was kind of to showcase my process and how just putting shapes together and and exploring different
+[36:54] different kind of things, knickknacks that don't even really make any sense. They kind of just are there. Um it's a fun way to to not get frustrated when drawing. Um, one last thing I love doing with
+[37:10] this program on Pixquare. So, if we go here, the three dots up here, and we go to um, postprocessing and select CRT. We get this cool little
+[37:25] CRT design. And it's just kind of fun to add it and kind of see how it looks. You can even work with it, you know.
+[37:43] Looks pretty cool. Let's add a add another weapon on this side. Maybe another couple weapons like so. Do another
+[38:01] some kind of spear. spears like so. And then add some
+[38:20] uh red ribbons to those as well. [Music] Going behind it. add some highlights quickly to those. And this is this is my
+[38:37] favorite part to a character kind of just like you have everything figured out. You have the you kind of style the the silhouette, the position, you know, the you got your multiply and color dodge layers on for highlights and you
+[38:54] kind of just, you know, ready character's ready to go. And you can add some more highlights to these weapons. You can we can move them a bit if we want. Uh position them a bit more. Oh, we got the strings on, too. So, let's just leave that. Undo
+[39:12] and kind of just have fun with it. And I recommend if if you're still watching, just kind of make a bunch of silhouettes, use references, and kind of just, you know, if you have this reference here, you can apply these
+[39:29] colors, this this theme to another silhouette's pose, and kind of just have fun with it. Just try different different ideas and just go with it. And if you're watching and supporting me on any social media on
+[39:46] YouTube, Instagram, uh, X, wherever it may be, Patreon, itch, I appreciate it so much. Um, and thank you so much. I will catch you next time.
+[40:09] We are the one.

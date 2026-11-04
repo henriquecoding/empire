@@ -24,7 +24,7 @@ from collections import Counter
 
 from PIL import Image
 
-from . import color, masks
+from . import color, masks, effect_windows
 from .imageops import from_grid, grid as to_grid
 
 STATUSES = ("review", "motion", "expected", "protected", "inconclusive")
@@ -84,17 +84,20 @@ def _classify(grids, change, static, actions, keep=frozenset()) -> str:
 
 
 def diagnose(frames: list[Image.Image], threshold: float = 0.05, static=None, actions=None,
-             limit: int = 200, keep=frozenset()) -> dict:
+             limit: int = 200, keep=frozenset(), action_windows=None) -> dict:
     """Os candidatos a cintilacao de uma sequencia, cada um com o seu estado. Nao muda nenhum pixel.
 
     `keep`: pixels protegidos (do quadro), que nunca se estabilizam."""
     grids = [to_grid(f) for f in frames]
+    windows = effect_windows.validate(action_windows, len(frames), frames[0].size) if frames else []
     zone, acts = _boxes(static), _boxes(actions)
-    cands = [{"frame": c[0], "at": [c[1], c[2]], "kind": c[3], "status": _classify(grids, c, zone, acts, keep)}
+    cands = [{"frame": c[0], "at": [c[1], c[2]], "kind": c[3], "status": _classify(
+        grids, c, zone, acts | effect_windows.at(windows, c[0]), keep)}
              for c in _changes(grids, threshold)]
     counts = Counter(c["status"] for c in cands)
     return {"threshold": threshold, "static": [list(b) for b in static or []],
-            "actions": [list(b) for b in actions or []], "counts": {s: counts[s] for s in STATUSES},
+            "actions": [list(b) for b in actions or []], "action_windows": windows,
+            "counts": {s: counts[s] for s in STATUSES},
             "candidates": cands[:limit], "note": _note(counts, bool(static))}
 
 
@@ -106,18 +109,21 @@ def _note(counts: Counter, has_static: bool) -> str:
 
 
 def stabilize(frames: list[Image.Image], threshold: float = 0.05, static=None,
-              actions=None, keep=frozenset()) -> tuple[list[Image.Image], dict]:
+              actions=None, keep=frozenset(), action_windows=None) -> tuple[list[Image.Image], dict]:
     """Corrige so os candidatos `review`, contra o quadro anterior ja corrigido; diz o que mudou e onde."""
     grids = [to_grid(f) for f in frames]
-    report = diagnose(frames, threshold, static, actions, keep=keep)
+    report = diagnose(frames, threshold, static, actions, keep=keep, action_windows=action_windows)
     zone, acts = _boxes(static), _boxes(actions)
     changed = []
     if zone:
         for i in range(1, len(grids)):
             for c in _changes(grids[max(0, i - 1):i + 2], threshold):
-                if c[0] != 1 or _classify(grids[max(0, i - 1):i + 2], c, zone, acts, keep) != "review":
+                current = acts | effect_windows.at(report["action_windows"], i)
+                if c[0] != 1 or _classify(grids[max(0, i - 1):i + 2], c, zone, current, keep) != "review":
                     continue
                 x, y = c[1], c[2]
+                if (x, y) in effect_windows.at(report["action_windows"], i - 1):
+                    continue  # nao copiar o efeito do quadro anterior para fora do intervalo
                 grids[i][y][x] = grids[i - 1][y][x]
                 changed.append([i, x, y])
     report["changed"] = changed

@@ -1,0 +1,98 @@
+{
+  "schema": "forja.penusbmic/1",
+  "date": "2026-11-03",
+  "study": "docs/art/research/2026-11-03-penusbmic/ESTUDO.md",
+  "study_sha256": "a67f153556601b7466fa48b0cc4d64ef779b780fa42a3963f2977e8d6c6482de",
+  "scope": "engineering_inferences_from_partial_transcript_study",
+  "proposals": [
+    {
+      "id": "P0-01",
+      "title": "Revisão de mãos e objetos ao longo da ação",
+      "sources": [
+        "https://www.youtube.com/watch?v=qODPK9kf-h4",
+        "https://www.youtube.com/watch?v=NSOZKOLNP5w",
+        "https://www.youtube.com/watch?v=4WsffG5KzQk"
+      ],
+      "acceptance": "Na prova dos dois alquimistas, conservar o mesmo tamanho absoluto da poção e distinguir pega válida, mão solta, braço ausente e objeto oculto. Ausência de evidência produz pendência, não aprovação."
+    },
+    {
+      "id": "P0-02",
+      "title": "Identidade facial por pose e estado",
+      "sources": [
+        "https://www.youtube.com/watch?v=sx665YgtZVQ",
+        "https://www.youtube.com/watch?v=mCM6gACqtkM"
+      ],
+      "acceptance": "Comparar repouso, esforço e dano sem perder barba, bigode, nariz e expressão característica. Olho fechado ou boca diferente só passam quando pertencem a um estado admitido e visualmente revisado."
+    },
+    {
+      "id": "P0-03",
+      "title": "Evidência de apoio, fases e recuperação",
+      "sources": [
+        "https://www.youtube.com/watch?v=OnrmsMm6NMk",
+        "https://www.youtube.com/watch?v=Kgwiwbr4QS4",
+        "https://www.youtube.com/watch?v=KS837a-TFRc",
+        "https://www.youtube.com/watch?v=mDy2aXfOWKU"
+      ],
+      "acceptance": "A ação mantém origem e contratos de tempo; cada mudança de apoio é explicável; não há perda de membro ou arma. Recuperação e loop são vistos, e os efeitos não escondem defeitos conhecidos."
+    },
+    {
+      "id": "P1-01",
+      "title": "Variação controlada de personagens novos",
+      "sources": [
+        "https://www.youtube.com/watch?v=sx665YgtZVQ",
+        "https://www.youtube.com/watch?v=zRGV_9GRBTc"
+      ],
+      "acceptance": "A prancha mostra diferenças legíveis a 1× e registra por que uma alternativa atende à função. Nenhum candidato rejeitado vira nova referência por conveniência."
+    },
+    {
+      "id": "P1-02",
+      "title": "Prova de cenário antes de expansão",
+      "sources": [
+        "https://www.youtube.com/watch?v=l-GrnsUKlsg",
+        "https://www.youtube.com/watch?v=UuxieFVHKIE",
+        "https://www.youtube.com/watch?v=5P4EVDuBzfI"
+      ],
+      "acceptance": "A leitura do ator permanece; a porta corresponde ao corpo; a faixa inferior funciona; troncos, copas e materiais têm grupos deliberados. Não há ruído uniforme para simular riqueza."
+    },
+    {
+      "id": "P1-03",
+      "title": "Ensaio repetível da peça editada",
+      "sources": [
+        "https://www.youtube.com/watch?v=dLvS_vtiXKQ",
+        "https://www.youtube.com/watch?v=65nL1D3FZ5M",
+        "https://www.youtube.com/watch?v=8VZVFGJIrSs"
+      ],
+      "acceptance": "Antes/depois têm a mesma escala e ação; PNG, JSON e fonte Aseprite correspondem; o teste no Godot é identificado separadamente da prévia de autoria."
+    },
+    {
+      "id": "R2-01",
+      "title": "Contrato de exportação por ação",
+      "sources": [
+        "https://www.youtube.com/watch?v=1M3niV7jooU",
+        "https://www.youtube.com/watch?v=m91mtS0267c",
+        "https://www.youtube.com/watch?v=PB6R95Q_4Xs"
+      ],
+      "acceptance": "Na mesma prévia, alternar idle, run, ataque e retorno sem salto de pivô. Conferir dimensões de 64/80 px antes e depois de exportar/importar. Um efeito que ultrapasse o corpo não deve provocar escala diferente do personagem."
+    },
+    {
+      "id": "R2-02",
+      "title": "Revisão de efeitos intencionais por região e intervalo",
+      "sources": [
+        "https://www.youtube.com/watch?v=9rU5a_MM-ek",
+        "https://www.youtube.com/watch?v=__hbXdm1HN8",
+        "https://www.youtube.com/watch?v=XbQ4RmritTY"
+      ],
+      "acceptance": "Um glitch autorizado não deve ser apagado por estabilização automática. Fora da região e intervalo, alterações continuam exigindo explicação. Arma, arco, oclusão e retorno devem permanecer verificáveis com o efeito desligado."
+    },
+    {
+      "id": "R2-03",
+      "title": "Prova de cenário por massas, escala e circulação",
+      "sources": [
+        "https://www.youtube.com/watch?v=l-GrnsUKlsg",
+        "https://www.youtube.com/watch?v=mfUnB-yq53w",
+        "https://www.youtube.com/watch?v=PB6R95Q_4Xs"
+      ],
+      "acceptance": "No bosque, musgo, fungos e cogumelos devem construir identidade por formas e agrupamentos reconhecíveis. A faixa inferior funcional e os acessos continuam legíveis. Comparar a cena no enquadramento de jogo, sem estabelecer um percentual universal de ocupação."
+    }
+  ]
+}

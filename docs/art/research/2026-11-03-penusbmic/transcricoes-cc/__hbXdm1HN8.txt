@@ -1,0 +1,964 @@
+Pixel Art Tutorial: Top Down Attacks
+Autor: Penusbmic
+Fonte: https://www.youtube.com/watch?v=__hbXdm1HN8
+Licença observada: Creative Commons Atribuição (reutilização permitida), conforme YouTube.
+Link da licença exibido na fonte: https://www.youtube.com/t/creative_commons
+Conferência da licença: 2026-11-02. Texto obtido via exportação de legendas do YouTube.
+Adaptação: apresentação textual das legendas, com este cabeçalho de atribuição.
+Idioma: original disponível (inglês). Legenda não revisada integralmente contra áudio; pode conter erros, omissões e tempos aproximados.
+Não há endosso do autor à Forja.
+
+YouTube transcript
+Video ID: __hbXdm1HN8
+Language: en
+Captions: auto-generated
+
+[0:00] hey I'm pen USB Mike a pixel artist
+[0:03] animator that has worked on games like
+[0:04] domee keeper Showgun Showdown and right
+[0:07] now my own little project called bullet
+[0:08] bunny this tutorial is a condensed
+[0:11] version I release unedited versions on
+[0:14] my itch.io and for my patreons they can
+[0:17] download it for free check out the links
+[0:19] below like I said they're they're
+[0:21] unedited from start to finish including
+[0:23] mistakes more information I have about
+[0:25] 20 tutorials banked up on itch.io that
+[0:29] my patreons can
+[0:30] access all of them for free so check
+[0:32] that out if you're interested but yeah
+[0:34] let's get going so this tutorial I want
+[0:37] to kind of go through the process of top
+[0:40] down which I haven't done many tutorials
+[0:43] on we're going to be doing an attack so
+[0:46] swiping down and then kind of seeing how
+[0:49] you can translate that attacking down to
+[0:52] attacking up which is very different but
+[0:54] there's a couple little things you can
+[0:55] do that will make it easier so right now
+[0:58] I have this this character it's a from
+[1:00] my stranded series that is slowly
+[1:02] building up but we have an idle
+[1:05] down right now kind of a move down a
+[1:09] roll idle up and move up so slowly
+[1:12] working on him and I thought it would be
+[1:14] great to go over the attack
+[1:17] animation and and see what we can learn
+[1:20] from it so with that being said I'll
+[1:22] first uh show you another hero I did
+[1:25] it's kind of top down kind of a bit
+[1:28] older you can see the runs
+[1:30] similar and the attack down is
+[1:33] quick attack up same thing so some key
+[1:36] things we w we want to take from this is
+[1:39] the head position so the head position
+[1:41] here when just running down or in its
+[1:44] idle position is just kind of hanging
+[1:47] out in a neutral position goes up and
+[1:49] down in the run and then with the attack
+[1:52] right away it darts to the right where
+[1:54] his weapon is slashing to the left and
+[1:57] then it kind of it leaps forward quite a
+[1:59] bit it and then it slowly will return to
+[2:02] that neutral position so that first
+[2:05] frame is stting to the right a bit
+[2:08] slashing far to the left bit looking to
+[2:11] the left and then it comes back so
+[2:13] that's the main thing we're going to
+[2:14] focus on is the head right now and then
+[2:17] you can see the attack up is is somewhat
+[2:20] the same but dirting to the right let's
+[2:23] kind of take that and translate it to
+[2:25] this uh this other hero that we're
+[2:28] working on I'll start a fr
+[2:30] canvas so 192x 192 is usually what I
+[2:34] start at so we'll just we'll open that
+[2:36] up we'll make a bunch of layers cuz
+[2:38] we're going to copy and
+[2:41] paste and for animation you want you
+[2:44] want to have your layers separated it
+[2:47] makes things so much easier that's a
+[2:50] rule everyone should follow and we have
+[2:52] a gun in there so we'll just remove
+[2:54] layer eight and right now we have we can
+[2:58] go through and double check check all of
+[3:00] them our background here so layer one is
+[3:02] nothing so this layer two we'll name
+[3:06] background Layer Three is the shadow
+[3:09] which is just for looks most of the time
+[3:12] you you won't use it layer four is the
+[3:15] backpack and layer five is the body/
+[3:20] legs underneath layer six is the cloak
+[3:25] or robe layer Seven's the head layer
+[3:30] 9 a sword or weapon so now we have this
+[3:34] our layers separated it will make our
+[3:36] workflow so much easier and more
+[3:38] efficient mistakes won't be as costly if
+[3:41] you make a you know a big mistake and
+[3:43] you have say one or two layers it's
+[3:46] going to be quite the pain to uh clean
+[3:49] up so we'll also make another layer for
+[3:52] the VFX or FX and that's going to be the
+[3:55] sword swipe so we know right away just
+[3:58] from looking at our our old kind of
+[4:00] layout we want the head shift over here
+[4:06] and then that's frame two and then frame
+[4:08] three we want it over here so we can go
+[4:10] ahead and make our our key frames and we
+[4:13] can start by making that first key frame
+[4:16] or I mean sorry that last key frame
+[4:18] where the head's a little bit over here
+[4:21] and looking towards that direction just
+[4:24] a bit and then we can go ahead and make
+[4:26] the sword the sword's going to be a bit
+[4:29] up here here so I just flip that
+[4:32] quickly and right now it's in front of
+[4:34] his head that doesn't make any sense and
+[4:36] we can quickly just go to cell
+[4:37] properties you can open that up and you
+[4:39] can go to Z index and we can move so it
+[4:42] was at zero you can see it's in front of
+[4:44] the head and we want it behind the head
+[4:46] so one is good enough so we'll just keep
+[4:49] it like that but you can go all the way
+[4:51] down and it will be behind it will be
+[4:53] behind the background as well but let's
+[4:55] just keep that at at one so now we have
+[4:58] the head movement
+[5:00] and what we want to do is we want to
+[5:02] bring the backpack kind of up here the
+[5:06] the one leg will be forward the one will
+[5:08] be back cuz it's in kind of like a a
+[5:11] pose where his he's striking his legs
+[5:13] are are separated quite a bit so we can
+[5:16] go ahead and quickly move this leg back
+[5:20] a bit cuz it's not going to be in sight
+[5:23] this leg will
+[5:25] be up a bit maybe over we can remove
+[5:29] some of
+[5:31] this and the backpack I'm going to use
+[5:34] the V tool to quickly jump to that layer
+[5:37] so you saw we were on whatever layer we
+[5:40] were let's just say we're on the cloak
+[5:42] if you hold V you can see it highlights
+[5:44] the cloak but if you click or if you
+[5:47] Hoover over the backpack you'll see it
+[5:51] highlights that and if you click it it
+[5:52] will jump to that layer so little little
+[5:55] Quick Trick tip there and the backpack
+[5:58] we're going to want kind of up more
+[6:01] towards the right and we can always
+[6:03] adjust that this is just the main key
+[6:06] frame so the most important one thing to
+[6:10] get correct is the cloak here so we're
+[6:12] saving it for last and this this kind of
+[6:15] triangle here the darker section that's
+[6:18] always leading to his head so we're
+[6:20] going to want to keep that triangle kind
+[6:23] of consistent where its head is
+[6:26] somewhere below it and making some sort
+[6:29] of triangle shape it doesn't need to be
+[6:31] perfect but just something to keep
+[6:35] consistent and you want that volume to
+[6:37] be somewhat the same as it was before
+[6:40] you can go ahead and count pixels to
+[6:42] keep it very consistent or you can just
+[6:44] do the ey test it would be cool if there
+[6:46] was a little tool that down here said
+[6:49] this was x amount of pixels and then if
+[6:51] you went over here and and highlighted
+[6:54] this it was x amount of pixels as well
+[6:56] but as far as I know that's not a tool
+[6:58] could be let's let's go ahead and and
+[7:00] keep working on this this cloak here so
+[7:02] these don't make sense so we can we can
+[7:04] go ahead and erase those and right now
+[7:07] it looks it looks okay we can we can
+[7:09] flare out the cloak a bit more make it
+[7:12] more dramatic but I'd say let's not
+[7:15] worry about the cloak too much at this
+[7:18] point because we're going to be adding
+[7:20] the physics and everything as we go the
+[7:23] most important part is making sure this
+[7:25] this key frame here is appealing to the
+[7:29] eye and we can go ahead and jump to the
+[7:31] legs maybe the legs need to be back a
+[7:34] bit more and that would make the the
+[7:36] Shadows not too important but just for
+[7:39] the overall appeal of it we can keep it
+[7:42] back we can bring we can erase some from
+[7:45] the cloak
+[7:46] here and as well the
+[7:51] underneath and we can kind of just flip
+[7:54] through so this will be the last the
+[7:57] last frame so it's not make too much
+[7:59] sense right now I don't think I like his
+[8:02] uh the left foot his right foot right
+[8:04] now so let's let's go ahead and and move
+[8:07] that let's try it up a bit maybe just
+[8:11] maybe just completely gone um we can
+[8:14] always adjust that later perhaps the bag
+[8:17] is too too close we can move this over
+[8:20] to appear as if it's uh tilting a bit
+[8:23] shave some down there and kind of just
+[8:26] get a general idea of of this perhaps we
+[8:32] want the bag kind of above the cloak as
+[8:34] well because right now it doesn't make
+[8:36] as much sense so we could we could even
+[8:39] try bringing that above using the the
+[8:43] index cell index as well so let's go
+[8:46] ahead and and do that bring it one
+[8:50] two but behind the
+[8:53] head maybe just two and what we can do
+[8:57] is just remove this
+[9:00] little part for now and kind of just TST
+[9:03] the bag a bit maybe it's appearing too
+[9:06] big we can we can chop it down slim it
+[9:09] down a bit and this little guy here we
+[9:12] can kind of keep we can animate that you
+[9:16] know fling back and forth as we go but
+[9:19] perhaps that's better the cloak is kind
+[9:22] of not as important then we can try that
+[9:26] and one thing we'll add to get a final
+[9:28] feel of this key frame is the the swipe
+[9:32] so what I'm going to use is the circle
+[9:34] tool and I'm going to kind of make a big
+[9:37] circle and just line up the point here
+[9:40] the point of the sword with the circle
+[9:42] and then I'm going to just flap it on
+[9:45] all we can do is erase a section and
+[9:48] it's going to give you this crescent
+[9:49] moon or what whatever type of moon it is
+[9:52] it's going to give you that look and you
+[9:54] can adjust this as as needed but that's
+[9:57] a nice smooth V effect X look already so
+[10:00] we can um leave that as is adjust it
+[10:03] later on but right now it's a smooth
+[10:04] thing and what you can do with this
+[10:06] later on when we're doing the upwards
+[10:08] motion or upwards attack is we can just
+[10:10] flip it and hopefully use the same one
+[10:13] maybe some minor adjustments but right
+[10:16] now let's let's uh let's leave that as
+[10:18] is so we got our neutral pose slice and
+[10:22] that's going to be our two key frames
+[10:24] top down tends to be very quick in most
+[10:27] cases it you can do some more dramatic
+[10:30] things but this base attack right now is
+[10:32] going to be a quick SL swipe and you
+[10:35] could do a combo and have a swipe back
+[10:38] as well but we're just going to focus on
+[10:40] this first quick swipe because we're
+[10:42] doing the up version as well we don't
+[10:45] have as much time so let's just focus on
+[10:48] the one swipe and not a combo so with
+[10:50] that being said we can go ahead and and
+[10:52] start making some inet you know that
+[10:55] kind of buildup frame we could add where
+[10:58] his head's kind of over here a bit more
+[11:00] and the sword's kind of building up a
+[11:03] bit more over here quickly so the heads
+[11:06] if you go between it's a little odd
+[11:09] right now if we adjust some more things
+[11:12] oops maybe his foot comes back and Tad
+[11:17] the the cloak comes down so we remove
+[11:21] here some over here and then adding some
+[11:25] as
+[11:26] well with that we move down this the
+[11:30] stripe and this like I said before kind
+[11:33] of follows the chin under the head so we
+[11:36] we can adjust
+[11:40] that so now we have kind of slight
+[11:44] movement we can add we can see here this
+[11:47] this piece is kind of separating so we
+[11:49] can add that so it's more consistent and
+[11:51] we can make sure it's in this one as
+[11:54] well so now you got your three main kind
+[11:57] of key frames quickly this one switches
+[12:01] over maybe the bag moves too much but
+[12:04] let's see oh that didn't move at all so
+[12:06] maybe just one up kind of like it over
+[12:10] over and then swipe a quick swipe and
+[12:14] then if you want to add the combo it's
+[12:17] just you can follow along um pause it if
+[12:20] needed and just add kind of the sword on
+[12:22] this side and kind of everything would
+[12:23] be reversed this way and that would just
+[12:26] make it a quick two swing combo so now
+[12:28] that we have those these three frames
+[12:31] kind of figured out we can go ahead and
+[12:32] start adding some inet if you want a
+[12:35] quick slash I would do less in between
+[12:38] between one and two and then kind of
+[12:40] just have some aftermath frames on three
+[12:42] so we'll start with that and we'll kind
+[12:45] of start by deleting this VFX we can
+[12:48] toggle the background off and then
+[12:50] toggle onion skin and what onion skin
+[12:53] does is just it shows the the frame
+[12:56] behind it or in front of it whatever you
+[12:58] set it too with these little markers
+[13:00] here you can see I'm adjusting it here
+[13:04] right now it's on the frame before and
+[13:05] the frame
+[13:07] after so if we go to frame four we can
+[13:10] see the VFX from frame three and we can
+[13:13] kind of just follow that kind of line
+[13:15] and work with it so what I'm going to do
+[13:17] is just kind of Trail the line of this
+[13:21] just in sections you know and just kind
+[13:27] of
+[13:30] kind of make it I kind of like doing it
+[13:32] on the bends that part was a little too
+[13:35] straight for me so the bends kind of
+[13:36] work work well in my
+[13:39] eyes so let's just go ahead and add that
+[13:43] there perhaps and maybe a little tiny
+[13:47] one over
+[13:49] here and what we can do is add another
+[13:52] frame because we know this this VFX is
+[13:55] going
+[13:56] to go a little tiny bit more
+[14:00] and you want it to fade real quick
+[14:03] especially this this one
+[14:07] here so you kind of want to start
+[14:11] erasing it you know it goes from that
+[14:13] volume say it was 12 pixels now it's
+[14:16] three uh this one somewhere along those
+[14:20] lines as
+[14:23] well perhaps even just two and then we
+[14:26] can check out add one more frame and
+[14:29] kind of
+[14:30] just add the
+[14:33] remaining pixels and see how it looks so
+[14:36] now it's going to be static not much
+[14:38] going on but you can see it looks like
+[14:41] an attack already and one thing I'm
+[14:43] going to do is speed up the frames it's
+[14:47] the default is 100 which is is pretty
+[14:50] standard but I'm going to drop it down
+[14:52] to 75 I find I've been liking that and
+[14:56] that's just faster frame rate I I been
+[14:58] liking that a bit more it kind of works
+[15:00] better with my VFX so now we have it
+[15:03] looks like a slash no movement
+[15:06] afterwards with the with the body but
+[15:09] let's go ahead and and add that in so
+[15:11] now we we know this this last frame we
+[15:15] want it to be somewhat closer to the
+[15:17] neutral position so let's go ahead and
+[15:20] move that head we can even take this
+[15:24] head as well and copy and paste it there
+[15:27] so it's now in that position and what we
+[15:29] can do is just move it down say down one
+[15:33] and left one and then we got a good idea
+[15:36] of where that's going to be we can do
+[15:38] the same thing with the sword copy that
+[15:41] one and bring it here and what you can
+[15:44] do is move it up one and to the left as
+[15:47] well so it's kind of just coming
+[15:49] together so the head and sword the cloak
+[15:51] will save for a bit later the legs we
+[15:55] can do the same thing as well and and
+[15:58] perhaps since the attack stance was
+[16:01] pretty close the right leg his left we
+[16:05] can just work on this leg and kind of
+[16:07] move it up a bit so it's kind of walking
+[16:10] into that neutral position the backpack
+[16:14] we can go ahead and copy that and paste
+[16:16] it and we can just move that up one and
+[16:19] to the right so now we have the bag and
+[16:22] head and sword kind of in position
+[16:24] better position we can now Focus kind of
+[16:27] on the cloak and we we can copy that
+[16:30] last one and paste it and kind of just
+[16:32] adjust it slightly so this would be down
+[16:35] a bit so we'll erase some there perhaps
+[16:39] it's moved in just a tad and with that
+[16:42] being said we can jump to the legs and
+[16:45] kind of just erase this this side of the
+[16:47] cloak we'll jump back to the cloak layer
+[16:49] using the V tool we can move this side
+[16:52] down a bit just here and there and then
+[16:55] perhaps erase that and then if we jump
+[16:57] from six to the first frame it's kind of
+[17:00] just looks pretty good so now let's with
+[17:02] editing that one that one that last
+[17:04] frame let's just see how it looks you
+[17:06] can see a little bit more movement in
+[17:08] this in this slash and one thing you'll
+[17:10] notice is the sword it looks small and
+[17:13] the slash comes all the way out here
+[17:15] that's more for gameplay wise if you
+[17:17] wanted it you know to actually be
+[17:19] consistent the the sword would come to
+[17:22] about here you know and it doesn't cover
+[17:24] much you want if you're if this is the
+[17:27] main character and you're SLA you want
+[17:29] you want this entire section to be able
+[17:31] to you want it to be a hit box that
+[17:33] could actually hit the enemy so that's
+[17:36] that's the whole purpose for that so
+[17:38] let's go ahead and now now we'll work on
+[17:41] the fourth frame so the fourth frame's
+[17:43] going to be an alteration of the third
+[17:45] frame which is this one this key frame
+[17:48] and we're just going to be moving stuff
+[17:50] slightly so maybe the sword has some
+[17:52] some Kickback it goes one back maybe the
+[17:55] head comes forward even a tad bit more
+[17:58] the cloak could slowly kind of settle in
+[18:01] perhaps into position a bit more so you
+[18:04] can you can move things down the bag
+[18:08] perhaps even settles down on his back a
+[18:10] bit more we'll worry about this antenna
+[18:12] a bit more later and let's just see that
+[18:15] just looks like I moved everything down
+[18:17] a bit perhaps that's not the best but we
+[18:19] can start moving everything back up so
+[18:21] let's just see everything comes down
+[18:23] perhaps the bag doesn't yeah perhaps the
+[18:26] bag comes up it's kind of I think that
+[18:28] looks better to me and then it starts
+[18:30] switching through so even we didn't even
+[18:32] add or edit the fifth frame but I think
+[18:35] the head and everything it's the same as
+[18:37] third but it kind of cuz there's like
+[18:39] recoil in in the fourth frame it kind of
+[18:41] kind of settles then the bag comes down
+[18:43] the head comes up the sword moves
+[18:44] forward so we can go ahead and and keep
+[18:46] that perhaps we change the the cloak but
+[18:49] then we'll add one more in between so
+[18:51] we'll have to adjust these VFX or the
+[18:54] slash because you're going to have
+[18:55] duplicate here so we're going to erase
+[18:58] that one one and then just bring this
+[18:59] one back here and so this this in
+[19:04] between then we can start kind of really
+[19:06] bringing it towards this this final one
+[19:09] so this head is up here so we can even
+[19:11] bring it here and perhaps it it starts
+[19:13] to turn let's see how that looks the bag
+[19:16] I mean the sword can really start coming
+[19:19] into position here it's coming down
+[19:21] perhaps it's swinging into that position
+[19:23] so here and then come so that looks okay
+[19:26] it's kind of in between the bed egg
+[19:28] we'll have to adjust the cell properties
+[19:31] I think switch it back there and and
+[19:34] that might be okay already just kind of
+[19:37] slowly we could we could bring the cell
+[19:39] properties back let's do I think it was
+[19:42] on Two And we can kind of just erase a
+[19:45] tiny bit so it doesn't look like it it's
+[19:47] completely just Vanishing perhaps that's
+[19:49] better and I think so you can see here
+[19:52] I'm looking at this preview window
+[19:53] constantly and it and it looks looks
+[19:56] really good so let's just see the cloaks
+[19:57] not done yet but let's just see how
+[19:59] we're looking everything's looking
+[20:01] pretty good the the feet could use some
+[20:03] love and and the cloak as well and and
+[20:05] we kind of knew that cuz we haven't been
+[20:06] touching it we can make the antenna we
+[20:09] can do that quickly cuz that should be
+[20:11] fairly simple so it moves down we can
+[20:13] say on the second frame it's kind of
+[20:15] kind of wants to be in that original
+[20:17] position so it's kind of moving back it
+[20:19] slices let's say it goes hard this way
+[20:22] first and then it comes hard back and
+[20:24] then it's kind of Flint settling into
+[20:26] position and then it comes back into
+[20:27] position position so let's see how that
+[20:29] looks just a little touch not many
+[20:31] people will notice but looks cool so
+[20:33] let's uh let's do the cloak first
+[20:35] because the cloak might hide the feed a
+[20:37] lot of the time so I think it's better
+[20:39] to tackle the cloak first so right away
+[20:42] I think I want more movement so we might
+[20:45] go ahead and not worry about the the
+[20:48] stripe and the the darker color right
+[20:51] now we're just going to try to get some
+[20:52] some flowiness in it so it feels like
+[20:55] it's flowing a bit more and then
+[20:57] returning to position position so say he
+[20:59] swipes perhaps this is kind of up more
+[21:01] this is down more and we might fill this
+[21:04] in you know something like that a bit
+[21:07] and then this will kind of even could
+[21:09] even it could even come back a bit I
+[21:11] think and we can see the onion skin here
+[21:13] working in our favor just kind of doing
+[21:16] its thing so we'll try to focus on this
+[21:17] side the left side a bit more and
+[21:20] perhaps it settles down as it's coming
+[21:23] into position could still be out a bit
+[21:26] more and then it's kind of settle here
+[21:29] so it's hard to see but slashes oh I
+[21:32] think we we missed this this Frame It
+[21:34] kind of might add a bit more so we can
+[21:36] even make this one a bit more dramatic
+[21:39] like it's really up there and then
+[21:41] perhaps it starts coming down a bit more
+[21:43] so kind of cool I think if we add this
+[21:46] bit the darker color and kind of have it
+[21:49] play more of a role in informing the
+[21:51] shape of it that might be cool maybe a
+[21:53] more dramatic say it's it's flared out
+[21:55] here and we can have it a bit more dram
+[21:58] atic here where it's coming down quicker
+[22:00] so let's try something like that and
+[22:03] then here would be even more so we'll
+[22:06] kind of reshape it kind of have the cape
+[22:08] come this way I think I think that might
+[22:10] be the best approach for that side at
+[22:12] least we could erase a bit more here a
+[22:15] little too much doesn't look good with
+[22:17] the consistency but I think that side
+[22:19] looks looks good the the right side is
+[22:22] is a little tricky I mean not tricky
+[22:24] sorry um the right side doesn't look as
+[22:26] good right now but let's uh let's try to
+[22:28] work that let's try to work something
+[22:29] out here so it's flaring up here so
+[22:32] perhaps it it uh flares out a bit over
+[22:34] here so we could we could bring this all
+[22:37] up I think and then it's kind of like H
+[22:40] there and then it comes down a bit so we
+[22:42] want to bring this slowly kind of same
+[22:45] thing as the other side kind of kind of
+[22:47] like it's like floating into position
+[22:49] again and we'll add those stripes
+[22:51] afterwards since stay kind of all over
+[22:53] the place and then we can do a bit more
+[22:56] over here get kind of fading down more
+[22:59] and even a couple more we'll have to
+[23:01] make this bag kind of place more so
+[23:04] that's kind of like flaring out a tad
+[23:06] and it's kind of coming back into
+[23:08] position in this last frame we can even
+[23:10] add a little bit more and then into the
+[23:13] final position so these two are quite
+[23:16] different comes down I think we need to
+[23:19] make some adjustments here perhaps this
+[23:21] comes too far from my liking but we're
+[23:24] getting there we're slowly getting there
+[23:26] and then maybe that that little little
+[23:28] thing is too much so let's add the the
+[23:31] stripes and see where we're at with the
+[23:33] the final kind of look of it so perhaps
+[23:36] that one's there is and this one's kind
+[23:39] of here and then it coming back down
+[23:41] just on the edge and then it kind of
+[23:43] starts to form into bit higher this one
+[23:46] will be somewhat the same so that should
+[23:48] lose bit here this should come down a
+[23:51] bit more since it was very close to that
+[23:54] one and I think that will look better so
+[23:55] little adjustments there and then comes
+[23:58] into the final position so I think that
+[24:00] looks pretty good let's just fix the the
+[24:03] leg that's kind of disappearing on us so
+[24:06] it starts out we want ey drop that and
+[24:09] maybe this one is already going back
+[24:11] let's cover let's cover this piece cuz
+[24:14] it's kind of it's kind of like a stray
+[24:15] pixel is what I call it it kind of just
+[24:17] doesn't fit in perhaps this one as well
+[24:20] let's just cover those with the cloak
+[24:22] kind of hiding up and same with that one
+[24:24] and that looks that looks better it's
+[24:25] going to be a weird movement but it's
+[24:28] it's so quick in game and such a little
+[24:30] minor thing we can we can try to make
+[24:33] the the foot kind of jump back in this
+[24:36] Frame no that frame so this one kind of
+[24:38] comes up like so just slight movements
+[24:41] and for the peel um the appeal is what
+[24:45] is like if I'm showcasing it on on
+[24:47] Twitter or Instagram or any any kind of
+[24:51] social media or if I'm selling it on
+[24:53] itch.io I like to keep the Shadows
+[24:55] because it kind of sells it a little bit
+[24:57] bit more I I don't know if that's weird
+[24:59] but I think people like kind of the
+[25:01] Shadow movement so we'll just add we'll
+[25:04] just add to that a little bit just minor
+[25:06] never put too much effort into it but
+[25:08] you can just see it kind of like fading
+[25:09] away and looks cool so that's kind of
+[25:12] quick downward quick well not so quick
+[25:15] but uh that's kind of the downward slash
+[25:17] and we'll go ahead and name that tack
+[25:21] down and we'll kind of see how some of
+[25:24] this can translate into the attack up so
+[25:27] let's uh see if we can make this attack
+[25:30] down take it and kind of transform it
+[25:32] into an attack up and we're only
+[25:35] tackling attack down and attack up cuz I
+[25:39] I feel they translate better when you're
+[25:41] when you're doing a top down animation
+[25:43] you tend to tackle the run up run down
+[25:46] the roll up roll down kind of tackle
+[25:49] those at once and then the left and
+[25:51] right which is the same in most cases
+[25:54] cuz you just rotate them in engine those
+[25:57] I I I kind of treat those more like a
+[25:59] sidescroller platformer so they're going
+[26:01] to look different quite a bit different
+[26:03] if you go to uh this guy here you can
+[26:06] see the attack up and attack down are
+[26:09] kind of similar and this is the same but
+[26:11] but different mainly in this in the
+[26:13] swipe and the the head movements is
+[26:16] quite the same but the Cape is will be
+[26:18] different but overall like it's it's
+[26:20] quite different so right now we're just
+[26:22] going to for this tutorial we're going
+[26:23] to attack the attack we're going to
+[26:25] tackle the down and up and just kind of
+[26:28] kind of round those out so right now I
+[26:30] just copy and paste the attack down
+[26:33] because I'm going to start with this
+[26:35] this key frame and what you want to do
+[26:37] is we can start with the sword but the
+[26:39] sword if it's if it's uh this way to
+[26:42] keep it consistent it's going to be on
+[26:44] the other side so on this side so we can
+[26:47] flip it a bit and kind of just keep it
+[26:50] on this side and then sell properties
+[26:52] we're going to switch this to behind
+[26:55] everything pretty much not the sh Shadow
+[26:58] but behind everything and then you can
+[27:00] adjust it move it up the cloak we can
+[27:03] tackle next is going to be filled in
+[27:06] here so we can just use the paint bucket
+[27:08] and then however you want the back
+[27:10] design I think I had it like this in the
+[27:13] idle let's just see the idle up I had
+[27:17] some I have a shadow from from the back
+[27:19] and and this so we'll go ahead and and
+[27:22] add that as well once we get the
+[27:24] backpack I think I might do the shadow
+[27:25] on the backpack just so we can track get
+[27:27] a bit more and this is going to move up
+[27:29] so we want it in front of everything the
+[27:32] head as well and we head this kind of we
+[27:34] had that going on and then keep I'll
+[27:36] just steal the color I think it's the
+[27:38] the same red we use for the cloak but
+[27:40] just something like that and and then
+[27:43] the head simple in this this scenario
+[27:46] cuz it's pretty low res we are just
+[27:49] erasing the nose I believe that's all we
+[27:52] did yep so everything looks the same we
+[27:55] did move the the backpack kind of over
+[27:58] to that side to keep it consistent but
+[28:01] everything looks looks looks good and we
+[28:03] already have our first frame done so now
+[28:06] we can kind of just do that with these
+[28:08] frames there's going to be a lot of
+[28:10] things we're going to want to change
+[28:11] like the head is going to the left on
+[28:13] this side I think it will look better if
+[28:15] we just we can try it but I think it
+[28:17] might look better going the the other
+[28:20] way so let's just go ahead and fill in
+[28:22] the cloak and see if we can we can make
+[28:24] that work bit as intended fill in the
+[28:27] cloak everywhere and then go back to the
+[28:30] start
+[28:31] and fill it here some minor adjustments
+[28:35] and just continue filling in the cloak
+[28:37] the stripe along like so and then we can
+[28:41] we can flip the the bag over or we can
+[28:44] do the VFX and with that you're just
+[28:46] going to highlight all these and just
+[28:48] contrl V flip it and and then we're just
+[28:52] going to adjust this accordingly we can
+[28:54] even do flip it horizontally cuz the
+[28:57] sword's it's going to be more on this
+[28:58] side I believe and now you can see like
+[29:00] it's it's a mess but it's looking like
+[29:02] they're attacking up the swipe is going
+[29:04] the wrong way so we'll just we'll
+[29:06] actually end up deleting these I think
+[29:09] they're fairly simple to do so we'll
+[29:11] just go go from there so I think what we
+[29:13] want to do is begin to move or we can do
+[29:17] the bag first so we can do the bag well
+[29:19] actually let's do the feet so the feet
+[29:21] are will should be quick it's just going
+[29:23] to be we want the opposite so when this
+[29:26] one is here we just we kind of want it
+[29:28] like that we want to flip everything so
+[29:30] it's like it's like uh the same foot if
+[29:33] if that same fighter did the same kind
+[29:35] of footwork would be consistent so what
+[29:37] I'm doing is just highlighting and CR H
+[29:40] flipping it around and kind of making
+[29:42] sure that's all
+[29:44] consistent that's part of the clo so
+[29:48] let's remove that and jump back to this
+[29:50] I think that moving in might actually
+[29:52] work and then final frame like so so
+[29:56] slowly getting there we can work on the
+[29:58] head quick which will be a lot of
+[30:00] removing the nose since it's looking up
+[30:03] so no nose the bag might need some extra
+[30:06] love all around but we're going to move
+[30:09] these in front and then we can do the
+[30:11] one be in front even more but this one
+[30:14] may need to be it may need some more
+[30:17] adjustment we we need to really move
+[30:20] this um kind of more so over here and
+[30:22] perhaps the head the head the other way
+[30:24] and same goes with this one but let's
+[30:26] just get the cell the cell properties
+[30:28] kind of going I think it might be better
+[30:30] to tackle the sword and kind of get that
+[30:32] movement all in since since it's not
+[30:34] really so let's let's let's see what we
+[30:37] did here so this sword it's that way and
+[30:40] then it swipes so we want the swipe to
+[30:42] be we want the swipe to actually be on
+[30:44] the other side if we're making it
+[30:46] consistent we want the swipe to be over
+[30:50] here like so and then the sword kind of
+[30:55] come it's finishing this way so now we
+[30:58] can kind of Steal This one and we know
+[31:00] it comes back a bit and then I'm going
+[31:02] to comes back down and then it's going
+[31:05] to be going into that neutral position
+[31:07] which is a little different but it's
+[31:10] kind of going in and then the neutral
+[31:11] position here will be over here um this
+[31:14] bag can edit as well to make it more so
+[31:18] now everything's kind of looking like it
+[31:20] should except for the head circling the
+[31:22] bag quite odd but let's go ahead and and
+[31:25] see what we need to so the head kind of
+[31:27] swings to the left there so we want it
+[31:29] to swing for we're doing it similar to
+[31:32] this one we want to swing to the right
+[31:33] so kind of the opposite so what we can
+[31:35] do is take this and kind of flip it and
+[31:39] see where that brings us not where we
+[31:42] want we can do this manually which might
+[31:45] be easier so we're going to be on the
+[31:46] head layer so we know when he moves his
+[31:49] sword it's going to go towards the sword
+[31:50] so we move there and we want the head to
+[31:53] go towards this side so like that and
+[31:55] then it comes starting this way with the
+[31:57] bag kind of more towards this side so
+[32:00] the head is now kind of moving back into
+[32:04] the original position and the bag is
+[32:07] well so we know the bag we can kind of
+[32:09] take this last one for this and kind of
+[32:12] shape it and the antenna is going to be
+[32:15] on the opposite side in all of these so
+[32:17] we can go ahead and and move those like
+[32:19] so move that move this one and this one
+[32:23] and the head's going to need to or the
+[32:25] backpack's going to need to go forward
+[32:26] oops forward I think we have one more
+[32:29] where that's on the wrong side good so
+[32:31] now we can line up this a bit
+[32:33] more like so and I think that makes more
+[32:36] sense all around so kind of a little bit
+[32:39] what's the word it's a little strange
+[32:41] but once you once you get the hang of it
+[32:43] it feels it feels quick like you could
+[32:45] do the same kind of movement in a lot
+[32:48] less time so now it's going up so let's
+[32:51] see the difference so we can add those V
+[32:53] effects now kind of same same idea as
+[32:55] before we did one one here one early on
+[32:59] and that will give a better sense of of
+[33:01] overall direction of the Swing oops one
+[33:04] here and there delete that one so the
+[33:07] main goal is to keep the consistency of
+[33:11] that that swing for gameplay purposes to
+[33:14] keep it kind of like that same kind of
+[33:15] Moon slash you get the same distance in
+[33:18] front and behind the character so that's
+[33:20] kind of the main goal so we're just
+[33:22] going to start doing the smaller details
+[33:25] which is this bag highlight on the back
+[33:28] oops we'll just copy and paste that so
+[33:31] let's oh it shifts let's just add it
+[33:34] keep it consistent keep it long these
+[33:36] ones are good this one's long as well
+[33:38] this long so looks good one thing I'm
+[33:40] not entirely sold on is the cloak which
+[33:42] we didn't really do anything except for
+[33:44] filling it in so let's go ahead and and
+[33:46] see see what we can do with that but
+[33:49] first let's do the bag comes up maybe a
+[33:52] bit too much this can swing to the other
+[33:55] side perhaps that comes too quick swings
+[33:58] here we're going to try to visualize a
+[34:00] bit more the head seems a bit chaotic so
+[34:03] we'll work backwards and kind of from
+[34:05] that initial where it's this way so the
+[34:07] head's already the head's on the wrong
+[34:09] side and this is kind of just the
+[34:10] cleanup part where you're just making
+[34:12] sure everything's kind of consistent
+[34:14] this head can come in a bit and then we
+[34:16] know this one's down and that that seems
+[34:19] to be a little more consistent can even
+[34:21] come back nope turn moving up perhaps
+[34:23] slowly into position so I think the head
+[34:26] the head's moving m is is good you can
+[34:28] see it kind of comes down goes back to
+[34:30] position the bag is good and then the
+[34:33] sword we see here kind of the
+[34:36] anticipation slashes I think this sword
+[34:39] feels a bit too long you can even try a
+[34:41] more dramatic kind of
+[34:44] Slash just make a brand new
+[34:47] sword and kind of work in from there a
+[34:50] little little all over the place there
+[34:52] but uh let's see what we can do with
+[34:54] this if it looks a bit better if we just
+[34:55] kind of tilt that a bit and kind of so
+[34:58] this one kind of comes in too quick so
+[35:00] let's let's fix that sword on frame 12
+[35:03] kind of so one thing you can do to check
+[35:05] the slash is remove that first frame cuz
+[35:07] that's kind of the idle pose and that's
+[35:09] just uh that's mainly just to make sure
+[35:12] it transitions into the idle smoothly or
+[35:15] run you can say so we want to make sure
+[35:17] that's kind of in place I'm not too sold
+[35:20] on the sword placement right now so
+[35:22] let's uh let's try to work on that
+[35:25] perhaps we do need it this way
+[35:28] and this can be out a bit more that's a
+[35:30] bit better go ahead and and save that
+[35:32] and then we can kind of focus on the
+[35:34] cloak more so I think the best way to
+[35:36] tackle the cloak is to just start from
+[35:40] scratch kind of so we'll delete these
+[35:42] frames and just kind of we'll highlight
+[35:44] the Base main color which is this red
+[35:46] here and we'll just frame by frame kind
+[35:49] of scope it in so he right away he's his
+[35:51] head goes to the left and the movement
+[35:53] is sort of that way so that would mean
+[35:55] the cloak kind of comes to the side a
+[35:58] bit but not too much just a slight
+[36:00] movement so let's just slowly work our
+[36:03] way up and even that might be too much
+[36:05] so let's slight movement is good and
+[36:08] then it swings he swings all the way
+[36:11] this way so perhaps it moves so quick
+[36:13] that this is kind of still over here the
+[36:15] cloak is still a bit over here so it
+[36:18] kind of that might be too far but um
+[36:20] just to get point across we delete some
+[36:23] and the cloak is kind of more so this
+[36:26] way than it is is that more so to the
+[36:28] right than it is so it comes this way
+[36:30] and then we can have it start start to
+[36:32] kind of just drift towards the left the
+[36:34] momentum of the Swing kind of carried
+[36:37] carried through so we can kind of add
+[36:39] some more to this side to say perhaps
+[36:42] it's it's dropping a bit too and then we
+[36:44] can add a tiny bit more so just kind of
+[36:47] coming towards the edge of this and just
+[36:50] slowly we can turn off the The Shadow to
+[36:53] see it better and we can kind of just
+[36:55] work our way along along and just kind
+[36:57] of remove some from this side and then
+[37:00] work our way or add some on this side so
+[37:02] it's kind of shifting a tad and then
+[37:04] fill in the middle like so that might be
+[37:07] dramatic but we can always alter it or
+[37:09] condense it a bit and then it kind of
+[37:11] shifts back towards this side and then
+[37:14] we can go ahead and copy the first frame
+[37:17] I think on the last one just to get a
+[37:19] better idea of where it should be and
+[37:21] kind of just just shift a couple over so
+[37:24] it looks like it's settling in place so
+[37:26] let's see where we're at and already
+[37:28] that looks way better it looks like it
+[37:29] kind of shifts to the side but let's go
+[37:31] ahead and and make it a tad bit better I
+[37:35] think it loses some consistency in areas
+[37:37] right now so let's just here it's a
+[37:39] little thick so we can can go ahead and
+[37:41] just start removing one from kind of
+[37:43] every every
+[37:45] area and then this one kind of adds
+[37:48] quite a bit so let's just remove some
+[37:50] here and then it kind of settles back
+[37:52] into place comes this way but it doesn't
+[37:54] lose as much as we'd like so let's uh
+[37:57] take away this whole section remove
+[38:00] there and then it's kind of slowly
+[38:01] building up to this position and we can
+[38:04] even perhaps move this entire thing up
+[38:06] like so and I think that looks a lot
+[38:09] better than than just the original swap
+[38:11] so let's uh let's go ahead and add some
+[38:13] some lines and then perhaps the shadows
+[38:16] as and I usually start with the bottom
+[38:18] one here kind of just like trigger that
+[38:20] whole section out and it's usually just
+[38:23] one above um the bottom except for on
+[38:26] the side
+[38:27] like here would be one above the bottom
+[38:29] one above the bottom and then it kind of
+[38:30] comes up towards the side and then we're
+[38:32] shifting back into the original so it
+[38:34] looks good A little jiggle um you can
+[38:36] probably nitpick some areas here like
+[38:39] this this this uh Red Dot here we can
+[38:42] remove that it kind of looks out of
+[38:43] place even though it is on the two here
+[38:46] so may we can keep that consistent
+[38:48] that's one thing you can do but it's
+[38:50] below here so you kind of you don't see
+[38:52] it as much so I think we'll just keep it
+[38:54] we'll keep it out of the picture for
+[38:56] most part except for that main idle
+[38:58] frame so let's just go and fix this
+[39:00] antenna a little bit more and moves that
+[39:02] way kind of Shifting make sure you're on
+[39:04] the bag Shifting the other way we going
+[39:06] flip it then it perhaps Ricochet this
+[39:08] way this way one looks odd in here this
+[39:11] one like so and then I think we're we're
+[39:13] in a good place we can differentiate the
+[39:16] the two attacks we know this is up um
+[39:19] and this is down we can work on the
+[39:20] sword a bit more it's a little Tad
+[39:22] little wonky in areas I think that's a
+[39:25] little bit better already so we want to
+[39:27] swing kind of comes back a bit more and
+[39:29] then it kind of comes forward and then
+[39:31] back into place last one can be a little
+[39:34] bit closer in I think and it's this one
+[39:36] here that's kind of the idle pose that's
+[39:39] really throwing it off but if we remove
+[39:40] it it looks like so you can play around
+[39:42] with that you know if you don't want
+[39:44] that idle position but it's kind of
+[39:46] where it's at same thing with this if
+[39:47] you really focus on the initial spot
+[39:50] it's going to look odd but yeah that's
+[39:52] if you made it this far thanks thanks so
+[39:54] much for uh watching the video I hope
+[39:56] you you learned a couple things and for
+[39:58] now take
+[40:17] care

@@ -1,0 +1,239 @@
+Three AWESOME must have ASEPRITE extensions
+Autor: Penusbmic
+Fonte: https://www.youtube.com/watch?v=mfUnB-yq53w
+Licença observada: Creative Commons Atribuição (reutilização permitida), conforme YouTube.
+Link da licença exibido na fonte: https://www.youtube.com/t/creative_commons
+Conferência da licença: 2026-11-02. Texto obtido via exportação de legendas do YouTube.
+Adaptação: apresentação textual das legendas, com este cabeçalho de atribuição.
+Idioma: original disponível (inglês). Legenda não revisada integralmente contra áudio; pode conter erros, omissões e tempos aproximados.
+Não há endosso do autor à Forja.
+
+YouTube transcript
+Video ID: mfUnB-yq53w
+Language: en
+Captions: auto-generated
+
+[0:00] welcome welcome welcome I'm pen and in
+[0:02] this video we're going to be checking
+[0:03] out three new a Sprite extensions the
+[0:07] first extension it's actually five bucks
+[0:09] you can see bought it up here 23 days
+[0:12] ago it's the loop draw draw during
+[0:14] playback button to create water smoke
+[0:16] Fetti fire so we're going to be checking
+[0:18] it out I've messed around with it a few
+[0:20] times and it has some huge potential and
+[0:24] this is by carbs code I will have the
+[0:26] link in the description below so check
+[0:29] it out this is the only one that's
+[0:31] that's you have to pay for the other two
+[0:33] are free so stick around for those so
+[0:34] let's get to it when you install the
+[0:37] loop draw extension it will be up here
+[0:39] in frame and it will be Loop draw it
+[0:42] will bring up this little toggle box
+[0:44] that has some playback settings and some
+[0:46] brush settings the playback settings are
+[0:49] how quick it plays back and so far I
+[0:51] like it pretty fast but we can kind of
+[0:54] mess around with that let's start with
+[0:55] triple and if you click is looping it
+[0:58] will Loop your frames so if we we make
+[1:01] just make 16 frames here Qui is looping
+[1:04] it will Loop through the frames and
+[1:06] essentially you can draw well it's
+[1:08] playing which is really cool and I think
+[1:10] it has a ton of potential so if you that
+[1:13] and check the brush settings this is how
+[1:15] fast it will draw and we're going to go
+[1:18] ahead and keep this we're going to put
+[1:20] it on faster right now and mess around
+[1:22] with that and you can add new frames and
+[1:25] that will just continuously make it go
+[1:27] but I think having it Loop through is is
+[1:30] really fun if you hit is drawn and have
+[1:32] looping on it will draw as we go so if
+[1:36] we make sure we're on the right layer is
+[1:38] drawing you can see some cool little
+[1:41] lines are appearing this isn't much so
+[1:43] far so let's unclick this and delete
+[1:45] what we did there and let's turn this to
+[1:48] fastest and what I like to do is if you
+[1:51] click the is drawing you can toggle it
+[1:53] with the space bar and you can probably
+[1:55] set up a different shortcut for it but
+[1:58] you can see here it's drawn because
+[2:00] we've done a lot to it or we've we have
+[2:03] it looping and is drawing on layer 4 and
+[2:06] right now it's just looking pretty
+[2:08] chaotic so let's start fresh but you can
+[2:10] see the potential here but the key is to
+[2:14] have the looping and then toggle is
+[2:16] drawing so right now it's off and I'm
+[2:18] going to press spacebar to toggle it and
+[2:21] make something so right now I'm just
+[2:23] going to try to make some kind of energy
+[2:25] flowing so I'm going to toggle it and
+[2:26] then have it come up like this and I'm
+[2:28] going to toggle It Off and then I might
+[2:30] do some right here maybe a bit shorter
+[2:32] then maybe one right here I went to the
+[2:34] side of bit that's okay you can see how
+[2:37] this would be really cool to make fire
+[2:39] or something so let's uh make our brush
+[2:41] a bit bigger and kind of mess around
+[2:44] with it again so again I'm going to
+[2:45] toggle the space bar I'm just going to
+[2:47] going to make some kind of like weird
+[2:50] thing happening behind him like some
+[2:52] kind of UI energy flowing through his
+[2:55] weapon which is cool and I made two
+[2:57] layers so we can actually go to layer
+[3:00] five and do the same thing but have it
+[3:02] above so it looks like it's going above
+[3:04] now and then back around you can maybe
+[3:06] do something like around here on his arm
+[3:09] we can go to layer four and maybe have
+[3:12] it com up around here it looks like it's
+[3:15] wrapping around his arm which is really
+[3:16] cool let's do a different brush size and
+[3:20] kind of mess with it again and that
+[3:22] wasn't the best cuz I had the thing
+[3:24] drawing but you can see the potential
+[3:26] you can do some cool animations and I
+[3:29] think it's Limitless kind of figuring
+[3:31] out so this will take some more time it
+[3:32] only came out 23 days ago or so so I'm
+[3:35] going to mess around with this and maybe
+[3:37] even do a full dedicated video towards
+[3:40] this but this is a really cool extension
+[3:43] and I think you should check it out if
+[3:45] you can so let's move on to the second
+[3:48] extension and I'm just going to close
+[3:50] this and that is Grassy and that is by
+[3:54] THU and again I'll have the extension
+[3:57] link below but essentially you can take
+[4:00] a layer and
+[4:03] grassfed it here let's go and do some
+[4:06] quick examples of that and I just
+[4:08] grabbed a an image with no grass and it
+[4:12] might not look the best but it will tell
+[4:15] you how it works and everything so let's
+[4:17] go through it I have one layer here
+[4:19] which is grass and it's not really Grass
+[4:21] more like dirt what we want to do is go
+[4:23] to file when you have the script in a
+[4:25] spray already we will click on grafy and
+[4:27] it will bring up this little box and you
+[4:29] have a a grass coverage percent so 100%
+[4:32] will make grass everywhere and the
+[4:34] length is just how long the pixel is and
+[4:36] then you can also click randomize length
+[4:39] which I recommend doing and if you do a
+[4:41] lower grass coverage it will be more
+[4:44] realistic so how this works is you can
+[4:47] pick a section with your M tool you have
+[4:49] everything one layer or if you have
+[4:51] different layers you don't need to but
+[4:53] you can grab a section and essentially
+[4:55] you can go we'll just do grass coverage
+[4:57] 100 and length three and not random and
+[5:00] see how it looks now you get this even
+[5:02] brass three pixels long everywhere we're
+[5:05] not going to do that we're going to go
+[5:07] let's do
+[5:08] 32% coverage at a random length and
+[5:14] grassfed and it's a quick way to save
+[5:17] some time and you can go ahead and clean
+[5:19] this up later if you want to but it
+[5:21] looks okay obviously this is dirt and
+[5:24] doesn't really look like grass but this
+[5:26] is a really useful tool I've used it
+[5:28] quite a bit so let's grab a section here
+[5:30] and I'm going to make this section jorer
+[5:32] so let's do two and coverage we'll do 27
+[5:37] and we'll apply it verify it and then
+[5:39] we'll grab a tiny little section up here
+[5:42] and we'll do one length coverage 16 a
+[5:44] little less and you can see it added a
+[5:46] couple here maybe do it one more time
+[5:48] and not bad so you can see this isn't
+[5:51] the perfect image for this uh couldn't
+[5:54] find a good grass example on this
+[5:56] computer but you can get the idea of of
+[5:59] how this can be super helpful and can
+[6:02] save a lot of time so that is classfied
+[6:04] by th and it's free the link will be
+[6:07] below and the last extension I want to
+[6:10] show you everyone is the record
+[6:13] extension and this is really cool if you
+[6:16] want to make a quick gift of a time
+[6:18] lapse or something and you don't want to
+[6:20] record cuz recording can be hard on your
+[6:22] you have a laptop that can't handle it
+[6:24] so this record program or extension is
+[6:27] exactly what you want and it's a little
+[6:29] confusing at first but you install the
+[6:31] extension and this is by spnr grr the
+[6:35] link will be below it's a little
+[6:37] confusing at first but with some time
+[6:39] you'll get used to it and you'll be able
+[6:42] to record something like this this is
+[6:43] one I did way back in the day you can
+[6:46] see the frames or about 200 frames now
+[6:49] and it just records the whole process
+[6:51] you can post this time lapse on Twitter
+[6:53] as a gift or X whatever it's called now
+[6:56] but super handy and saves you a lot of
+[6:58] time cuz I know I used to just
+[7:00] screenshot that section which is pretty
+[7:03] timec consuming where this you can just
+[7:05] draw and not worry about it so let's
+[7:07] dive into it a little bit now that we
+[7:08] saw that I made this test kind of thing
+[7:11] and you need to have the file saved in
+[7:14] order for it to work with a folder so
+[7:16] you can see it and just open up the
+[7:19] automatic snapshot and this has a status
+[7:24] off right now once you hit start it will
+[7:26] turn on the action delay I'm going to go
+[7:28] three frame so so every that means every
+[7:30] three clicks or three times you draw it
+[7:33] will take a snapshot and save it in that
+[7:36] folder that this files in let's go ahead
+[7:39] and start it and just draw something and
+[7:42] I'm going to click a bit more than
+[7:44] probably usual but get the pointy draw a
+[7:47] little dude try to make it look somewhat
+[7:50] cool maybe a big sword maybe a hat and
+[7:54] maybe something like this I'll just make
+[7:55] a quick little silhouette maybe the
+[7:58] hands going up here and we'll erase to
+[8:01] capture that as well and then a little
+[8:04] ball there and maybe something like that
+[8:07] just to get an idea this guy's kind of
+[8:08] cooler than I thought he would be but
+[8:10] and some marks in the sword and then you
+[8:12] can hit stop and what that did was
+[8:15] probably took a lot of snapshots and
+[8:17] saved it in this folder right here and
+[8:20] you can see we have
+[8:22] 26 started at 9 probably cuz I did the
+[8:25] test run before so let's just go ahead
+[8:27] and grab all of that and let's move it
+[8:29] into a Sprite so I just clicked it all
+[8:32] and dragged it and it will say import
+[8:34] them all and 100 it will say agree and
+[8:37] it brought it in and now you can see it
+[8:39] did a quick little time lapse 18 frames
+[8:43] total make this a bit longer let's do
+[8:45] 300 and then you can go ahead and Export
+[8:49] this as a gift and post it on your
+[8:51] social medias which is really cool so if
+[8:53] you stuck along this long I hope one or
+[8:57] two or all three of these extensions
+[8:59] grab your your attention and you try
+[9:00] them out they're really useful and can
+[9:03] help in a lot of ways thanks for
+[9:05] watching if you want to check out three
+[9:08] more extensions click this video

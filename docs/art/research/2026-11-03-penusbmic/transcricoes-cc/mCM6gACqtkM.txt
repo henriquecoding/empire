@@ -1,0 +1,25 @@
+Aseprite Lock Alpha Magic #pixelart #art #aseprite #gamedev #digitalart  #pixel
+Autor: Penusbmic
+Fonte: https://www.youtube.com/watch?v=mCM6gACqtkM
+Licença observada: Creative Commons Atribuição (reutilização permitida), conforme YouTube.
+Link da licença exibido na fonte: https://www.youtube.com/t/creative_commons
+Conferência da licença: 2026-11-03. Texto obtido via exportação de legendas do YouTube.
+Adaptação: apresentação textual das legendas, com este cabeçalho de atribuição.
+Idioma: original disponível (inglês). Legenda não revisada integralmente contra áudio; pode conter erros, omissões e tempos aproximados.
+Não há endosso do autor à Forja.
+
+YouTube transcript
+Video ID: mCM6gACqtkM
+Language: en
+Captions: auto-generated
+
+[0:00] a bit more. So, let's use a dark color,
+[0:03] so we'll use this one, I believe. I'm
+[0:04] going to use D again, and I'm actually
+[0:06] going to go to layer seven, go lock
+[0:09] alpha, and what that does is wherever
+[0:11] you drive wherever you draw, it's not
+[0:14] going to go out of that line of anything
+[0:16] on this layer. So, we can draw all we
+[0:18] want, and it just stays on anything on
+[0:20] that layer.

@@ -3319,5 +3319,22 @@
   "horas": "—",
   "passos": [],
   "notas": []
+ },
+ "FORJA-19": {
+  "title": "Estudo Penusbmic aplicado a ensaios verificáveis",
+  "porque": "Converter o estudo fornecido em ferramentas de produção e revisão por ação.",
+  "spec": [
+   "docs/art/PENUSBMIC_WORKFLOW.md"
+  ],
+  "depende": "FORJA-17",
+  "feito": "Exportação por ação, ensaio/revisão/replay, variantes e piloto de cena; evidência vinculada aos arquivos.",
+  "fora": "Aprovar arte ou afirmar integração de assets no Godot.",
+  "estado": "feito — implementação e provas automatizadas; suite e portões completos exigidos antes do merge.",
+  "horas": "—",
+  "passos": [
+   "Preservar o estudo e as fontes",
+   "Implementar CLI/MCP e testes",
+   "Validar suite e portões antes do merge"
+  ]
  }
 }

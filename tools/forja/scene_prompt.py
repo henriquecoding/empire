@@ -13,7 +13,7 @@ from __future__ import annotations
 
 from PIL import Image, ImageDraw
 
-from . import constraints, contracts, matte, prompts, regua
+from . import constraints, contracts, matte, owner_rules, prompts, regua, study
 from .palette import Palette
 
 ROLE_TEXT = {"palette": prompts.ROLES["palette"],
@@ -48,6 +48,10 @@ def role_text(role: str) -> str:
         return ROLE_TEXT[role]
     r = regua.data()["roles"][role]
     return f"the {r['en']} ({role}): use it for {r['carries']}; do NOT copy {r['forbids']}"
+
+
+def _review_rules(kind: str) -> list[dict]:
+    return owner_rules.prompt_rules(kind) + study.rules("scene", kind=kind)
 
 
 def geometry(res: dict, target: str) -> dict:
@@ -131,7 +135,7 @@ def rules(res: dict, palette: Palette | None, swatch: int | None, listed: int = 
     if light:
         out.append(_rule("light", f"Light: {light}; warm light only where a source exists, as stepped color clusters; "
                          "no glow halo, no bloom.", "scene:brief"))
-    return out
+    return out + _review_rules(c.kind)
 
 
 def build(res: dict, target: str = "gpt-image", attached: list[str] | None = None, geo: dict | None = None,
@@ -172,7 +176,10 @@ def build(res: dict, target: str = "gpt-image", attached: list[str] | None = Non
                      f"row {y1 - 1}; everything outside that box is empty background.")
     lines.append("Avoid: characters, animals, text or lettered signs, UI, frames, perspective or isometric projection, "
                  "photorealism, 3D render, painterly brushwork, blur, glow, watermark.")
-    expect = {"kind": res["kind"], "cells": [lw, lh], "content": [x0, y0, x1, y1], "scale": k,
+    consulted = owner_rules.context()
+    lines.append("FORJA_OWNER_RULES:" + consulted["revision"])
+    expect = {"study": study.context("scene"), "owner_rules": consulted, "kind": res["kind"],
+              "cells": [lw, lh], "content": [x0, y0, x1, y1], "scale": k,
               "scale_exact": geo["exact"], "grid": "requested", "layout": [1, 1], "frames": 1, "tags": None,
               "background": background, "size": geo["size"], "cluster": res["step"], "attached": attached,
               "mode": "scene", "scene": res["id"], "forge_args": res["forge_args"], "placement": "origin"}
@@ -197,7 +204,10 @@ def backdrop(res: dict, target: str, palette: Palette | None = None) -> str:
 def pixellab_params(res: dict) -> dict:
     c = contracts.get(res["kind"])
     outline = {None: None, 0: "lineless"}.get(c.outline_px, "single color black outline")
-    return {"description": f"{res['scene']['subject']}, {res['spec']['en']}",
+    lines = [f"{res['scene']['subject']}, {res['spec']['en']}"]
+    lines.extend(r["text"] for r in _review_rules(c.kind))
+    lines.append("FORJA_OWNER_RULES:" + owner_rules.context()["revision"])
+    return {"description": "\n".join(lines),
             "image_size": {"width": res["cells"][0], "height": res["cells"][1]}, "outline": outline,
             "shading": "basic shading", "detail": "highly detailed", "view": "side", "no_background": True}
 
