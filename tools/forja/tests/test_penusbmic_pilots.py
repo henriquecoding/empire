@@ -11,6 +11,30 @@ from tools.forja.tests.test_penusbmic_review import observed
 
 
 class PilotsTest(unittest.TestCase):
+    def test_scene_method_reaches_the_actual_requests(self):
+        from tools.forja import owner_rules, scene_plan, study
+        spec = scene_fixtures.write(tempdir(), scene_fixtures.contract())
+        for backend in ("openai", "gemini", "pixellab"):
+            with self.subTest(backend=backend):
+                plan = scene_plan.make(backend, spec, guides_mode="none")
+                self.assertTrue(plan.ok, plan.data["errors"])
+                plan.call()  # constroi o pedido real, sem o enviar
+                self.assertEqual(plan.data["expect"]["owner_rules"]["revision"], owner_rules.context()["revision"])
+                for rule in study.rules("scene"):
+                    self.assertIn(rule["text"], plan.data["prompt"])
+
+    def test_tile_and_prop_requests_do_not_acquire_human_anatomy(self):
+        from tools.forja import prompts
+        for kind, subject in (("tile", "stone paving"), ("prop", "glass flask")):
+            with self.subTest(kind=kind):
+                built = prompts.build(subject, kind, cells=(32, 32))
+                self.assertNotIn("wrist, hand, grip", built["prompt"])
+                self.assertNotIn("facial states", built["pixellab"]["description"])
+                if kind == "tile":
+                    self.assertEqual(built["expect"]["study"]["design_mode"], "scene_pilot")
+                if kind == "prop":
+                    self.assertEqual(built["expect"]["study"]["design_mode"], "asset_review")
+
     def test_variations_reject_selected_cast_duplicate_and_wrong_canvas(self):
         out = tempdir()
         a, b = out / "a.png", out / "b.png"
@@ -46,6 +70,8 @@ class PilotsTest(unittest.TestCase):
         proof_io.save(out / "spec.json", spec)
         result = study_pilots.scene_pilot(out / "spec.json", out / "proof")
         self.assertTrue(result["ok"])
+        manifest = json.loads((out / "proof/manifest.json").read_text())
+        self.assertEqual(manifest["study"]["design_mode"], "scene_pilot")
         for name in ("day-with-actor", "night-with-actor"):
             with Image.open(out / "proof" / (name + ".png")) as im:
                 self.assertEqual(im.getpixel((40, 50)), (255, 0, 0, 255))

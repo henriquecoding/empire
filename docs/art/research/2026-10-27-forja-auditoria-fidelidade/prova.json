@@ -1616,7 +1616,10 @@
      "owner_equipment_shape": "owner:Henrique",
      "owner_materials": "owner:Henrique",
      "owner_revisions": "owner:Henrique",
-     "owner_delivery_gate": "owner:Henrique"
+     "owner_delivery_gate": "owner:Henrique",
+     "penusbmic_P0-01": "study:Penusbmic:P0-01",
+     "penusbmic_P0-02": "study:Penusbmic:P0-02",
+     "penusbmic_P1-01": "study:Penusbmic:P1-01"
     }
    },
    "escudeiro": {
@@ -1642,7 +1645,10 @@
      "owner_equipment_shape": "owner:Henrique",
      "owner_materials": "owner:Henrique",
      "owner_revisions": "owner:Henrique",
-     "owner_delivery_gate": "owner:Henrique"
+     "owner_delivery_gate": "owner:Henrique",
+     "penusbmic_P0-01": "study:Penusbmic:P0-01",
+     "penusbmic_P0-02": "study:Penusbmic:P0-02",
+     "penusbmic_P1-01": "study:Penusbmic:P1-01"
     }
    },
    "arqueiro": {
@@ -1668,7 +1674,10 @@
      "owner_equipment_shape": "owner:Henrique",
      "owner_materials": "owner:Henrique",
      "owner_revisions": "owner:Henrique",
-     "owner_delivery_gate": "owner:Henrique"
+     "owner_delivery_gate": "owner:Henrique",
+     "penusbmic_P0-01": "study:Penusbmic:P0-01",
+     "penusbmic_P0-02": "study:Penusbmic:P0-02",
+     "penusbmic_P1-01": "study:Penusbmic:P1-01"
     }
    }
   },

@@ -5,8 +5,11 @@ import hashlib
 import json
 from pathlib import Path
 
+from .owner_rules import CHARACTERS
+
 BOOK = Path(__file__).with_name("penusbmic_study.json")
 ROOT = Path(__file__).resolve().parents[2]
+SCENERY = ("building", "tile", "parallax_far", "parallax_mid", "foreground")
 
 
 def load() -> dict:
@@ -18,23 +21,31 @@ def load() -> dict:
     return data
 
 
-def context(mode: str = "stylized") -> dict:
+def design_mode(mode: str, kind: str | None) -> str:
+    if mode == "scene" or kind in SCENERY:
+        return "scene_pilot"
+    if kind is not None and kind not in CHARACTERS:
+        return "asset_review"
+    return "explore_unapproved" if mode == "stylized" else "preserve_and_repair"
+
+
+def context(mode: str = "stylized", kind: str | None = None) -> dict:
     data = load()
     return {"schema": data["schema"], "revision": hashlib.sha256(BOOK.read_bytes()).hexdigest(),
-            "source": data["study"], "design_mode": "explore_unapproved" if mode == "stylized" else
-            "scene_pilot" if mode == "scene" else "preserve_and_repair",
+            "source": data["study"], "design_mode": design_mode(mode, kind),
             "proposals": [p["id"] for p in data["proposals"]], "artistic_approval": "not_granted"}
 
 
-def rules(mode: str, animated: bool = False) -> list[dict]:
+def rules(mode: str, animated: bool = False, kind: str | None = None) -> list[dict]:
     rows = []
-    if mode == "scene":
+    scope = design_mode(mode, kind)
+    if scope == "scene_pilot":
         rows += [("P1-02", "Prove a small side-view scene at game scale before expanding: actor ruler, doorway or "
                   "bank, functional lower access, three depth planes, material junctions, day/night and seams."),
-                 ("R2-03", "Build masses and circulation before texture. Woodland moss, fungi and mushrooms form "
-                  "recognizable groups; confine procedural detail to chosen regions, then clean overlaps. "
+                 ("R2-03", "Build masses and circulation before texture. In woodland scenes, group moss, fungi and "
+                  "mushrooms into recognizable forms. Confine procedural detail to chosen regions, then clean overlaps. "
                   "No universal density percentage and no isometric camera substitution.")]
-    else:
+    elif scope != "asset_review":
         rows += [("P0-01", "Review wrist, hand, grip, object orientation and occluder together in every critical "
                   "pose. Preserve the same absolute shared-prop size; a hidden object is not a missing arm."),
                  ("P0-02", "Act within authorized facial states and orientations: preserve identity, asymmetry, "
@@ -46,10 +57,11 @@ def rules(mode: str, animated: bool = False) -> list[dict]:
         else:
             rows.append(("P1-01", "Preserve and repair the accepted design. Do not use variation exploration to replace "
                          "its face, silhouette or function, and never promote a rejected candidate to authority."))
+    if animated and (kind is None or kind in (*CHARACTERS, "creature", "colossus")):
+        rows.append(("P0-03", "Prove contact/support, leading and following parts, occlusion, entry and recovery before "
+                     "effects. Inspect the body without VFX and the final composition; effects cannot hide known defects."))
     if animated:
-        rows += [("P0-03", "Prove contact/support, leading and following parts, occlusion, entry and recovery before "
-                  "effects. Inspect the body without VFX and the final composition; effects cannot hide known defects."),
-                 ("R2-02", "Intentional glitch, flashes and particles need an explicit region and frame interval; "
+        rows += [("R2-02", "Intentional glitch, flashes and particles need an explicit region and frame interval; "
                   "outside that window changes still need review. Never stabilize intentional acting globally."),
                  ("R2-01", "Keep native canvas, pivot, support and exact frame durations across action exports. "
                   "Storage trim must reconstruct the original canvas, never rescale the actor for larger VFX."),

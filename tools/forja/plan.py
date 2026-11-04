@@ -57,7 +57,7 @@ class Plan:
         if not method or method.get("revision") != study.context()["revision"]:
             raise ValueError("plano sem consulta atual do estudo: compilar de novo antes de gerar")
         if d["model"] != pixellab_convert.MODEL and any(r["text"] not in prompt for r in
-                study.rules(d["mode"], d["frames"] > 1)):
+                study.rules(d["mode"], d["frames"] > 1, d["kind"])):
             raise ValueError("prompt sem o texto do estudo: compilar de novo antes de gerar")
         r = d["request"]
         if d["backend"] == "pixellab" and d["model"] == pixellab_convert.MODEL:
@@ -215,7 +215,7 @@ def make(backend: str, subject: str, kind: str | None = None, tags: list[tuple[s
     if d["expect"] is not None:
         d["expect"].update(role=selected["role"], target_useful_bbox=d["fidelity_prompt"].get("target_useful_bbox"))
         d["expect"]["owner_rules"] = owner_rules.context(prep["record"])
-        d["expect"]["study"] = study.context(d["mode"])
+        d["expect"]["study"] = study.context(d["mode"], kind)
     d["attachments"] = [{"index": i, "role": refs_mod.family(r), "prompt_role": r, "sha256": sha(b), "bytes": len(b)}
                         for i, (r, b) in enumerate(images, 1)]
     d["prompt_sha256"] = hashlib.sha256(d["prompt"].encode("utf-8")).hexdigest()

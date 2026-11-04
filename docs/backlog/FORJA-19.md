@@ -25,6 +25,6 @@ O deployment de produção permanece condicionado ao release gate existente e ao
 Não alterar arte aprovada nem inventar animações finais. Não chamar o ensaio HTML de teste Godot,
 não conceder aprovação artística e não ampliar a cobertura das aulas além do registrado no estudo.
 
-A validação do player executa seu JavaScript com DOM/canvas simulados (escala, direção, duração e controles);
-os pixels são conferidos contra a fonte nos testes Python. A tentativa de browser local falhou antes de abrir
-a página (Chromium terminou com SIGSEGV); não constitui prova visual em navegador.
+Os testes Python recompõem os pixels da fonte e o teste JavaScript percorre a timeline. Uma prova no
+Chromium abriu o HTML gerado pela CLI com uma animação sintética e o conceito do escudeiro alquimista.
+Conferiu a direção reversa, os tempos dos quadros, a troca dos pixels do efeito, os controles e a ampliação.

@@ -29,7 +29,7 @@ Os caminhos abaixo são exemplos de arquivos de trabalho, não assets já produz
 
 ```bash
 python3 -m tools.forja ensaio build/forja/personagem.aseprite \
-  --kind troop_64 --character alchemist_squire --effect-layer fx --trim \
+  --kind royal_64 --character alchemist_squire --effect-layer fx --trim \
   -o build/forja/ensaio-v1
 ```
 

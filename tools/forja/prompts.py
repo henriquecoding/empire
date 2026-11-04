@@ -143,7 +143,7 @@ def build(subject: str, kind: str = "character_s2", tags: list[tuple[str, int]] 
                               fid.get("where"), fid.get("max_colors"), fid.get("tones"), animated=frames > 1)
     rules += production.rules(fid)
     rules += owner_rules.prompt_rules(kind, frames > 1)
-    rules += study.rules(mode, frames > 1)
+    rules += study.rules(mode, frames > 1, kind)
     consulted = owner_rules.context(fid.get("owner_authority"))
     lines = [
         'Create a pixel-art game asset for "Empire", a 2D side-view kingdom builder.',
@@ -181,7 +181,8 @@ def build(subject: str, kind: str = "character_s2", tags: list[tuple[str, int]] 
     lines.append("Avoid: photorealism, 3D render, painterly or vector style, glow, lens effects, drop shadows, "
                  "extra characters, watermarks, signatures, UI.")
     lines.append(f"Owner rules consulted: FORJA_OWNER_RULES:{consulted['revision']}")
-    expect = {"study": study.context(mode), "owner_rules": consulted, "kind": kind, "cells": geo["logical"], "content": geo["content"], "scale": k,
+    expect = {"study": study.context(mode, kind), "owner_rules": consulted, "kind": kind,
+              "cells": geo["logical"], "content": geo["content"], "scale": k,
               "scale_exact": geo["exact"], "grid": "requested", "layout": [cols, rows], "frames": frames,
               "tags": [list(t) for t in tags] if tags else None,
               "background": "transparent" if transparent else key, "size": geo["size"], "cluster": c.cluster,

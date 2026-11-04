@@ -19,7 +19,8 @@ SCENE_CHECKS = ("masses_before_detail", "actor_scale", "door_or_bank", "lower_ac
 
 
 def _finish(out: Path, data: dict, files: list[str], views: list[str], checks: list[str]) -> dict:
-    data.update(schema=SCHEMA, study=study.context(), release_ready=False, runtime_integration="not_evaluated")
+    mode = "scene" if data["type"] == "scene" else "stylized"
+    data.update(schema=SCHEMA, study=study.context(mode), release_ready=False, runtime_integration="not_evaluated")
     manifest = proof_io.seal(data, out, files)
     doc = {"schema": "forja.pilot_review/1", "manifest_sha256": manifest["manifest_sha256"],
            "observer": {"author": "", "method": "", "date": ""},

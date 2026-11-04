@@ -429,7 +429,14 @@
     "scenery.json:families (proposta, relatorio §16)",
     "contract:prop (2 px de ecra = 1 pixel logico)",
     "asset_bible §1",
-    "palette:Empire Working (dossie v5.1, §22); contract:prop (max_colors null)"
+    "palette:Empire Working (dossie v5.1, §22); contract:prop (max_colors null)",
+    "owner:Henrique",
+    "owner:Henrique",
+    "owner:Henrique",
+    "owner:Henrique",
+    "owner:Henrique",
+    "study:Penusbmic:P1-02",
+    "study:Penusbmic:R2-03"
    ],
    "plans": {
     "openai": {
@@ -491,7 +498,7 @@
      ]
     }
    },
-   "prompt_lines": 19
+   "prompt_lines": 27
   },
   "forja-jogo-enramados": {
    "cells": [
@@ -520,7 +527,14 @@
     "contract:building (2 px de ecra = 1 pixel logico)",
     "asset_bible §1",
     "palette:Empire Working (dossie v5.1, §22); contract:building (max_colors null)",
-    "scene:brief"
+    "scene:brief",
+    "owner:Henrique",
+    "owner:Henrique",
+    "owner:Henrique",
+    "owner:Henrique",
+    "owner:Henrique",
+    "study:Penusbmic:P1-02",
+    "study:Penusbmic:R2-03"
    ],
    "plans": {
     "openai": {
@@ -581,7 +595,7 @@
      ]
     }
    },
-   "prompt_lines": 25
+   "prompt_lines": 33
   },
   "oficina-enramados": {
    "cells": [
@@ -611,7 +625,14 @@
     "contract:building (2 px de ecra = 1 pixel logico)",
     "asset_bible §1",
     "palette:Empire Working (dossie v5.1, §22); contract:building (max_colors null)",
-    "scene:brief"
+    "scene:brief",
+    "owner:Henrique",
+    "owner:Henrique",
+    "owner:Henrique",
+    "owner:Henrique",
+    "owner:Henrique",
+    "study:Penusbmic:P1-02",
+    "study:Penusbmic:R2-03"
    ],
    "plans": {
     "openai": {
@@ -675,7 +696,7 @@
      ]
     }
    },
-   "prompt_lines": 26
+   "prompt_lines": 34
   },
   "terreno-enramados": {
    "cells": [
@@ -699,7 +720,14 @@
     "scenery.json:families (proposta, relatorio §16)",
     "asset_bible §1",
     "palette:Empire Working (dossie v5.1, §22); contract:tile (max_colors null)",
-    "scene:repeat"
+    "scene:repeat",
+    "owner:Henrique",
+    "owner:Henrique",
+    "owner:Henrique",
+    "owner:Henrique",
+    "owner:Henrique",
+    "study:Penusbmic:P1-02",
+    "study:Penusbmic:R2-03"
    ],
    "plans": {
     "openai": {
@@ -758,7 +786,7 @@
      ]
     }
    },
-   "prompt_lines": 19
+   "prompt_lines": 27
   }
  },
  "adaptacao": {
