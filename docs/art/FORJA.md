@@ -567,6 +567,38 @@ O que não está: as opções da folha que o pipeline não usa (`--trim`, `--mer
 `json-hash`); a prova da composição com `compose_groups` ligado e da mistura antiga; a conversão ICC; a interface
 gráfica (a prova é a CLI em batch, o mesmo motor de documento).
 
+## Luz facetada e Aseprite
+
+A Forja usa o núcleo do Pixel Art Lighter 3.5.23 (Moonfell RPG) para estimar direções facetadas
+a partir dos grupos de cor e da silhueta. O prompt pede a arte base na grade e as luzes novas
+numa passagem separada. Na revisão, comparar o albedo e as duas luzes da prévia para localizar
+áreas de volume ou receção a ajustar, em especial rosto, mãos, cavidades e contorno.
+
+```sh
+python3 -m tools.forja luz build/forja/arqueiro.png --kind troop_64
+python3 -m tools.forja luz build/forja/rei.aseprite --kind royal_80 --quadro 3
+python3 -m tools.forja forge entrada.png --kind troop_64 --lighting -o build/forja/tropa
+python3 -m tools.forja sheet prancha.png --kind royal_80 --tags idle --lighting -o build/forja/rei
+```
+
+- `source.aseprite` abre com a arte e os mapas `forja_normal` e `forja_light_mask` ocultos.
+  As fontes RGB conservam as camadas, as tags, os tempos, as slices e o pivô. Uma fonte indexada
+  ou em tons de cinzento produz um estudo RGB à parte, composto no albedo por quadro. A fonte original fica disponível.
+- Para ajustar, mostrar uma camada de mapa, pintar nas mesmas coordenadas, guardar e voltar a correr
+  `forja luz ficheiro.aseprite --mapas-editados -o build/forja/revisao-luz`. Usar cinzento na máscara
+  e cores de normal com R para a direita, G para cima e B para a frente. Conservar o alfa do albedo.
+- `normal.png` e `light_mask.png` são os mapas editáveis em atlas. `surface.png` é o atlas compacto
+  para o shader Godot. `lighting.json` regista os retângulos, a timeline, as slices e a origem.
+  `preview.png` apresenta o quadro original, a luz à esquerda e a luz à direita, a 4× inteiros.
+  `--preset` seleciona personagem, objeto, arquitetura ou terreno e `--posicao=X,Y` reposiciona a primeira luz.
+- Para uma prancha animada, trabalhar com o `.aseprite` que `sheet` ou `anim` exportam. A geração é feita por
+  quadro (até 262 144 px cada), sem reamostragem. A prévia é um estudo e a aceitação usa as regras do dono.
+
+Os mapas que já entram no jogo são os dos oito atlas reais V15. Depois de atualizar os respetivos atlas
+de albedo, correr `python3 -m tools.bake_royal_lighting` e conferir com `--check`.
+O jogo liga os atlas às luzes da faixa e usa as três paragens de §80. Ver a
+[ADR 0106](../adr/0106-luz-facetada-por-pixel.md).
+
 ## Receitas por tipo de asset
 
 ### Decidir escala, examinar a referência e gerar no orçamento nativo (28/10)
@@ -718,6 +750,7 @@ pelos testes. `forja kinds` mostra-os; esta página não os copia.
 | `fit` | Pousar na tela e no pivô do contrato |
 | `scale` | Ampliação inteira, Scale2x, rotação RotSprite, redução por voto |
 | `anim` / `aseprite` | Quadros PNG → tira, JSON do Aseprite, `.aseprite` (um corpo com uma camada por slot, referência, tags e pivot), GIF/APNG, SpriteFrames |
+| `luz` | PNG nativo ou fonte Aseprite → normal facetada, máscara, prévia e `.aseprite` editável |
 | `ase` / `exportar` | Um `.aseprite` como o Aseprite o vê e as convenções do Empire (só lê; `--scene`); a folha e o JSON por camada como o `tools/export_aseprite.sh` e a CLI, sem o Aseprite |
 | `lock` / `motion` | Travar o rosto; respirar, piscar, dissolver, empurrão |
 | `tileset` / `seams` | Conjunto Wang 16 + TileSet do Godot (`--aseprite`: em tilemap); conferir emendas |

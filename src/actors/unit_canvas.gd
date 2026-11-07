@@ -11,11 +11,13 @@ var light: Lighting
 var time := 0.0
 var _batch := UnitArtBatch.new()
 var _branco: UnitFlash
+var _lighting: ShaderMaterial
 
 
 func _ready() -> void:
 	_batch.royals.listen()
-	material = SpriteLighting.material()
+	_lighting = SpriteLighting.material()
+	material = _lighting
 	_branco = UnitFlash.new()
 	var tinta := ShaderMaterial.new()
 	tinta.shader = load(FLASH_SHADER)
@@ -25,6 +27,7 @@ func _ready() -> void:
 
 func _draw() -> void:
 	if SimLoop.state != null and light != null:
+		SpriteLighting.sync(_lighting, light, self)
 		_batch.draw_on(self, band, light, time)
 		_branco.items = _batch.flashes.duplicate()
 		_branco.queue_redraw()

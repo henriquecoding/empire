@@ -1,0 +1,42 @@
+{
+  "rei.png": {
+    "albedo": "e137af3038a60684c6399b6cabb40ca3029ecb48fc3a8a89d6c84e384399f894",
+    "surface_pixels": "321d4904f1b9bb9b3aebbdf238dfd1804601e882da3723048d74d49917783e06",
+    "layout": "3d627b05e6fef9e7f11dc5e9bcff2a98a5bee90965962b525b5a1e116e755048"
+  },
+  "escudeiro.png": {
+    "albedo": "739d1884350aa70f6ba31a4a68f513f0fca86167644b9c88746a279cc8e25f9a",
+    "surface_pixels": "89de84f330fe5cfd178fbfd73a41a8d0a77ef58e62a204d4396bd26c6f3640c0",
+    "layout": "c4e4fe399316c9fa8cc23b84d488e176cb768c8bd891380c82db3e509f894fc8"
+  },
+  "nia.png": {
+    "albedo": "a3e485c58e79b1f11632690aea55f961e23adefb2fe6c064d09952079b8c1320",
+    "surface_pixels": "89b66a8a655f3eec783e0ac89ff0b51c090c173613eeae9f19f3eb644502fa13",
+    "layout": "24fddfacf9f0f138446a89c9078b1a4f11fadd1615552fbd8d80fc9cd94a348f"
+  },
+  "bardo.png": {
+    "albedo": "f9fbe496f61b404fb1b4dc4afa9bf7fbce7b997b49932eb9c2917df4f3e5ade4",
+    "surface_pixels": "5b1b35314bd19c5b300e208f8d89f08d020749656a5f5b8c85f707e3d3d9392a",
+    "layout": "24fddfacf9f0f138446a89c9078b1a4f11fadd1615552fbd8d80fc9cd94a348f"
+  },
+  "arqueiro.png": {
+    "albedo": "4240c596a30345ae15490813570dffe31344299f3eecfc4e03de0de8502434c9",
+    "surface_pixels": "eac24a41cf907f80d66faa1f15dbfdbce4f5df649569239a46a55314066acc61",
+    "layout": "8ba77ef3ee2b41e0816d995f5c7da06e6f659c4c76b7166195b4a09605e91115"
+  },
+  "intendente.png": {
+    "albedo": "193103e71f3fcebe9d2a0de1e74b447fa28324228f20a49f5f342055191f803e",
+    "surface_pixels": "c99a9059bd9ba690c0df1efa6e8a9868fd2446048d3e00b1e1355ceff2b1697b",
+    "layout": "300ef9fb2c875ae3a8df6edf26eb4e69df8d9fbc21824cb7d5bcdf05e67a3468"
+  },
+  "sombra.png": {
+    "albedo": "c448325ddec6cecac3afe48f899449724dc3612c705bffd65a80d65a54b42bda",
+    "surface_pixels": "af5462b08d0154c6c89243c733a9497a75ebb6e900e2755f097e9aa6a73a17b9",
+    "layout": "8ba77ef3ee2b41e0816d995f5c7da06e6f659c4c76b7166195b4a09605e91115"
+  },
+  "dancarina.png": {
+    "albedo": "d4da1b8d6801f4775b92048df743fad2c32c65f9a940f3a1b1966f1cfae967d6",
+    "surface_pixels": "680543487eae8a11643fbb8a0e627770a66400a50268e629748f7a7fc19ecccf",
+    "layout": "24fddfacf9f0f138446a89c9078b1a4f11fadd1615552fbd8d80fc9cd94a348f"
+  }
+}

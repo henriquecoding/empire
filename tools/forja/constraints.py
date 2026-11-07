@@ -106,6 +106,10 @@ def rules(c: contracts.Contract, pal: Palette | None, facing: str, mode: str, li
     faithful = mode in FAITHFUL
     out = [camera(c, facing, faithful, animated), outline(c), shading(c, faithful, tones),
            colors(pal, c, listed, swatch, faithful, max_colors)]
+    out.append(_rule("lighting_albedo", "Lighting handoff: keep painted material planes, facial accents and any "
+                     "authorized highlights as deliberate flat pixel clusters. Return the albedo as the artwork; "
+                     "the Forja derives normal and light-mask data separately. Keep new point-light glow on a "
+                     "separate effect pass.", "workflow:Pixel Art Lighter"))
     return out + (fidelity(invariants, where) if faithful else [])
 
 

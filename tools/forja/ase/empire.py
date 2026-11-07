@@ -21,7 +21,8 @@ from .export import sheet
 from .model import Sprite, UserData
 
 SLOTS = {"shadow": -1, "body": 0, "storage": 1, "head": 2, "face": 3, "weapon": 4, "shield": 4, "overlay": 5}
-WORK = ("Knight", "References", "Background")
+LIGHT_MAPS = ("forja_normal", "forja_light_mask")
+WORK = ("Knight", "References", "Background", *LIGHT_MAPS)
 LEGACY = {"Body": "body", "Equipments": "storage", "Face": "face", "Sword": "weapon", "Arms and Weapons": "weapon",
           "Shield": "shield"}  # a tabela de correspondencia da §2
 SIDES = ("_left", "_right")

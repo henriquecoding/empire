@@ -171,7 +171,7 @@ def _anchor(img: Image.Image, mode: str) -> tuple[int, int]:
 
 def forge(source: str | Path, out_dir: str | Path, opts: Options, name: str | None = None,
           prompt: str | None = None, generator: str | None = None, aseprite: bool = False,
-          report_html: bool = True) -> dict:
+          report_html: bool = True, *, lighting: bool = False) -> dict:
     """Um ficheiro de entrada, uma figura. Escreve <nome>.png, @4x, .json e report.html."""
     source = Path(source)
     out = Path(out_dir)
@@ -226,12 +226,15 @@ def forge(source: str | Path, out_dir: str | Path, opts: Options, name: str | No
         uncut, _ = finish(native, replace(opts, fit=False), contract, pal)
         files["uncut_png"] = str(out / f"{name}_uncut.png")
         uncut.save(files["uncut_png"])
-    if aseprite:
+    if aseprite or lighting:
         from . import aseprite as ase
         pivot = (finishinfo.get("fit") or {}).get("pivot")
         files["aseprite"] = str(ase.from_frames(out / f"{name}.aseprite", [final],
                                                 palette=pal.colors if pal and len(pal) <= 256 else None,
                                                 pivot=tuple(pivot) if pivot else None))
+    if lighting:
+        from . import lighting_export
+        lighting_export.after_forge(files, out, contract.kind)
     summary = verdicts.summary(verdicts.for_review(verdict["ok"], None, coherence=verdict["coherence"]))
     result = {"name": name, "contract": contract.as_dict(), "snap": snapinfo, "finish": finishinfo,
               "lint": verdict, "files": files, "verdicts": summary,

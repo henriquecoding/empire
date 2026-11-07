@@ -34,7 +34,8 @@ def do_sheet(args) -> dict:
                                     godot_texture=args.godot_texture, region=region, align=args.align,
                                     holds=review.parse_holds(args.hold))
     prompt = Path(args.prompt_file).read_text(encoding="utf-8") if args.prompt_file else None
-    res = sheetforge.forge_sheet(args.image, args.out, opts, sopts, args.name, prompt, args.generator)
+    res = sheetforge.forge_sheet(args.image, args.out, opts, sopts, args.name, prompt, args.generator,
+                                lighting=args.lighting)
     cmp = expected(args, res, expectation.from_period(res["frames"]))
     if cmp:
         res["review"] = expectation.mark(res["review"], cmp)
@@ -176,6 +177,7 @@ def register(sub) -> None:
     p.add_argument("--same-height", action="store_true", help="cada figura na sua propria grade (o gerador desenhou "
                    "pixels de tamanhos diferentes); nada se estica")
     p.add_argument("--outline", dest="outline_mode", default="auto", choices=("auto", "keep", "force"))
+    p.add_argument("--lighting", action="store_true", help="estudo de luz e .aseprite com mapas por quadro final")
     p.add_argument("--reduce", action="store_true", help="reducao diagnostica, registada por quadro")
     from . import lineage
     lineage.cli_args(p)
