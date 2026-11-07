@@ -85,7 +85,8 @@ def expected(args, res: dict, detected: float | None) -> dict | None:
 
 def do_forge(args) -> dict:
     prompt = Path(args.prompt_file).read_text(encoding="utf-8") if args.prompt_file else None
-    res = pipeline.forge(args.image, args.out, _options(args), args.name, prompt, args.generator, args.aseprite)
+    res = pipeline.forge(args.image, args.out, _options(args), args.name, prompt, args.generator,
+                         args.aseprite, lighting=args.lighting)
     cmp = expected(args, res, res["snap"]["grid"]["period"][0])
     sig, lost = res["signals"], res["snap"].get("loss") or {}
     return {"ok": res["lint"]["ok"] and not (cmp and cmp["hard"]), "files": res["files"],
@@ -198,6 +199,7 @@ def register(sub) -> None:
     p.add_argument("--canvas", type=pair, help="tela LxA (sobrepoe o contrato)")
     p.add_argument("--pivot", type=pair, help="pivot X,Y (sobrepoe o contrato)")
     p.add_argument("--aseprite", action="store_true", help="tambem escrever .aseprite")
+    p.add_argument("--lighting", action="store_true", help="estudo de luz e .aseprite com mapas do sprite final")
     p.add_argument("--reduce", action="store_true", help="com --scale/--cells: a grade e uma reducao deliberada "
                    "para caber (adaptacao com perda, nao recuperacao); sai marcada assim")
     p.add_argument("--signals", help="forja.signals/1 desta imagem: pinos (pixel e cor declarados) e regioes "

@@ -64,7 +64,8 @@ def _bg(image: Image.Image, given: str | None) -> tuple[int, int, int] | None:
 
 
 def forge_sheet(source: str | Path, out_dir: str | Path, opts: Options, sopts: SheetOptions,
-                name: str | None = None, prompt: str | None = None, generator: str | None = None) -> dict:
+                name: str | None = None, prompt: str | None = None, generator: str | None = None,
+                *, lighting: bool = False) -> dict:
     source = Path(source)
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
@@ -126,6 +127,9 @@ def forge_sheet(source: str | Path, out_dir: str | Path, opts: Options, sopts: S
     files = anim.export(frames, out, name, durations, tags, pivot)
     files["aseprite"] = str(ase.from_frames(out / f"{name}.aseprite", frames, durations=durations, tags=tags,
                                             palette=pal.colors if pal and len(pal) <= 256 else None, pivot=pivot))
+    if lighting:
+        from . import lighting_export
+        lighting_export.after_forge(files, out, contract.kind)
     if sopts.mirror:
         left, left_pivot = anim.mirror(frames, pivot)
         files.update({f"left_{k}": v for k, v in anim.export(left, out, f"{name}_left", durations,

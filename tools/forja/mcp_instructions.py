@@ -55,4 +55,7 @@ INSTRUCTIONS = (
     "e cria previa com corpo sem VFX e ficha por quadro. forja_ensaio-rever exige maos/objeto, estados faciais, "
     "apoio e recuperacao observados; incompleto fica pendente. forja_ensaio-comparar repete a mesma receita. "
     "forja_variantes so explora designs em aberto; forja_cena-piloto compara massas, planos, ator e dia/noite. "
-    "Estes ensaios nao concedem aprovacao artistica nem provam integracao Godot. docs/art/PENUSBMIC_WORKFLOW.md.")
+    "Estes ensaios nao concedem aprovacao artistica nem provam integracao Godot. docs/art/PENUSBMIC_WORKFLOW.md. "
+    "(16) forja_luz recebe PNG nativo ou .aseprite e devolve normal, mascara, previa e fonte RGB com mapas "
+    "ocultos. Pode usar lighting em forja_forge ou forja_sheet; mapas editados voltam por mapas_editados. "
+    "A previa e para avaliar os planos de luz; o albedo e a autoridade visual.")

@@ -51,7 +51,7 @@ float luz_limiar(vec2 quadrado) {
 // Chama-se do fragment() com os dois varyings: luz_aqui(ecra_luz, mundo_luz).
 // Sem luz nenhuma no ecra (o dia, ou longe de todas) e so o ambiente: o SceneryLight so
 // manda as que se veem, e cada plano deixa de pagar o dither em cada pixel (03/10/2026).
-vec3 luz_aqui(vec2 ecra, vec2 mundo) {
+vec3 luz_surface(vec2 ecra, vec2 mundo, vec3 normal, float recepcao) {
 	if (luzes <= 0 || alcance <= 0.0) {
 		return min(ambiente, vec3(teto));
 	}
@@ -86,7 +86,18 @@ vec3 luz_aqui(vec2 ecra, vec2 mundo) {
 			}
 			cor = k == 0 ? nucleo[i] : (k == 1 ? meio[i] : bordo[i]);
 		}
-		soma += cor * onde[i].w;
+		float ganho = onde[i].w;
+		if (recepcao >= 0.0) {
+			// Luzes do Empire nas mesmas três paragens, com resposta da superfície.
+			vec3 direcao = normalize(vec3(onde[i].xy - p, 36.0 * escala));
+			float face = max(0.0, dot(normal, direcao));
+			ganho *= recepcao * mix(0.55, 1.0, face);
+		}
+		soma += cor * ganho;
 	}
 	return min(ambiente + soma * alcance, vec3(teto));
+}
+
+vec3 luz_aqui(vec2 ecra, vec2 mundo) {
+	return luz_surface(ecra, mundo, vec3(0.0, 0.0, 1.0), -1.0);
 }

@@ -24,7 +24,6 @@ var _health: Dictionary = {}
 var _facing: Dictionary = {}
 var _hit_until: Dictionary = {}
 var _phase: Dictionary = {}
-## Per-unit action start; a new action starts on its first frame.
 var _action: Dictionary = {}
 var _since: Dictionary = {}
 
@@ -122,6 +121,7 @@ func draw_on(canvas: CanvasItem, band: Band.Kind, light: Lighting, time: float) 
 					"id": id,
 					"i": i,
 					"frame": frame,
+					"surface": not hit and light.dark > 0.0 and not light.glows.is_empty(),
 					"pose": pose,
 					"posed": posed,
 					"style": estilo,
@@ -135,7 +135,7 @@ func draw_on(canvas: CanvasItem, band: Band.Kind, light: Lighting, time: float) 
 		)
 		canvas.draw_texture_rect(SHADOW_TEXTURE, rect, false, WorldPalette.SOMBRA)
 	for item in draws:
-		_art.draw_posed(canvas, item.profile, item.color, item.frame, item.posed)
+		_art.draw_posed(canvas, item.profile, item.color, item.frame, item.posed, item.surface)
 	for item in draws:
 		var i: int = item.i
 		if not units.alive(i):

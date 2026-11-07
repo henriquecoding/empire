@@ -43,10 +43,11 @@ class PipelineTest(unittest.TestCase):
         synth.sheet(truths, 3, 8.1, bg=(0, 0, 255)).save(d / "sheet.png")
         res = sheetforge.forge_sheet(d / "sheet.png", d / "out", pipeline.Options(kind="character_s1"),
                                      sheetforge.SheetOptions(tags=[("idle", 6)], mirror=True,
-                                                             godot_texture="res://idle.png"))
+                                                             godot_texture="res://idle.png"), lighting=True)
         self.assertEqual((res["requested"], res["found"]), (6, 6))
-        for key in ("sheet", "json", "aseprite", "gif", "godot", "left_sheet", "report"):
+        for key in ("sheet", "json", "aseprite", "gif", "godot", "left_sheet", "report", "lighting", "lit_aseprite"):
             self.assertTrue(Path(res["files"][key]).exists(), key)
+        self.assertEqual(json.loads(Path(res["files"]["lighting"]).read_text())["frames"], 6)
         self.assertEqual(res["metrics"]["max_drift"], 0)
 
     def test_sheet_reports_missing_frames_without_inventing(self):
@@ -106,8 +107,9 @@ class CliTest(unittest.TestCase):
         d = tempdir()
         exp = {"kind": "character_s1", "scale": 14.7, "layout": [1, 1], "background": "#0000FF"}
         (d / "expect.json").write_text(json.dumps(exp))
-        res = cli.run(["forge", str(fake_file(d)), "-o", str(d / "o"), "--expect", str(d / "expect.json")])
+        res = cli.run(["forge", str(fake_file(d)), "-o", str(d / "o"), "--expect", str(d / "expect.json"), "--lighting"])
         self.assertTrue(res["ok"], res["findings"])
+        self.assertTrue(Path(res["files"]["lit_aseprite"]).exists())
 
 
 class McpTest(unittest.TestCase):

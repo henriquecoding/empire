@@ -114,10 +114,15 @@ func draw_on(
 ## O mesmo, com uma pose: o golpe estica e a queda roda (CombatFx), sempre em
 ## volta dos pes — um corpo esticado ou caido continua pousado onde estava.
 func draw_posed(
-	canvas: CanvasItem, id: StringName, tint: Color, frame: int, pose: Transform2D
+	canvas: CanvasItem,
+	id: StringName,
+	tint: Color,
+	frame: int,
+	pose: Transform2D,
+	surface: bool = false
 ) -> void:
 	if not RoyalArt.entry(id).is_empty():
-		RoyalArt.draw_on(canvas, id, tint, frame, pose)
+		RoyalArt.draw_on(canvas, id, tint, frame, pose, "texture", surface)
 		return
 	var item := entry(id)
 	var size := Vector2(item.size[0], item.size[1])

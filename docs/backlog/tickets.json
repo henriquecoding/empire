@@ -3336,5 +3336,24 @@
    "Implementar CLI/MCP e testes",
    "Validar suite e portões antes do merge"
   ]
+ },
+ "FORJA-20": {
+  "title": "Luz facetada por pixel na Forja e no jogo",
+  "porque": "Aplicar o núcleo do Pixel Art Lighter no runtime e nas fontes nativas Aseprite.",
+  "spec": [
+   "docs/art/FORJA.md",
+   "docs/adr/0106-luz-facetada-por-pixel.md"
+  ],
+  "depende": "FORJA-19",
+  "feito": "Mapas por quadro, prévia, fonte editável e consumo dos atlas V15 no Godot.",
+  "fora": "Aprovação artística de mapas por personagem.",
+  "estado": "feito — núcleo portado da versão 3.5.23, exportação editável e consumo de atlas alinhados no jogo.",
+  "horas": "—",
+  "passos": [
+   "Portar os mapas e a prévia",
+   "Preservar a fonte e a timeline Aseprite",
+   "Ligar os atlas às luzes da faixa"
+  ],
+  "notas": []
  }
 }

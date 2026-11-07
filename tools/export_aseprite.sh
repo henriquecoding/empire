@@ -15,7 +15,7 @@ REL="${SRC#art/source/}"
 DIR="art/export/$(dirname "$REL")"
 BASE="$(basename "$SRC" .aseprite)"
 # Camadas de trabalho que nunca se exportam (ASSET_BIBLE §2).
-SKIP='^(Knight|References|Background)$'
+SKIP='^(Knight|References|Background|forja_normal|forja_light_mask)$'
 mkdir -p "$DIR"
 "$ASEPRITE" -b --list-layers "$SRC" | while IFS= read -r LAYER; do
   [[ "$LAYER" =~ $SKIP ]] && continue

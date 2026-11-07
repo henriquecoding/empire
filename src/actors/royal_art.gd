@@ -51,17 +51,21 @@ static func draw_on(
 	tint: Color,
 	frame: int,
 	pose: Transform2D,
-	channel: String = "texture"
+	channel: String = "texture",
+	surface: bool = false
 ) -> void:
 	var item := entry(id)
 	var picture := sample(id, frame, pose.x.x)
 	var path := ROOT + String(item[channel])
 	if not _textures.has(path):
 		_textures[path] = load(path)
+	var sheet: Texture2D = _textures[path]
+	if surface and channel == "texture":
+		sheet = SpriteLighting.with_surface(sheet, String(item.texture))
 	# The source already faces left. No second mirror and no procedural body deformation.
 	var native := Transform2D(0.0, pose.origin.floor())
 	canvas.draw_set_transform_matrix(native)
-	canvas.draw_texture_rect_region(_textures[path], picture.target, picture.source, tint)
+	canvas.draw_texture_rect_region(sheet, picture.target, picture.source, tint)
 	canvas.draw_set_transform(Vector2.ZERO)
 
 
